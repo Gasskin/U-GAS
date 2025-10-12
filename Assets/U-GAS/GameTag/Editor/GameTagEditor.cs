@@ -21,8 +21,11 @@ namespace U_GAS.Editor
     [InitializeOnLoad]
     public static class GameTagEditor
     {
-        private const string _TAG_PATH = "Assets/U-GAS/GameTag/Tags";
-        private const string _GEN_TAG_PATH = "Assets/U-GAS/GameTag/Gen";
+        private const string _TAG_PATH = "GameTag/Tags";
+        private const string _GEN_TAG_PATH = "GameTag/Gen";
+
+        private static string TagPath => UConst.UGAS_PATH + "/" + _TAG_PATH;
+        private static string GenTagPath => UConst.UGAS_PATH + "/" + _GEN_TAG_PATH; 
 
         private static readonly Dictionary<string, TagNode> _tagDic = new();
         private static readonly List<TagNode> _tagTree = new();
@@ -45,7 +48,7 @@ namespace U_GAS.Editor
             if (!AssetDatabase.IsValidFolder(path))
                 return;
 
-            if (!path.EndsWith(_TAG_PATH))
+            if (!path.EndsWith(TagPath))
                 return;
 
             // 列表视图：行右侧靠右画一个小按钮
@@ -59,15 +62,15 @@ namespace U_GAS.Editor
 
         private static void GenTag()
         {
-            if (Directory.Exists(_GEN_TAG_PATH))
+            if (Directory.Exists(GenTagPath))
             {
-                Directory.Delete(_GEN_TAG_PATH, true);
+                Directory.Delete(GenTagPath, true);
             }
-            Directory.CreateDirectory(_GEN_TAG_PATH);
+            Directory.CreateDirectory(GenTagPath);
 
 
-            var folder1 = Directory.GetDirectories(_TAG_PATH, "*", SearchOption.AllDirectories);
-            var folder2 = folder1.Select((s => s.Replace($"{_TAG_PATH}\\", ""))).ToList();
+            var folder1 = Directory.GetDirectories(TagPath, "*", SearchOption.AllDirectories);
+            var folder2 = folder1.Select((s => s.Replace($"{TagPath}\\", ""))).ToList();
 
             _tagDic.Clear();
             _tagTree.Clear();
@@ -91,7 +94,7 @@ namespace U_GAS.Editor
                 var tagName = f;
                 var parentFullPath = "";
                 var idx = tagName.LastIndexOf("\\", StringComparison.Ordinal);
-                if (idx != -1) 
+                if (idx != -1)
                 {
                     tagName = tagName.Substring(idx + 1);
                     parentFullPath = f.Replace($"\\{tagName}", "");
@@ -190,7 +193,7 @@ namespace U_GAS.Editor
             sb.AppendLine("\t}");
             sb.AppendLine("}");
 
-            File.WriteAllText(_GEN_TAG_PATH + "/EGameTag.cs", sb.ToString());
+            File.WriteAllText(GenTagPath + "/EGameTag.cs", sb.ToString());
 
             void AddTag(TagNode tagNode)
             {
@@ -249,7 +252,7 @@ namespace U_GAS.Editor
             sb.AppendLine("\t}");
             sb.AppendLine("}");
 
-            File.WriteAllText(_GEN_TAG_PATH + "/GameTagTree.cs", sb.ToString());
+            File.WriteAllText(GenTagPath + "/GameTagRegister.cs", sb.ToString());
 
             void AddTree(TagNode tagNode)
             {

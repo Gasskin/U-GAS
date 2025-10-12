@@ -1,6 +1,6 @@
 namespace U_GAS
 {
-	public static class GameTagTree
+	public static class GameTagRegister
 	{
 		public static readonly int Size = 18;
 		public static readonly int[] Tree =

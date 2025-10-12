@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51fc82408e4941c999a7e00a7fb0017b, type: 3}
+  m_Name: GameAttributeEditor
+  m_EditorClassIdentifier: 
+  attribute:
+  - key: Hp
+    backUp: "\u751F\u547D\u503C"
+    eCalculateMode: 2
+    minValue: 0
+    maxValue: 3.4028235e+38
+  - key: Mp
+    backUp: "\u6CD5\u529B\u503C"
+    eCalculateMode: 1
+    minValue: 0
+    maxValue: 3.4028235e+38
+  - key: Atk
+    backUp: "\u653B\u51FB\u529B"
+    eCalculateMode: 0
+    minValue: 0
+    maxValue: 3.4028235e+38

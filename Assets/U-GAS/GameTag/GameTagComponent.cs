@@ -9,11 +9,11 @@ namespace U_GAS
 
         protected override void OnStart()
         {
-            if (GameTagTree.Size != GameTagTree.Tree.Length)
+            if (GameTagRegister.Size != GameTagRegister.Tree.Length)
             {
                 throw new Exception("GameTag数据异常");
             }
-            _gameTag = new int[GameTagTree.Size];
+            _gameTag = new int[GameTagRegister.Size];
             Array.Clear(_gameTag, 0, _gameTag.Length);
         }
 
@@ -83,9 +83,9 @@ namespace U_GAS
             var idx = (int)tag;
             _gameTag[idx] += value;
             _gameTag[idx] = Math.Clamp(_gameTag[idx], 0, int.MaxValue);
-            if (GameTagTree.Tree[idx] > 0)
+            if (GameTagRegister.Tree[idx] > 0)
             {
-                TravelAdd((EGameTag)GameTagTree.Tree[idx], value);
+                TravelAdd((EGameTag)GameTagRegister.Tree[idx], value);
             }
         }
     }
