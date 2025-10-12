@@ -21,5 +21,12 @@ namespace U_GAS
 		[LabelText("攻击力")]
 		Atk,
 		
+		/// <summary>
+		/// 防御力
+		/// </summary>
+		[LabelText("防御力")]
+		Defence,
+		
+		Max = 4,
 	}
 }

@@ -33,7 +33,6 @@ namespace U_GAS.Editor
 
         // [InlineEditor(InlineEditorModes.FullEditor, ObjectFieldMode = InlineEditorObjectFieldModes.Hidden, DrawHeader = false, Expanded = true)]
         // public GameAttributeEditorSerialize serializeSo;
-
         public List<BaseGameAttribute> attribute;
 
         [Button]
@@ -41,7 +40,7 @@ namespace U_GAS.Editor
         {
             GenEnum();
             GenAttributes();
-            GenRegister();
+            // GenRegister();
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
@@ -69,6 +68,7 @@ namespace U_GAS.Editor
                 sb.AppendLine($"\t\t{attributeValue.Key},");
                 sb.AppendLine("\t\t");
             }
+            sb.AppendLine($"\t\tMax = {attribute.Count},");
             sb.AppendLine("\t}");
             sb.AppendLine("}");
 
@@ -124,7 +124,7 @@ namespace U_GAS.Editor
                 sb.AppendLine($"\t\t\t{{ EGameAttribute.{attr.Key} , typeof(GameAttribute_{attr.Key})}},");
             }
             sb.AppendLine("\t\t};");
-            sb.AppendLine("\t\tpublic static BaseGameAttribute Get(EGameAttribute attribute)");
+            sb.AppendLine("\t\tpublic static BaseGameAttribute New(EGameAttribute attribute)");
             sb.AppendLine("\t\t{");
             sb.AppendLine("\t\t\tswitch (attribute)");
             sb.AppendLine("\t\t\t{");

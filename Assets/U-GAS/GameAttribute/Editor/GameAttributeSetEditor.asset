@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 357d6a530fd24d1f8a321d115d5ade88, type: 3}
+  m_Name: GameAttributeSetEditor
+  m_EditorClassIdentifier: 
+  attributeSets:
+  - key: Atk
+    backUp: "\u653B\u51FB\u5C5E\u6027"
+    attributeSelectors: 02000000
+  - key: Defence
+    backUp: "\u9632\u5FA1\u5C5E\u6027"
+    attributeSelectors: 03000000
+  - key: Number
+    backUp: "\u6570\u503C"
+    attributeSelectors: 0000000001000000

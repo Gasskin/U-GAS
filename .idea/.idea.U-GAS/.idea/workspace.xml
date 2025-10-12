@@ -6,12 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="0c3c9b50-d8a9-4143-81cd-bf63752d18e6" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.U-GAS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.U-GAS/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assembly-CSharp-Editor.csproj.DotSettings" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp-Editor.csproj.DotSettings" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assembly-CSharp.csproj.DotSettings" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp.csproj.DotSettings" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameTag/Editor/GameTagEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/U-GAS/GameTag/Editor/GameTagEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameTag/GameTagComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/U-GAS/GameTag/GameTagComponent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameTag/Gen/GameTagTree.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/U-GAS/GameTag/Gen/GameTagRegister.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-6000.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-6000.dwlt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/Editor/GameAttributeEditor.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/Editor/GameAttributeEditor.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/Editor/GameAttributeEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/Editor/GameAttributeEditor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/Editor/GameAttributeSetEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/Editor/GameAttributeSetEditor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/Gen/EGameAttribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/Gen/EGameAttribute.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/Gen/GameAttributeRegister.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/Gen/GameAttributes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/Gen/GameAttributes.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameTag/GameTagComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/U-GAS/GameTag/GameTagContainer.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +29,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/75372d1732c04bb9ae6815434ed108e110fc00/b3/c257b37c/Enumerable.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ca3f2c7411ab4a11a75f67d848927d091fea00/2e/6908cd9a/IMGUIContainer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ca3f2c7411ab4a11a75f67d848927d091fea00/db/1c04ae07/LayoutDataStore.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/U-GAS/GameAttribute/Gen/GameAttributes.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -119,7 +121,7 @@
       <option name="presentableId" value="Default" />
       <updated>1760185172542</updated>
       <workItem from="1760185174197" duration="21820000" />
-      <workItem from="1760264198635" duration="8292000" />
+      <workItem from="1760264198635" duration="13147000" />
     </task>
     <servers />
   </component>

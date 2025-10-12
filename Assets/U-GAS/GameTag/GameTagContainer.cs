@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace U_GAS
 {
-    public class GameTagComponent : BaseEntityComponent
+    public class GameTagContainer
     {
         private int[] _gameTag;
 
-        protected override void OnStart()
+        protected void OnStart()
         {
             if (GameTagRegister.Size != GameTagRegister.Tree.Length)
             {
@@ -17,15 +17,10 @@ namespace U_GAS
             Array.Clear(_gameTag, 0, _gameTag.Length);
         }
 
-        protected override void OnStop()
+        protected void OnStop()
         {
             _gameTag = null;
         }
-
-        protected override void OnUpdate(float dt)
-        {
-        }
-
 
         public void AddTag(EGameTag gameTag)
         {

@@ -6,7 +6,7 @@ namespace U_GAS
 		{
 			minValue = 0f;
 			maxValue = 3.402823E+38f;
-			eCalculateMode = ECalculateMode.MaxValueOnly;
+			eCalculateMode = ECalculateMode.Stacking;
 			attributeType = EGameAttribute.Hp;
 		}
 	}
@@ -16,7 +16,7 @@ namespace U_GAS
 		{
 			minValue = 0f;
 			maxValue = 3.402823E+38f;
-			eCalculateMode = ECalculateMode.MinValueOnly;
+			eCalculateMode = ECalculateMode.Stacking;
 			attributeType = EGameAttribute.Mp;
 		}
 	}
@@ -28,6 +28,16 @@ namespace U_GAS
 			maxValue = 3.402823E+38f;
 			eCalculateMode = ECalculateMode.Stacking;
 			attributeType = EGameAttribute.Atk;
+		}
+	}
+	public class GameAttribute_Defence : BaseGameAttribute
+	{
+		public GameAttribute_Defence()
+		{
+			minValue = -3.402823E+38f;
+			maxValue = 3.402823E+38f;
+			eCalculateMode = ECalculateMode.Stacking;
+			attributeType = EGameAttribute.Defence;
 		}
 	}
 }

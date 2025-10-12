@@ -15,16 +15,21 @@ MonoBehaviour:
   attribute:
   - key: Hp
     backUp: "\u751F\u547D\u503C"
-    eCalculateMode: 2
+    eCalculateMode: 0
     minValue: 0
     maxValue: 3.4028235e+38
   - key: Mp
     backUp: "\u6CD5\u529B\u503C"
-    eCalculateMode: 1
+    eCalculateMode: 0
     minValue: 0
     maxValue: 3.4028235e+38
   - key: Atk
     backUp: "\u653B\u51FB\u529B"
     eCalculateMode: 0
     minValue: 0
+    maxValue: 3.4028235e+38
+  - key: Defence
+    backUp: "\u9632\u5FA1\u529B"
+    eCalculateMode: 0
+    minValue: -3.4028235e+38
     maxValue: 3.4028235e+38
