@@ -2,7 +2,9 @@
 {
     public abstract class BaseEntityComponent
     {
-        public void Start()
+        public int EntityId { get; private set; }
+
+        public void Start(int idx)
         {
             OnStart();
         }
@@ -11,12 +13,12 @@
         {
             OnStop();
         }
-        
+
         public void DoUpdate(float dt)
         {
             OnUpdate(dt);
         }
-        
+
         protected abstract void OnStart();
         protected abstract void OnStop();
         protected abstract void OnUpdate(float dt);

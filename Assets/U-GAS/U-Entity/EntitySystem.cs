@@ -163,7 +163,7 @@ namespace U_GAS
                         _activeComponentIndex[type] = activeIndex;
                     }
                     list[idx] = comp;
-                    list[idx]?.Start();
+                    list[idx]?.Start(idx);
                     activeIndex.Add(idx);
                 }
             }

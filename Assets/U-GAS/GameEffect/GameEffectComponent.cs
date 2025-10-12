@@ -1,17 +1,7 @@
 ﻿namespace U_GAS
 {
-    public class GameEffectComponent : BaseEntityComponent
+    public class GameEffectContainer
     {
-        protected override void OnStart()
-        {
-        }
-
-        protected override void OnStop()
-        {
-        }
-
-        protected override void OnUpdate(float dt)
-        {
-        }
+        
     }
 }
