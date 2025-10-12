@@ -1,0 +1,92 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace U_GAS
+{
+    public class GameTagComponent : BaseEntityComponent
+    {
+        private int[] _gameTag;
+
+        protected override void OnStart()
+        {
+            if (GameTagTree.Size != GameTagTree.Tree.Length)
+            {
+                throw new Exception("GameTag数据异常");
+            }
+            _gameTag = new int[GameTagTree.Size];
+            Array.Clear(_gameTag, 0, _gameTag.Length);
+        }
+
+        protected override void OnStop()
+        {
+            _gameTag = null;
+        }
+
+        protected override void OnUpdate(float dt)
+        {
+        }
+
+
+        public void AddTag(EGameTag gameTag)
+        {
+            TravelAdd(gameTag, 1);
+        }
+
+        public void RemoveTag(EGameTag gameTag)
+        {
+            TravelAdd(gameTag, -1);
+        }
+
+        public bool HasTag(EGameTag gameTag)
+        {
+            return _gameTag[(int)gameTag] > 0;
+        }
+
+        public bool HasAllTag(List<EGameTag> gameTags)
+        {
+            foreach (EGameTag gameTag in gameTags)
+            {
+                if (!HasTag(gameTag))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public bool HasNoTags(List<EGameTag> gameTags)
+        {
+            foreach (EGameTag gameTag in gameTags)
+            {
+                if (HasTag(gameTag))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public bool HasAnyTags(List<EGameTag> gameTags)
+        {
+            foreach (EGameTag gameTag in gameTags)
+            {
+                if (HasTag(gameTag))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        private void TravelAdd(EGameTag tag, int value)
+        {
+            var idx = (int)tag;
+            _gameTag[idx] += value;
+            _gameTag[idx] = Math.Clamp(_gameTag[idx], 0, int.MaxValue);
+            if (GameTagTree.Tree[idx] > 0)
+            {
+                TravelAdd((EGameTag)GameTagTree.Tree[idx], value);
+            }
+        }
+    }
+}
