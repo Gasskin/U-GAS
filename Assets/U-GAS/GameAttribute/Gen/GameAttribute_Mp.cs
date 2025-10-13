@@ -1,0 +1,13 @@
+namespace U_GAS
+{
+	public class GameAttribute_Mp : GameAttribute
+	{
+		public GameAttribute_Mp()
+		{
+			minValue = 0f;
+			maxValue = 3.402823E+38f;
+			eCalculateMode = ECalculateMode.Stacking;
+			attributeType = EGameAttribute.Mp;
+		}
+	}
+}

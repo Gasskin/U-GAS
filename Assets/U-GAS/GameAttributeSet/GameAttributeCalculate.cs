@@ -9,11 +9,11 @@ namespace U_GAS
     /// </summary>
     public class GameAttributeCalculate
     {
-        private BaseGameAttribute _taget;
+        private GameAttribute _taget;
         private GameAbilityComponent _owner;
         private readonly List<string> _modifierCache = new();
         
-        public GameAttributeCalculate(BaseGameAttribute attribute, GameAbilityComponent owner)
+        public GameAttributeCalculate(GameAttribute attribute, GameAbilityComponent owner)
         {
             _taget = attribute;
             _owner = owner;
@@ -31,7 +31,7 @@ namespace U_GAS
         }
         
         
-        private void UpdateCurrentValueWhenBaseValueIsDirty(BaseGameAttribute attribute, float oldBaseValue, float newBaseValue)
+        private void UpdateCurrentValueWhenBaseValueIsDirty(GameAttribute attribute, float oldBaseValue, float newBaseValue)
         {
             if (Mathf.Approximately(oldBaseValue, newBaseValue))
             {

@@ -7,7 +7,7 @@ using UnityEngine;
 namespace U_GAS
 {
     [Serializable]
-    public class BaseGameAttributeSet
+    public class GameAttributeSet
     {
         [FoldoutGroup("$DisplayName")]
         [SerializeField]
@@ -23,7 +23,7 @@ namespace U_GAS
 
         private string DisplayName => $"{key} - {backUp}";
 
-        public Dictionary<EGameAttribute,BaseGameAttribute> attributes;
+        public Dictionary<EGameAttribute,GameAttribute> attributes;
 
         
         public string Key => key;

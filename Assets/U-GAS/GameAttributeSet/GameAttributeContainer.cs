@@ -7,7 +7,7 @@ namespace U_GAS
         private GameAbilityComponent _owner;
         
         // 属性组
-        private readonly Dictionary<EGameAttributeSet, BaseGameAttributeSet> _attributeSets = new();
+        private readonly Dictionary<EGameAttributeSet, GameAttributeSet> _attributeSets = new();
 
         // 所有属性对应的修改器
         private readonly Dictionary<EGameAttribute, GameAttributeCalculate> _attributeCalculate = new();

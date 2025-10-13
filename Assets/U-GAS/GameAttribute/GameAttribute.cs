@@ -23,7 +23,7 @@ namespace U_GAS
     }
 
     [Serializable]
-    public class BaseGameAttribute
+    public class GameAttribute
     {
         [FoldoutGroup("$DisplayName")]
         [SerializeField]
@@ -59,13 +59,13 @@ namespace U_GAS
 
         protected EGameAttribute attributeType;
 
-        private event Action<BaseGameAttribute, float> OnPreCurrentValueChange;
+        private event Action<GameAttribute, float> OnPreCurrentValueChange;
 
-        private event Action<BaseGameAttribute, float, float> OnPostCurrentValueChange;
+        private event Action<GameAttribute, float, float> OnPostCurrentValueChange;
 
         // private event Func<BaseGameAttribute, float, float> OnPreBaseValueChange;
-        private List<Func<BaseGameAttribute, float, float>> _preBaseValueChangeListeners = new(32);
-        private event Action<BaseGameAttribute, float, float> OnPostBaseValueChange;
+        private List<Func<GameAttribute, float, float>> _preBaseValueChangeListeners = new(32);
+        private event Action<GameAttribute, float, float> OnPostBaseValueChange;
 
         public string Key => key;
         public string BackUp => backUp;
@@ -115,42 +115,42 @@ namespace U_GAS
         }
 
 
-        public void RegisterPreBaseValueChange(Func<BaseGameAttribute, float, float> func)
+        public void RegisterPreBaseValueChange(Func<GameAttribute, float, float> func)
         {
             _preBaseValueChangeListeners.Add(func);
         }
 
-        public void RegisterPostBaseValueChange(Action<BaseGameAttribute, float, float> action)
+        public void RegisterPostBaseValueChange(Action<GameAttribute, float, float> action)
         {
             OnPostBaseValueChange += action;
         }
 
-        public void RegisterPreCurrentValueChange(Action<BaseGameAttribute, float> action)
+        public void RegisterPreCurrentValueChange(Action<GameAttribute, float> action)
         {
             OnPreCurrentValueChange += action;
         }
 
-        public void RegisterPostCurrentValueChange(Action<BaseGameAttribute, float, float> action)
+        public void RegisterPostCurrentValueChange(Action<GameAttribute, float, float> action)
         {
             OnPostCurrentValueChange += action;
         }
 
-        public void UnregisterPreBaseValueChange(Func<BaseGameAttribute, float, float> func)
+        public void UnregisterPreBaseValueChange(Func<GameAttribute, float, float> func)
         {
             _preBaseValueChangeListeners.Remove(func);
         }
 
-        public void UnregisterPostBaseValueChange(Action<BaseGameAttribute, float, float> action)
+        public void UnregisterPostBaseValueChange(Action<GameAttribute, float, float> action)
         {
             OnPostBaseValueChange -= action;
         }
 
-        public void UnregisterPreCurrentValueChange(Action<BaseGameAttribute, float> action)
+        public void UnregisterPreCurrentValueChange(Action<GameAttribute, float> action)
         {
             OnPreCurrentValueChange -= action;
         }
 
-        public void UnregisterPostCurrentValueChange(Action<BaseGameAttribute, float, float> action)
+        public void UnregisterPostCurrentValueChange(Action<GameAttribute, float, float> action)
         {
             OnPostCurrentValueChange -= action;
         }

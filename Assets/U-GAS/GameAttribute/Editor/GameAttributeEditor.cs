@@ -9,12 +9,13 @@ namespace U_GAS.Editor
 {
     public class GameAttributeEditor : ScriptableObject
     {
-        private const string _SERIALIZE_TARGET = "GameAttribute/Editor/GameAttributeEditor.asset";
+        private const string _SERIALIZE_TARGET = "GameAttribute/Editor/GameAttribute.asset";
         private const string _GEN_PATH = "GameAttribute/Gen";
         private static string SerializeTarget => UConst.UGAS_PATH + "/" + _SERIALIZE_TARGET;
 
         private static string GenEnumPath => UConst.UGAS_PATH + "/" + _GEN_PATH + "/" + "EGameAttribute.cs";
-        private static string GenAttributesPath => UConst.UGAS_PATH + "/" + _GEN_PATH + "/" + "GameAttributes.cs";
+
+        // private static string GenAttributesPath => UConst.UGAS_PATH + "/" + _GEN_PATH + "/" + "GameAttributes.cs";
         private static string GenRegisterPath => UConst.UGAS_PATH + "/" + _GEN_PATH + "/" + "GameAttributeRegister.cs";
 
         [MenuItem("U-GAS/GameAttribute")]
@@ -33,13 +34,16 @@ namespace U_GAS.Editor
 
         // [InlineEditor(InlineEditorModes.FullEditor, ObjectFieldMode = InlineEditorObjectFieldModes.Hidden, DrawHeader = false, Expanded = true)]
         // public GameAttributeEditorSerialize serializeSo;
-        public List<BaseGameAttribute> attribute;
+        public List<GameAttribute> attribute;
 
         [Button]
         public void Gen()
         {
             GenEnum();
-            GenAttributes();
+            foreach (var a in attribute)
+            {
+                GenAttribute(a);
+            }
             // GenRegister();
 
             AssetDatabase.SaveAssets();
@@ -75,32 +79,30 @@ namespace U_GAS.Editor
             File.WriteAllText(GenEnumPath, sb.ToString());
         }
 
-        private void GenAttributes()
+        private void GenAttribute(GameAttribute attr)
         {
-            if (File.Exists(GenAttributesPath))
+            var path = UConst.UGAS_PATH + "/" + _GEN_PATH + $"/GameAttribute_{attr.Key}.cs";
+            if (File.Exists(path))
             {
-                File.Delete(GenAttributesPath);
+                File.Delete(path);
             }
 
             var sb = new StringBuilder();
             sb.AppendLine("namespace U_GAS");
             sb.AppendLine("{");
-            foreach (var attr in attribute)
-            {
-                sb.AppendLine($"\tpublic class GameAttribute_{attr.Key} : BaseGameAttribute");
-                sb.AppendLine("\t{");
-                sb.AppendLine($"\t\tpublic GameAttribute_{attr.Key}()");
-                sb.AppendLine("\t\t{");
-                sb.AppendLine($"\t\t\tminValue = {attr.MinValue}f;");
-                sb.AppendLine($"\t\t\tmaxValue = {attr.MaxValue}f;");
-                sb.AppendLine($"\t\t\teCalculateMode = ECalculateMode.{attr.ECalculateMode};");
-                sb.AppendLine($"\t\t\tattributeType = EGameAttribute.{attr.Key};");
-                sb.AppendLine("\t\t}");
-                sb.AppendLine("\t}");
-            }
+            sb.AppendLine($"\tpublic class GameAttribute_{attr.Key} : GameAttribute");
+            sb.AppendLine("\t{");
+            sb.AppendLine($"\t\tpublic GameAttribute_{attr.Key}()");
+            sb.AppendLine("\t\t{");
+            sb.AppendLine($"\t\t\tminValue = {attr.MinValue}f;");
+            sb.AppendLine($"\t\t\tmaxValue = {attr.MaxValue}f;");
+            sb.AppendLine($"\t\t\teCalculateMode = ECalculateMode.{attr.ECalculateMode};");
+            sb.AppendLine($"\t\t\tattributeType = EGameAttribute.{attr.Key};");
+            sb.AppendLine("\t\t}");
+            sb.AppendLine("\t}");
             sb.AppendLine("}");
 
-            File.WriteAllText(GenAttributesPath, sb.ToString());
+            File.WriteAllText(path, sb.ToString());
         }
 
         private void GenRegister()
@@ -109,7 +111,7 @@ namespace U_GAS.Editor
             {
                 File.Delete(GenRegisterPath);
             }
-            
+
             var sb = new StringBuilder();
             sb.AppendLine("using System;");
             sb.AppendLine("using System.Collections.Generic;");
@@ -138,7 +140,7 @@ namespace U_GAS.Editor
             sb.AppendLine("\t\t}");
             sb.AppendLine("\t}");
             sb.AppendLine("}");
-            
+
             File.WriteAllText(GenRegisterPath, sb.ToString());
         }
     }

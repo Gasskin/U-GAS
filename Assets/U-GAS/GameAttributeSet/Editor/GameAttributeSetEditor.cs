@@ -9,13 +9,13 @@ namespace U_GAS.Editor
 {
     public class GameAttributeSetEditor : ScriptableObject
     {
-        private const string _SERIALIZE_TARGET = "GameAttribute/Editor/GameAttributeSetEditor.asset";
-        private const string _GEN_PATH = "GameAttribute/Gen";
+        private const string _SERIALIZE_TARGET = "GameAttributeSet/Editor/GameAttributeSet.asset";
+        private const string _GEN_PATH = "GameAttributeSet/Gen";
 
         private static string SerializeTarget => UConst.UGAS_PATH + "/" + _SERIALIZE_TARGET;
 
         private static string GenEnumPath => UConst.UGAS_PATH + "/" + _GEN_PATH + "/" + "EGameAttributeSet.cs";
-        private static string GenAttributeSetsPath => UConst.UGAS_PATH + "/" + _GEN_PATH + "/" + "GameAttributeSets.cs";
+        // private static string GenAttributeSetsPath => UConst.UGAS_PATH + "/" + _GEN_PATH + "/" + "GameAttributeSets.cs";
 
         private static string GenRegisterPath => UConst.UGAS_PATH + "/" + _GEN_PATH + "/" + "GameAttributeSetRegister.cs";
 
@@ -33,13 +33,16 @@ namespace U_GAS.Editor
             Selection.activeObject = so;
         }
 
-        public List<BaseGameAttributeSet> attributeSets = new();
+        public List<GameAttributeSet> attributeSets = new();
 
         [Button]
         public void Gen()
         {
             GenEnum();
-            GenAttributes();
+            foreach (var a in attributeSets)
+            {
+                GenAttributeSet(a);
+            }
             GenRegister();
 
             AssetDatabase.SaveAssets();
@@ -74,39 +77,38 @@ namespace U_GAS.Editor
             File.WriteAllText(GenEnumPath, sb.ToString());
         }
 
-        private void GenAttributes()
+        private void GenAttributeSet(GameAttributeSet set)
         {
-            if (File.Exists(GenAttributeSetsPath))
+            var path = UConst.UGAS_PATH + "/" + _GEN_PATH + "/" + $"GameAttributeSet_{set.Key}.cs";
+
+            if (File.Exists(path))
             {
-                File.Delete(GenAttributeSetsPath);
+                File.Delete(path);
             }
 
             var sb = new StringBuilder();
             sb.AppendLine("namespace U_GAS");
             sb.AppendLine("{");
             var attrSet = new HashSet<EGameAttribute>();
-            foreach (var set in attributeSets)
+            sb.AppendLine($"\tpublic class GameAttributeSet_{set.Key} : GameAttributeSet");
+            sb.AppendLine("\t{");
+            sb.AppendLine($"\t\tpublic GameAttributeSet_{set.Key}()");
+            sb.AppendLine("\t\t{");
+            sb.AppendLine("\t\t\tattributes = new()");
+            sb.AppendLine("\t\t\t{");
+            foreach (var selector in set.attributeSelectors)
             {
-                sb.AppendLine($"\tpublic class GameAttributeSet_{set.Key} : BaseGameAttributeSet");
-                sb.AppendLine("\t{");
-                sb.AppendLine($"\t\tpublic GameAttributeSet_{set.Key}()");
-                sb.AppendLine("\t\t{");
-                sb.AppendLine("\t\t\tattributes = new()");
-                sb.AppendLine("\t\t\t{");
-                foreach (var selector in set.attributeSelectors)
+                if (attrSet.Add(selector))
                 {
-                    if (attrSet.Add(selector))
-                    {
-                        sb.AppendLine($"\t\t\t\t{{ EGameAttribute.{selector}, new GameAttribute_{selector}() }},");
-                    }
+                    sb.AppendLine($"\t\t\t\t{{ EGameAttribute.{selector}, new GameAttribute_{selector}() }},");
                 }
-                sb.AppendLine("\t\t\t};");
-                sb.AppendLine("\t\t}");
-                sb.AppendLine("\t}");
             }
+            sb.AppendLine("\t\t\t};");
+            sb.AppendLine("\t\t}");
+            sb.AppendLine("\t}");
             sb.AppendLine("}");
 
-            File.WriteAllText(GenAttributeSetsPath, sb.ToString());
+            File.WriteAllText(path, sb.ToString());
         }
 
         private void GenRegister()
@@ -123,7 +125,7 @@ namespace U_GAS.Editor
             sb.AppendLine("{");
             sb.AppendLine("\tpublic static class GameAttributeSetRegister");
             sb.AppendLine("\t{");
-            sb.AppendLine("\t\tpublic static BaseGameAttributeSet New(EGameAttributeSet set)");
+            sb.AppendLine("\t\tpublic static GameAttributeSet New(EGameAttributeSet set)");
             sb.AppendLine("\t\t{");
             sb.AppendLine("\t\t\tswitch (set)");
             sb.AppendLine("\t\t\t{");

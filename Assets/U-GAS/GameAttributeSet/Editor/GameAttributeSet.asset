@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 357d6a530fd24d1f8a321d115d5ade88, type: 3}
-  m_Name: GameAttributeSetEditor
+  m_Name: GameAttributeSet
   m_EditorClassIdentifier: 
   attributeSets:
   - key: Atk
