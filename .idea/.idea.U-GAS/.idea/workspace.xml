@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c3c9b50-d8a9-4143-81cd-bf63752d18e6" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.U-GAS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.U-GAS/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/GameAttributeContainer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/GameAttributeContainer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameEffect/GameEffectComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/U-GAS/GameEffect/GameEffectComponent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/U-Entity/BaseEntityComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/U-GAS/U-Entity/BaseEntityComponent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/U-Entity/EntitySystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/U-GAS/U-Entity/EntitySystem.cs" afterDir="false" />
-    </list>
+    <list default="true" id="0c3c9b50-d8a9-4143-81cd-bf63752d18e6" name="更改" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
