@@ -15,7 +15,6 @@ namespace U_GAS.Editor
         private static string SerializeTarget => UConst.UGAS_PATH + "/" + _SERIALIZE_TARGET;
 
         private static string GenEnumPath => UConst.UGAS_PATH + "/" + _GEN_PATH + "/" + "EGameAttributeSet.cs";
-        // private static string GenAttributeSetsPath => UConst.UGAS_PATH + "/" + _GEN_PATH + "/" + "GameAttributeSets.cs";
 
         private static string GenRegisterPath => UConst.UGAS_PATH + "/" + _GEN_PATH + "/" + "GameAttributeSetRegister.cs";
 

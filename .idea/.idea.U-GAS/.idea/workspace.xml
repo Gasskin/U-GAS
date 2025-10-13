@@ -6,17 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="0c3c9b50-d8a9-4143-81cd-bf63752d18e6" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.U-GAS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.U-GAS/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assembly-CSharp-Editor.csproj.DotSettings" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp-Editor.csproj.DotSettings" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/BaseGameAttributeSet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/U-GAS/GameAttributeSet/BaseGameAttributeSet.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/Editor/GameAttributeEditor.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/Editor/GameAttributeEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/Editor/GameAttributeEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/Editor/GameAttributeSetEditor.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/Editor/GameAttributeSetEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/U-GAS/GameAttributeSet/Editor/GameAttributeSetEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/GameAttributeCalculate.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/U-GAS/GameAttributeSet/GameAttributeCalculate.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/GameAttributeContainer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/U-GAS/GameAttributeSet/GameAttributeContainer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/Gen/EGameAttributeSet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/U-GAS/GameAttributeSet/Gen/EGameAttributeSet.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/Gen/GameAttributeSetRegister.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/U-GAS/GameAttributeSet/Gen/GameAttributeSetRegister.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameAttribute/Gen/GameAttributeSets.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/U-GAS/GameAttributeSet/Gen/GameAttributeSets.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameAttributeSet/Editor/GameAttributeSetEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/U-GAS/GameAttributeSet/Editor/GameAttributeSetEditor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameEffect/BaseGameEffect.Serialize.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/U-GAS/GameEffect/BaseGameEffect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/U-GAS/GameEffect/GameEffect.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-6000.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-6000.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,7 +27,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ca3f2c7411ab4a11a75f67d848927d091fea00/2e/6908cd9a/IMGUIContainer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ca3f2c7411ab4a11a75f67d848927d091fea00/db/1c04ae07/LayoutDataStore.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/U-GAS/GameAttribute/Gen/GameAttribute_Hp.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/U-GAS/GameAttributeSet/Editor/GameAttributeSet.asset" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/U-GAS/GameAttributeSet/Gen/GameAttributeSet_Atk.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -126,7 +118,7 @@
       <updated>1760185172542</updated>
       <workItem from="1760185174197" duration="21820000" />
       <workItem from="1760264198635" duration="16594000" />
-      <workItem from="1760368662155" duration="3787000" />
+      <workItem from="1760368662155" duration="7392000" />
     </task>
     <servers />
   </component>
