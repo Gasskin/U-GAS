@@ -1,13 +1,20 @@
+
+using System;
+using System.IO;
+using ProtoBuf;
 namespace U_GAS
 {
 	public class GameAttribute_Atk : GameAttribute
 	{
+		private const string _U_ASSET_DATA = "Hf//f38=";
+		private static byte[] _s_Bytes;
+		static GameAttribute_Atk()
+		{
+			_s_Bytes = Convert.FromBase64String(_U_ASSET_DATA);
+		}
 		public GameAttribute_Atk()
 		{
-			minValue = 0f;
-			maxValue = 3.402823E+38f;
-			eCalculateMode = ECalculateMode.Stacking;
-			attributeType = EGameAttribute.Atk;
+			uAsset = Serializer.Deserialize<GameAttributeUAsset>(new MemoryStream(_s_Bytes));
 		}
 	}
 }

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using PlasticPipe.PlasticProtocol.Messages;
+using ProtoBuf;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
@@ -34,7 +36,9 @@ namespace U_GAS.Editor
 
         // [InlineEditor(InlineEditorModes.FullEditor, ObjectFieldMode = InlineEditorObjectFieldModes.Hidden, DrawHeader = false, Expanded = true)]
         // public GameAttributeEditorSerialize serializeSo;
-        public List<GameAttribute> attribute;
+        // public List<GameAttribute> attribute;
+        public List<GameAttributeUAsset> attribute;
+
 
         [Button]
         public void Gen()
@@ -42,7 +46,8 @@ namespace U_GAS.Editor
             GenEnum();
             foreach (var a in attribute)
             {
-                GenAttribute(a);
+                // GenAttribute(a);
+                UAssetGenerator.Gen(UConst.UGAS_PATH + "/" + _GEN_PATH,a);
             }
             // GenRegister();
 
@@ -79,69 +84,69 @@ namespace U_GAS.Editor
             File.WriteAllText(GenEnumPath, sb.ToString());
         }
 
-        private void GenAttribute(GameAttribute attr)
-        {
-            var path = UConst.UGAS_PATH + "/" + _GEN_PATH + $"/GameAttribute_{attr.Key}.cs";
-            if (File.Exists(path))
-            {
-                File.Delete(path);
-            }
+        // private void GenAttribute(GameAttribute attr)
+        // {
+        //     var path = UConst.UGAS_PATH + "/" + _GEN_PATH + $"/GameAttribute_{attr.Key}.cs";
+        //     if (File.Exists(path))
+        //     {
+        //         File.Delete(path);
+        //     }
+        //
+        //     var sb = new StringBuilder();
+        //     sb.AppendLine("namespace U_GAS");
+        //     sb.AppendLine("{");
+        //     sb.AppendLine($"\tpublic class GameAttribute_{attr.Key} : GameAttribute");
+        //     sb.AppendLine("\t{");
+        //     sb.AppendLine($"\t\tpublic GameAttribute_{attr.Key}()");
+        //     sb.AppendLine("\t\t{");
+        //     sb.AppendLine($"\t\t\tminValue = {attr.MinValue}f;");
+        //     sb.AppendLine($"\t\t\tmaxValue = {attr.MaxValue}f;");
+        //     sb.AppendLine($"\t\t\teCalculateMode = ECalculateMode.{attr.ECalculateMode};");
+        //     sb.AppendLine($"\t\t\tattributeType = EGameAttribute.{attr.Key};");
+        //     sb.AppendLine("\t\t}");
+        //     sb.AppendLine("\t}");
+        //     sb.AppendLine("}");
+        //
+        //     File.WriteAllText(path, sb.ToString());
+        // }
 
-            var sb = new StringBuilder();
-            sb.AppendLine("namespace U_GAS");
-            sb.AppendLine("{");
-            sb.AppendLine($"\tpublic class GameAttribute_{attr.Key} : GameAttribute");
-            sb.AppendLine("\t{");
-            sb.AppendLine($"\t\tpublic GameAttribute_{attr.Key}()");
-            sb.AppendLine("\t\t{");
-            sb.AppendLine($"\t\t\tminValue = {attr.MinValue}f;");
-            sb.AppendLine($"\t\t\tmaxValue = {attr.MaxValue}f;");
-            sb.AppendLine($"\t\t\teCalculateMode = ECalculateMode.{attr.ECalculateMode};");
-            sb.AppendLine($"\t\t\tattributeType = EGameAttribute.{attr.Key};");
-            sb.AppendLine("\t\t}");
-            sb.AppendLine("\t}");
-            sb.AppendLine("}");
-
-            File.WriteAllText(path, sb.ToString());
-        }
-
-        private void GenRegister()
-        {
-            if (File.Exists(GenRegisterPath))
-            {
-                File.Delete(GenRegisterPath);
-            }
-
-            var sb = new StringBuilder();
-            sb.AppendLine("using System;");
-            sb.AppendLine("using System.Collections.Generic;");
-            sb.AppendLine("namespace U_GAS");
-            sb.AppendLine("{");
-            sb.AppendLine("\tpublic static class GameAttributeRegister");
-            sb.AppendLine("\t{");
-            sb.AppendLine("\t\tpublic static readonly Dictionary<EGameAttribute, Type> KeyToGameValueType = new ()");
-            sb.AppendLine("\t\t{");
-            foreach (var attr in attribute)
-            {
-                sb.AppendLine($"\t\t\t{{ EGameAttribute.{attr.Key} , typeof(GameAttribute_{attr.Key})}},");
-            }
-            sb.AppendLine("\t\t};");
-            sb.AppendLine("\t\tpublic static BaseGameAttribute New(EGameAttribute attribute)");
-            sb.AppendLine("\t\t{");
-            sb.AppendLine("\t\t\tswitch (attribute)");
-            sb.AppendLine("\t\t\t{");
-            foreach (var attr in attribute)
-            {
-                sb.AppendLine($"\t\t\t\tcase EGameAttribute.{attr.Key}:");
-                sb.AppendLine($"\t\t\t\t\treturn new GameAttribute_{attr.Key}();");
-            }
-            sb.AppendLine("\t\t\t}");
-            sb.AppendLine("\t\t\treturn null;");
-            sb.AppendLine("\t\t}");
-            sb.AppendLine("\t}");
-            sb.AppendLine("}");
-
-            File.WriteAllText(GenRegisterPath, sb.ToString());
-        }
+        // private void GenRegister()
+        // {
+        //     if (File.Exists(GenRegisterPath))
+        //     {
+        //         File.Delete(GenRegisterPath);
+        //     }
+        //
+        //     var sb = new StringBuilder();
+        //     sb.AppendLine("using System;");
+        //     sb.AppendLine("using System.Collections.Generic;");
+        //     sb.AppendLine("namespace U_GAS");
+        //     sb.AppendLine("{");
+        //     sb.AppendLine("\tpublic static class GameAttributeRegister");
+        //     sb.AppendLine("\t{");
+        //     sb.AppendLine("\t\tpublic static readonly Dictionary<EGameAttribute, Type> KeyToGameValueType = new ()");
+        //     sb.AppendLine("\t\t{");
+        //     foreach (var attr in attribute)
+        //     {
+        //         sb.AppendLine($"\t\t\t{{ EGameAttribute.{attr.Key} , typeof(GameAttribute_{attr.Key})}},");
+        //     }
+        //     sb.AppendLine("\t\t};");
+        //     sb.AppendLine("\t\tpublic static BaseGameAttribute New(EGameAttribute attribute)");
+        //     sb.AppendLine("\t\t{");
+        //     sb.AppendLine("\t\t\tswitch (attribute)");
+        //     sb.AppendLine("\t\t\t{");
+        //     foreach (var attr in attribute)
+        //     {
+        //         sb.AppendLine($"\t\t\t\tcase EGameAttribute.{attr.Key}:");
+        //         sb.AppendLine($"\t\t\t\t\treturn new GameAttribute_{attr.Key}();");
+        //     }
+        //     sb.AppendLine("\t\t\t}");
+        //     sb.AppendLine("\t\t\treturn null;");
+        //     sb.AppendLine("\t\t}");
+        //     sb.AppendLine("\t}");
+        //     sb.AppendLine("}");
+        //
+        //     File.WriteAllText(GenRegisterPath, sb.ToString());
+        // }
     }
 }
