@@ -24,8 +24,9 @@ namespace U_GAS
     [Serializable]
     public class GameAttribute
     {
-        protected GameAttributeUAsset uAsset;
-        
+        private EGameAttribute add;
+        private EGameAttribute multiply;
+
         private event Action<GameAttribute, float> OnPreCurrentValueChange;
 
         private event Action<GameAttribute, float, float> OnPostCurrentValueChange;
@@ -34,24 +35,28 @@ namespace U_GAS
         private List<Func<GameAttribute, float, float>> preBaseValueChangeListeners = new(32);
         private event Action<GameAttribute, float, float> OnPostBaseValueChange;
 
-        public ECalculateMode ECalculateMode => uAsset.eCalculateMode;
-        public float MinValue => uAsset.minValue;
-        public float MaxValue => uAsset.maxValue;
+        public ECalculateMode ECalculateMode { get; private set; }
+        public float MinValue { get; private set; }
+        public float MaxValue { get; private set; }
 
         public float BaseValue { get; private set; }
         public float CurrentValue { get; private set; }
-        
-        protected void OnInit()
+
+
+        public GameAttribute(float initValue, float min, float max)
         {
-            
+            BaseValue = initValue;
+            CurrentValue = initValue;
+            MinValue = min;
+            MaxValue = max;
         }
 
         public void InitValue(float value)
         {
             BaseValue = value;
-            CurrentValue = value;
+            CurrentValue = CalculateCurrent(BaseValue);
         }
-        
+
         public void SetCurrentValue(float value)
         {
             value = Mathf.Clamp(value, MinValue, MaxValue);
@@ -77,6 +82,20 @@ namespace U_GAS
             {
                 OnPostBaseValueChange?.Invoke(this, oldValue, value);
             }
+        }
+
+        private float CalculateCurrent(float input)
+        {
+            var value = input;
+            // if (multiply != null)
+            // {
+            //     value *= multiply.CurrentValue;
+            // }
+            // if (add != null)
+            // {
+            //     value += add.CurrentValue;
+            // }
+            return value;
         }
 
         public void RegisterPreBaseValueChange(Func<GameAttribute, float, float> func)
@@ -117,11 +136,6 @@ namespace U_GAS
         public void UnregisterPostCurrentValueChange(Action<GameAttribute, float, float> action)
         {
             OnPostCurrentValueChange -= action;
-        }
-
-        public string GetDeSerializeTarget()
-        {
-            return nameof(uAsset);
         }
     }
 }

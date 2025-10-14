@@ -1,28 +1,35 @@
-﻿using U_GAS;
+﻿using TMPro;
+using U_GAS;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Scenes
 {
     public class Test : MonoBehaviour
     {
-        public EGameTag tag;
+        public Image hp;
+        public TextMeshProUGUI num;
 
-        private int _entity;
-        
+        private int entity;
+
         private void Start()
         {
-            _entity = EntitySystem.Instance.CreateEntity();
-            _entity.AddComponent(new GameAbilityComponent());
+            entity = EntitySystem.Instance.CreateEntity();
+            entity.AddComponent(new GameAbilityComponent());
 
-            if (_entity.TryGetComponent(out GameAbilityComponent component))
+            if (entity.TryGetComponent(out GameAbilityComponent component))
             {
-                component.GameAttributeComponent.AddAttributeSet(EGameAttributeSet.Number);
-                component.GameAttributeComponent.InitAttr(EGameAttribute.Hp, EGameAttributeSet.Number, 1000);
-
-                var value = component.GameAttributeComponent.GetAttrBaseValue(EGameAttribute.Hp, EGameAttributeSet.Number);
-                Debug.LogError(value);
+                var attrHp = new GameAttribute(100, 0, 100);
+                var attrStrength = new GameAttribute(10, 0, int.MaxValue);
+                var attrMaxHp = new GameAttribute(1, 0, int.MaxValue);
+                // attrMaxHp.SetDepend(attrStrength, null);
+                
+                component.GameAttributeComponent.AddAttribute(EGameAttribute.Hp, attrHp);
+                component.GameAttributeComponent.AddAttribute(EGameAttribute.MaxHp, attrMaxHp);
+                component.GameAttributeComponent.AddAttribute(EGameAttribute.Strength, attrStrength);
+                
+                attrHp = component.GameAttributeComponent.GetAttribute(EGameAttribute.Hp);
             }
-            Debug.LogError(111);
         }
     }
 }

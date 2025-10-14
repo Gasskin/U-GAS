@@ -9,7 +9,6 @@ namespace U_GAS
     [Serializable]
     public class GameAttributeUAsset : IUAsset
     {
-#if UNITY_EDITOR
         [FoldoutGroup("$DisplayName")]
         [LabelText("Key - 全英文")]
         [LabelWidth(80)]
@@ -21,7 +20,6 @@ namespace U_GAS
         public string backUp;
 
         private string DisplayName => $"{key} - {backUp}";
-#endif
 
         [FoldoutGroup("$DisplayName")]
         [LabelText("计算模式")]
