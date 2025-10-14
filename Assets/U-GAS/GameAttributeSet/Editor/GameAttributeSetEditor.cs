@@ -32,7 +32,7 @@ namespace U_GAS.Editor
             Selection.activeObject = so;
         }
 
-        public List<GameAttributeSet> attributeSets = new();
+        public List<GameAttributeSetUAsset> attributeSets = new();
 
         [Button]
         public void Gen()
@@ -40,7 +40,7 @@ namespace U_GAS.Editor
             GenEnum();
             foreach (var a in attributeSets)
             {
-                GenAttributeSet(a);
+                UAssetGenerator.Gen(UConst.UGAS_PATH + "/" + _GEN_PATH, a);
             }
             GenRegister();
 
@@ -64,10 +64,10 @@ namespace U_GAS.Editor
             foreach (var set in attributeSets)
             {
                 sb.AppendLine("\t\t/// <summary>");
-                sb.AppendLine($"\t\t/// {set.BackUp}");
+                sb.AppendLine($"\t\t/// {set.backUp}");
                 sb.AppendLine("\t\t/// </summary>");
-                sb.AppendLine($"\t\t[LabelText(\"{set.BackUp}\")]");
-                sb.AppendLine($"\t\t{set.Key},");
+                sb.AppendLine($"\t\t[LabelText(\"{set.backUp}\")]");
+                sb.AppendLine($"\t\t{set.key},");
                 sb.AppendLine("\t\t");
             }
             sb.AppendLine("\t}");
@@ -76,9 +76,9 @@ namespace U_GAS.Editor
             File.WriteAllText(GenEnumPath, sb.ToString());
         }
 
-        private void GenAttributeSet(GameAttributeSet set)
+        private void GenAttributeSet(GameAttributeSetUAsset set)
         {
-            var path = UConst.UGAS_PATH + "/" + _GEN_PATH + "/" + $"GameAttributeSet_{set.Key}.cs";
+            var path = UConst.UGAS_PATH + "/" + _GEN_PATH + "/" + $"GameAttributeSet_{set.key}.cs";
 
             if (File.Exists(path))
             {
@@ -89,19 +89,19 @@ namespace U_GAS.Editor
             sb.AppendLine("namespace U_GAS");
             sb.AppendLine("{");
             var attrSet = new HashSet<EGameAttribute>();
-            sb.AppendLine($"\tpublic class GameAttributeSet_{set.Key} : GameAttributeSet");
+            sb.AppendLine($"\tpublic class GameAttributeSet_{set.key} : GameAttributeSet");
             sb.AppendLine("\t{");
-            sb.AppendLine($"\t\tpublic GameAttributeSet_{set.Key}()");
+            sb.AppendLine($"\t\tpublic GameAttributeSet_{set.key}()");
             sb.AppendLine("\t\t{");
             sb.AppendLine("\t\t\tattributes = new()");
             sb.AppendLine("\t\t\t{");
-            foreach (var selector in set.attributeSelectors)
-            {
-                if (attrSet.Add(selector))
-                {
-                    sb.AppendLine($"\t\t\t\t{{ EGameAttribute.{selector}, new GameAttribute_{selector}() }},");
-                }
-            }
+            // foreach (var selector in set.attributeSelectors)
+            // {
+            //     if (attrSet.Add(selector))
+            //     {
+            //         sb.AppendLine($"\t\t\t\t{{ EGameAttribute.{selector}, new GameAttribute_{selector}() }},");
+            //     }
+            // }
             sb.AppendLine("\t\t\t};");
             sb.AppendLine("\t\t}");
             sb.AppendLine("\t}");
@@ -130,8 +130,8 @@ namespace U_GAS.Editor
             sb.AppendLine("\t\t\t{");
             foreach (var set in attributeSets)
             {
-                sb.AppendLine($"\t\t\t\tcase EGameAttributeSet.{set.Key}:");
-                sb.AppendLine($"\t\t\t\t\treturn new GameAttributeSet_{set.Key}();");
+                sb.AppendLine($"\t\t\t\tcase EGameAttributeSet.{set.key}:");
+                sb.AppendLine($"\t\t\t\t\treturn new GameAttributeSet_{set.key}();");
             }
             sb.AppendLine("\t\t\t}");
             sb.AppendLine("\t\t\treturn null;");

@@ -35,7 +35,7 @@ namespace U_GAS
             var set = GameAttributeSetRegister.New(setType);
             _attributeSets.Add(setType, set);
 
-            foreach (var pair in set.attributes)
+            foreach (var pair in set.Attributes)
             {
                 if (!_attributeCalculate.ContainsKey(pair.Key))
                 {

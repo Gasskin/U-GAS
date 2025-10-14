@@ -42,6 +42,7 @@ using ProtoBuf;
             sb.AppendLine($"\t\tpublic {className}()");
             sb.AppendLine("\t\t{");
             sb.AppendLine($"\t\t\t{assetInfo.deSerializeField} = Serializer.Deserialize<{asset.GetType().Name}>(new MemoryStream(_s_Bytes));");
+            sb.AppendLine("\t\t\tOnInit();");
             sb.AppendLine("\t\t}");
             sb.AppendLine("\t}");
             sb.AppendLine("}");

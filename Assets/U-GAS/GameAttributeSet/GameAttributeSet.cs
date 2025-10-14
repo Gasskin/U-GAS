@@ -9,33 +9,17 @@ namespace U_GAS
     [Serializable]
     public class GameAttributeSet
     {
-        [FoldoutGroup("$DisplayName")]
-        [SerializeField]
-        [LabelText("Key - 全英文")]
-        [LabelWidth(80)]
-        protected string key;
+        protected GameAttributeSetUAsset uAsset;
 
-        [FoldoutGroup("$DisplayName")]
-        [SerializeField]
-        [LabelText("备注")]
-        [LabelWidth(80)]
-        protected string backUp;
+        public Dictionary<EGameAttribute, GameAttribute> Attributes;
 
-        private string DisplayName => $"{key} - {backUp}";
-
-        public Dictionary<EGameAttribute,GameAttribute> attributes;
-
-        
-        public string Key => key;
-        public string BackUp => backUp;
-        
-        
-        
-#if UNITY_EDITOR
-        [FoldoutGroup("$DisplayName")]
-        [LabelText("属性列表")]
-        [SerializeField]
-        public List<EGameAttribute> attributeSelectors;
-#endif
+        protected void OnInit()
+        {
+            Attributes = new();
+            foreach (var attr in uAsset.attributes)
+            {
+                Attributes.Add(attr, GameAttributeRegister.New(attr));
+            }
+        }
     }
 }

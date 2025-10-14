@@ -17,7 +17,6 @@ namespace U_GAS.Editor
 
         private static string GenEnumPath => UConst.UGAS_PATH + "/" + _GEN_PATH + "/" + "EGameAttribute.cs";
 
-        // private static string GenAttributesPath => UConst.UGAS_PATH + "/" + _GEN_PATH + "/" + "GameAttributes.cs";
         private static string GenRegisterPath => UConst.UGAS_PATH + "/" + _GEN_PATH + "/" + "GameAttributeRegister.cs";
 
         [MenuItem("U-GAS/GameAttribute")]
@@ -34,9 +33,6 @@ namespace U_GAS.Editor
             Selection.activeObject = so;
         }
 
-        // [InlineEditor(InlineEditorModes.FullEditor, ObjectFieldMode = InlineEditorObjectFieldModes.Hidden, DrawHeader = false, Expanded = true)]
-        // public GameAttributeEditorSerialize serializeSo;
-        // public List<GameAttribute> attribute;
         public List<GameAttributeUAsset> attribute;
 
 
@@ -46,10 +42,9 @@ namespace U_GAS.Editor
             GenEnum();
             foreach (var a in attribute)
             {
-                // GenAttribute(a);
                 UAssetGenerator.Gen(UConst.UGAS_PATH + "/" + _GEN_PATH,a);
             }
-            // GenRegister();
+            GenRegister();
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
@@ -110,43 +105,36 @@ namespace U_GAS.Editor
         //     File.WriteAllText(path, sb.ToString());
         // }
 
-        // private void GenRegister()
-        // {
-        //     if (File.Exists(GenRegisterPath))
-        //     {
-        //         File.Delete(GenRegisterPath);
-        //     }
-        //
-        //     var sb = new StringBuilder();
-        //     sb.AppendLine("using System;");
-        //     sb.AppendLine("using System.Collections.Generic;");
-        //     sb.AppendLine("namespace U_GAS");
-        //     sb.AppendLine("{");
-        //     sb.AppendLine("\tpublic static class GameAttributeRegister");
-        //     sb.AppendLine("\t{");
-        //     sb.AppendLine("\t\tpublic static readonly Dictionary<EGameAttribute, Type> KeyToGameValueType = new ()");
-        //     sb.AppendLine("\t\t{");
-        //     foreach (var attr in attribute)
-        //     {
-        //         sb.AppendLine($"\t\t\t{{ EGameAttribute.{attr.Key} , typeof(GameAttribute_{attr.Key})}},");
-        //     }
-        //     sb.AppendLine("\t\t};");
-        //     sb.AppendLine("\t\tpublic static BaseGameAttribute New(EGameAttribute attribute)");
-        //     sb.AppendLine("\t\t{");
-        //     sb.AppendLine("\t\t\tswitch (attribute)");
-        //     sb.AppendLine("\t\t\t{");
-        //     foreach (var attr in attribute)
-        //     {
-        //         sb.AppendLine($"\t\t\t\tcase EGameAttribute.{attr.Key}:");
-        //         sb.AppendLine($"\t\t\t\t\treturn new GameAttribute_{attr.Key}();");
-        //     }
-        //     sb.AppendLine("\t\t\t}");
-        //     sb.AppendLine("\t\t\treturn null;");
-        //     sb.AppendLine("\t\t}");
-        //     sb.AppendLine("\t}");
-        //     sb.AppendLine("}");
-        //
-        //     File.WriteAllText(GenRegisterPath, sb.ToString());
-        // }
+        private void GenRegister()
+        {
+            if (File.Exists(GenRegisterPath))
+            {
+                File.Delete(GenRegisterPath);
+            }
+        
+            var sb = new StringBuilder();
+            sb.AppendLine("using System;");
+            sb.AppendLine("using System.Collections.Generic;");
+            sb.AppendLine("namespace U_GAS");
+            sb.AppendLine("{");
+            sb.AppendLine("\tpublic static class GameAttributeRegister");
+            sb.AppendLine("\t{");
+            sb.AppendLine("\t\tpublic static GameAttribute New(EGameAttribute attribute)");
+            sb.AppendLine("\t\t{");
+            sb.AppendLine("\t\t\tswitch (attribute)");
+            sb.AppendLine("\t\t\t{");
+            foreach (var attr in attribute)
+            {
+                sb.AppendLine($"\t\t\t\tcase EGameAttribute.{attr.Key}:");
+                sb.AppendLine($"\t\t\t\t\treturn new GameAttribute_{attr.Key}();");
+            }
+            sb.AppendLine("\t\t\t}");
+            sb.AppendLine("\t\t\treturn null;");
+            sb.AppendLine("\t\t}");
+            sb.AppendLine("\t}");
+            sb.AppendLine("}");
+        
+            File.WriteAllText(GenRegisterPath, sb.ToString());
+        }
     }
 }

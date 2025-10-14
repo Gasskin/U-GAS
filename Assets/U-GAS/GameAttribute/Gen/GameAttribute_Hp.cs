@@ -6,7 +6,7 @@ namespace U_GAS
 {
 	public class GameAttribute_Hp : GameAttribute
 	{
-		private const string _U_ASSET_DATA = "Hf//f38=";
+		private const string _U_ASSET_DATA = "CAEV+Kcr8h34pyty";
 		private static byte[] _s_Bytes;
 		static GameAttribute_Hp()
 		{
@@ -15,6 +15,7 @@ namespace U_GAS
 		public GameAttribute_Hp()
 		{
 			uAsset = Serializer.Deserialize<GameAttributeUAsset>(new MemoryStream(_s_Bytes));
+			OnInit();
 		}
 	}
 }

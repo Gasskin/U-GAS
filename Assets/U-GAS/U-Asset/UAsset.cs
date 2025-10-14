@@ -7,6 +7,7 @@ namespace U_GAS
         public string deSerializeField;
     }
     
+    
     public interface IUAsset
     {
         UAssetInfo GetUAssetInfo();

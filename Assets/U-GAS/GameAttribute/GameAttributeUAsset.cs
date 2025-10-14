@@ -41,13 +41,13 @@ namespace U_GAS
         [LabelWidth(80)]
         [ProtoMember(2)]
         
-        public float minValue = float.MinValue;
+        public float minValue;
         [FoldoutGroup("$DisplayName")]
         [SerializeField]
         [LabelText("最大值")]
         [LabelWidth(80)]
         [ProtoMember(3)]
-        public float maxValue = float.MaxValue;
+        public float maxValue;
 
         public UAssetInfo GetUAssetInfo()
         {

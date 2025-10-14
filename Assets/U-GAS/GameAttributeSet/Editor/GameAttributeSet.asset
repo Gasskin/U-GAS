@@ -15,10 +15,10 @@ MonoBehaviour:
   attributeSets:
   - key: Atk
     backUp: "\u653B\u51FB\u5C5E\u6027"
-    attributeSelectors: 02000000
+    attributes: 02000000000000000100000003000000
   - key: Defence
     backUp: "\u9632\u5FA1\u5C5E\u6027"
-    attributeSelectors: 03000000
+    attributes: 03000000
   - key: Number
     backUp: "\u6570\u503C"
-    attributeSelectors: 0000000001000000
+    attributes: 0100000000000000

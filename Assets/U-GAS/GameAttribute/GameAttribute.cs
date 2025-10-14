@@ -40,7 +40,12 @@ namespace U_GAS
 
         public float BaseValue { get; private set; }
         public float CurrentValue { get; private set; }
-
+        
+        protected void OnInit()
+        {
+            
+        }
+        
         public void SetCurrentValue(float value)
         {
             value = Mathf.Clamp(value, MinValue, MaxValue);
