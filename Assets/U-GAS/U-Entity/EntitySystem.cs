@@ -11,6 +11,11 @@ namespace U_GAS
         {
             EntitySystem.Instance.AddComponent(idx, component);
         }
+
+        public static bool TryGetComponent<T>(this int idx,out T t) where T: BaseEntityComponent
+        {
+            return EntitySystem.Instance.TryGetComponent(idx, out t);
+        }
     }
 
     public class EntitySystem : MonoBehaviour
@@ -167,6 +172,25 @@ namespace U_GAS
                     activeIndex.Add(idx);
                 }
             }
+        }
+
+        public bool TryGetComponent<T>(int idx, out T component) where T : BaseEntityComponent
+        {
+            component = null;
+            if (!_usingIndex.Contains(idx))
+            {
+                return false;
+            }
+            var type = typeof(T);
+            if (_typeToComponents.TryGetValue(type, out var list))
+            {
+                if (list[idx] != null)
+                {
+                    component = (T)list[idx];
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void RemoveComponent<T>(int idx) where T : BaseEntityComponent

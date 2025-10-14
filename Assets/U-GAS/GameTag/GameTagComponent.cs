@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace U_GAS
 {
-    public class GameTagContainer
+    public class GameTagComponent
     {
         private int[] _gameTag;
 

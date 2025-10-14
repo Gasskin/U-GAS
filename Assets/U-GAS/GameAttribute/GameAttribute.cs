@@ -45,6 +45,12 @@ namespace U_GAS
         {
             
         }
+
+        public void InitValue(float value)
+        {
+            BaseValue = value;
+            CurrentValue = value;
+        }
         
         public void SetCurrentValue(float value)
         {

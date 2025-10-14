@@ -11,39 +11,31 @@ namespace U_GAS
     {
 #if UNITY_EDITOR
         [FoldoutGroup("$DisplayName")]
-        [SerializeField]
         [LabelText("Key - 全英文")]
         [LabelWidth(80)]
-        private string key;
+        public string key;
 
         [FoldoutGroup("$DisplayName")]
-        [SerializeField]
         [LabelText("备注")]
         [LabelWidth(80)]
-        private string backUp;
-        
+        public string backUp;
+
         private string DisplayName => $"{key} - {backUp}";
-        
-        public string Key => key;
-        public string BackUp => backUp;
 #endif
-        
+
         [FoldoutGroup("$DisplayName")]
-        [SerializeField]
         [LabelText("计算模式")]
         [LabelWidth(80)]
         [ProtoMember(1)]
         public ECalculateMode eCalculateMode;
 
         [FoldoutGroup("$DisplayName")]
-        [SerializeField]
         [LabelText("最小值")]
         [LabelWidth(80)]
         [ProtoMember(2)]
-        
         public float minValue;
+
         [FoldoutGroup("$DisplayName")]
-        [SerializeField]
         [LabelText("最大值")]
         [LabelWidth(80)]
         [ProtoMember(3)]

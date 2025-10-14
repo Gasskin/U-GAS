@@ -25,11 +25,13 @@ namespace U_GAS.Editor
         private const string _GEN_TAG_PATH = "GameTag/Gen";
 
         private static string TagPath => UConst.UGAS_PATH + "/" + _TAG_PATH;
-        private static string GenTagPath => UConst.UGAS_PATH + "/" + _GEN_TAG_PATH; 
+        private static string GenTagPath => UConst.UGAS_PATH + "/" + _GEN_TAG_PATH;
 
         private static readonly Dictionary<string, TagNode> _tagDic = new();
         private static readonly List<TagNode> _tagTree = new();
         private static int _tagIdx;
+
+        private static string[] _gameTagValueDropdown;
 
         static GameTagEditor()
         {
@@ -58,6 +60,20 @@ namespace U_GAS.Editor
                 GenTag();
                 AssetDatabase.Refresh();
             }
+        }
+
+        public static IEnumerable<string> GameTagValueDropdown()
+        {
+            if (_gameTagValueDropdown == null)
+            {
+                _gameTagValueDropdown = new string [GameTagRegister.Size];
+                _gameTagValueDropdown[0] = "NULL";
+                for (int i = 1; i < GameTagRegister.Size; i++)
+                {
+                    _gameTagValueDropdown[i] = ((EGameTag)i).ToString();
+                }
+            }
+            return _gameTagValueDropdown;
         }
 
         private static void GenTag()
@@ -236,9 +252,10 @@ namespace U_GAS.Editor
         private static void GenTagTree()
         {
             var sb = new StringBuilder();
+            sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine("namespace U_GAS");
             sb.AppendLine("{");
-            sb.AppendLine("\tpublic static class GameTagTree");
+            sb.AppendLine("\tpublic static class GameTagRegister");
             sb.AppendLine("\t{");
             sb.AppendLine($"\t\tpublic static readonly int Size = {_tagIdx};");
             sb.AppendLine("\t\tpublic static readonly int[] Tree =");
@@ -247,6 +264,14 @@ namespace U_GAS.Editor
             foreach (var tagNode in _tagTree)
             {
                 AddTree(tagNode);
+            }
+            sb.AppendLine("\t\t};");
+            sb.AppendLine("\t\tpublic static readonly Dictionary<string, EGameTag> String2Enum = new()");
+            sb.AppendLine("\t\t{");
+            foreach (var tagNode in _tagDic.Values)
+            {
+                var fullName = GetTagFullName(tagNode, tagNode.tagName);
+                sb.AppendLine($"\t\t\t{{\"{fullName}\", EGameTag.{fullName}}},");
             }
             sb.AppendLine("\t\t};");
             sb.AppendLine("\t}");

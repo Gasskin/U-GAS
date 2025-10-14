@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace U_GAS
 {
 	public static class GameTagRegister
@@ -23,6 +25,26 @@ namespace U_GAS
 			11, // 15 State_Debuff
 			15, // 16 State_Debuff_LoseBalance
 			15, // 17 State_Debuff_Stun
+		};
+		public static readonly Dictionary<string, EGameTag> String2Enum = new()
+		{
+			{"Ability", EGameTag.Ability},
+			{"Faction", EGameTag.Faction},
+			{"State", EGameTag.State},
+			{"Ability_Attack", EGameTag.Ability_Attack},
+			{"Ability_Defend", EGameTag.Ability_Defend},
+			{"Ability_Die", EGameTag.Ability_Die},
+			{"Ability_Dodge", EGameTag.Ability_Dodge},
+			{"Ability_Jump", EGameTag.Ability_Jump},
+			{"Ability_Move", EGameTag.Ability_Move},
+			{"Faction_Enemy", EGameTag.Faction_Enemy},
+			{"Faction_Player", EGameTag.Faction_Player},
+			{"State_Buff", EGameTag.State_Buff},
+			{"State_Debuff", EGameTag.State_Debuff},
+			{"State_Buff_Bulkup", EGameTag.State_Buff_Bulkup},
+			{"State_Buff_Defend", EGameTag.State_Buff_Defend},
+			{"State_Debuff_LoseBalance", EGameTag.State_Debuff_LoseBalance},
+			{"State_Debuff_Stun", EGameTag.State_Debuff_Stun},
 		};
 	}
 }

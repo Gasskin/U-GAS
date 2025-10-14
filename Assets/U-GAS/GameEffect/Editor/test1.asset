@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03f65fcbef274ee28bcceb2876888485, type: 3}
-  m_Name: NewGameEffect
+  m_Name: test1
   m_EditorClassIdentifier: 
   asset:
-    backUp: test1
+    backUp: 
     durationPolicy: 0
     duration: 0
     period: 0

@@ -49,7 +49,6 @@ namespace U_GAS
             {
                 case ECalculateMode.Stacking:
                     var newValue = _taget.BaseValue;
-                    
                     return 0;
                 case ECalculateMode.MaxValueOnly:
                     return 0;

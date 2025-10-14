@@ -2,15 +2,15 @@ namespace U_GAS
 {
     public class GameAbilityComponent : BaseEntityComponent
     {
-        public GameEffectContainer GameEffectContainer { get;private set; }
-        public GameAttributeContainer GameAttributeContainer { get;private set; }
+        public GameEffectComponent GameEffectComponent { get;private set; }
+        public GameAttributeComponent GameAttributeComponent { get;private set; }
         
         protected override void OnStart()
         {
-            GameEffectContainer = new();
-            GameAttributeContainer = new();
+            GameEffectComponent = new();
+            GameAttributeComponent = new();
             
-            GameAttributeContainer.OnStart(this);
+            GameAttributeComponent.OnStart(this);
         }
 
         protected override void OnStop()

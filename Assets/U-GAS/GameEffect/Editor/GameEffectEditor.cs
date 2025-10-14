@@ -10,7 +10,7 @@ namespace U_GAS.Editor
 
         private static string GenPath => UConst.UGAS_PATH + "/" + _GEN_PATH + "/NewGameEffect.asset";
 
-        public GameEffect gameEffect;
+        public GameEffectUAsset asset;
         
         [MenuItem("U-GAS/Game Effect/Create New")]
         public static void Create()

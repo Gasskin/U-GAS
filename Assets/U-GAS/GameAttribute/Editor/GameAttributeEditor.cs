@@ -66,10 +66,10 @@ namespace U_GAS.Editor
             foreach (var attributeValue in attribute)
             {
                 sb.AppendLine("\t\t/// <summary>");
-                sb.AppendLine($"\t\t/// {attributeValue.BackUp}");
+                sb.AppendLine($"\t\t/// {attributeValue.backUp}");
                 sb.AppendLine("\t\t/// </summary>");
-                sb.AppendLine($"\t\t[LabelText(\"{attributeValue.BackUp}\")]");
-                sb.AppendLine($"\t\t{attributeValue.Key},");
+                sb.AppendLine($"\t\t[LabelText(\"{attributeValue.backUp}\")]");
+                sb.AppendLine($"\t\t{attributeValue.key},");
                 sb.AppendLine("\t\t");
             }
             sb.AppendLine($"\t\tMax = {attribute.Count},");
@@ -125,8 +125,8 @@ namespace U_GAS.Editor
             sb.AppendLine("\t\t\t{");
             foreach (var attr in attribute)
             {
-                sb.AppendLine($"\t\t\t\tcase EGameAttribute.{attr.Key}:");
-                sb.AppendLine($"\t\t\t\t\treturn new GameAttribute_{attr.Key}();");
+                sb.AppendLine($"\t\t\t\tcase EGameAttribute.{attr.key}:");
+                sb.AppendLine($"\t\t\t\t\treturn new GameAttribute_{attr.key}();");
             }
             sb.AppendLine("\t\t\t}");
             sb.AppendLine("\t\t\treturn null;");

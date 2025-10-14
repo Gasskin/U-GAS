@@ -1,6 +1,6 @@
 ﻿namespace U_GAS
 {
-    public class GameEffectContainer
+    public class GameEffectComponent
     {
         
     }

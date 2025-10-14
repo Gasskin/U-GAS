@@ -2,10 +2,10 @@ using System.Collections.Generic;
 
 namespace U_GAS
 {
-    public class GameAttributeContainer
+    public class GameAttributeComponent
     {
         private GameAbilityComponent _owner;
-        
+
         // 属性组
         private readonly Dictionary<EGameAttributeSet, GameAttributeSet> _attributeSets = new();
 
@@ -24,8 +24,25 @@ namespace U_GAS
             foreach (var aggregator in _attributeCalculate)
                 aggregator.Value.OnStop();
         }
-        
-        public void AddAttributeSet<T>(EGameAttributeSet setType)
+
+        public void InitAttr(EGameAttribute gameAttribute, EGameAttributeSet gameAttributeSet, float value)
+        {
+            if (_attributeSets.TryGetValue(gameAttributeSet, out GameAttributeSet set))
+            {
+                set.Attributes[gameAttribute].SetBaseValue(value);
+            }
+        }
+
+        public float GetAttrBaseValue(EGameAttribute gameAttribute, EGameAttributeSet gameAttributeSet)
+        {
+            if (_attributeSets.TryGetValue(gameAttributeSet, out GameAttributeSet set))
+            {
+                return set.Attributes[gameAttribute].BaseValue;
+            }
+            return 0;
+        }
+
+        public void AddAttributeSet(EGameAttributeSet setType)
         {
             if (_attributeSets.ContainsKey(setType))
             {
