@@ -1,9 +1,30 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace U_GAS
 {
+    public class GameEffectModifierSpec : IUPoolObject
+    {
+        public GameEffect.GameEffectSpec Spec { get; private set; }
+
+        public GameEffectModifier Modifier { get; private set; }
+
+        public void Init(GameEffect.GameEffectSpec arg1, GameEffectModifier arg2)
+        {
+            Spec = arg1;
+            Modifier = arg2;
+        }
+
+        public void OnRelease()
+        {
+            UPool<GameEffect.GameEffectSpec>.Release(Spec);
+            Spec = null;
+            Modifier = null;
+        }
+    }
+
     /// <summary>
     /// 某个属性的数值计算器，根据modifier
     /// </summary>
@@ -12,7 +33,7 @@ namespace U_GAS
         private GameAttribute _taget;
         private GameAbilityComponent _owner;
         private readonly List<ModifierMagnitude> _modifierCache = new();
-        
+
         public GameAttributeAggregator(GameAttribute attribute, GameAbilityComponent owner)
         {
             _taget = attribute;
@@ -22,15 +43,14 @@ namespace U_GAS
         public void OnStart()
         {
             _taget.RegisterPostBaseValueChange(UpdateCurrentValueWhenBaseValueIsDirty);
-            
         }
 
         public void OnStop()
         {
             _taget.UnregisterPostBaseValueChange(UpdateCurrentValueWhenBaseValueIsDirty);
         }
-        
-        
+
+
         private void UpdateCurrentValueWhenBaseValueIsDirty(GameAttribute attribute, float oldBaseValue, float newBaseValue)
         {
             if (Mathf.Approximately(oldBaseValue, newBaseValue))
@@ -39,7 +59,7 @@ namespace U_GAS
             }
 
             float newValue = CalculateNewValue();
-            
+
             _taget.SetCurrentValue(newValue);
         }
 

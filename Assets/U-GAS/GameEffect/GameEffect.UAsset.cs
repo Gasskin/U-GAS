@@ -15,14 +15,16 @@ namespace U_GAS
         [LabelText("限时")]
         Duration
     }
-    
+
     [ProtoContract]
     public class GameEffectModifier : IUAsset
     {
         [ProtoMember(1)]
         public EGameAttribute attribute;
+
         [ProtoMember(2)]
         public float input;
+
         [ProtoMember(3)]
         public ModifierMagnitude magnitude;
     }
@@ -56,5 +58,11 @@ namespace U_GAS
 
         [ProtoMember(9)]
         public List<GameEffectModifier> modifiers;
+
+        [ProtoMember(10)]
+        public GameEffect periodGameEffect;
+
+        [ProtoMember(11)]
+        public bool needSnapShot;
     }
 }

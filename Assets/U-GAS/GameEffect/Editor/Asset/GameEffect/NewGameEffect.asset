@@ -13,15 +13,23 @@ MonoBehaviour:
   m_Name: NewGameEffect
   m_EditorClassIdentifier: 
   backUp: 
-  durationPolicy: 1
-  duration: 1
+  durationPolicy: 2
+  duration: 22
   period: 2
+  periodGameEffect: {fileID: 11400000, guid: 908ebbaeb776e1e43adbe0ac90bc15e5, type: 2}
   assetTags: []
   grantedTags: []
   requiredTags: []
   conflictTags: []
   removeGameEffectsWithTags: []
+  needSnapShot: 0
+  stackingType: 0
+  cues: 0
   modifier:
   - attribute: 0
     input: 100
     magnitude: {fileID: 11400000, guid: d9256aea02ddae4478469627cde31eba, type: 2}
+  - attribute: 2
+    input: 10.99
+    magnitude: {fileID: 11400000, guid: edddb2c929d9aef40be871eb41760c0c, type: 2}
+  grantedAbility: 0

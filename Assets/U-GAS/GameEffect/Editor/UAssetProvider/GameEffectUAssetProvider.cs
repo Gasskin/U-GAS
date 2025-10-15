@@ -29,16 +29,18 @@ namespace U_GAS.Editor
         {
         }
     }
-    
+
     [Serializable]
     public class GameEffectModifierUAssetProvider : IUAssetProvider
     {
         [LabelText("目标属性")]
         [LabelWidth(80)]
         public EGameAttribute attribute;
+
         [LabelText("输入值")]
         [LabelWidth(80)]
         public float input;
+
         [LabelText("规格计算器")]
         [LabelWidth(80)]
         public ModifierMagnitudeUAssetProvider magnitude;
@@ -56,7 +58,7 @@ namespace U_GAS.Editor
         }
     }
 
-    public class GameEffectUAssetProvider : ScriptableObject, IUAssetProvider
+    public class GameEffectUAssetProvider : ScriptableObject, IUAssetProvider, IUAssetTemplate
     {
         [Title("备注")]
         [HideLabel]
@@ -73,14 +75,20 @@ namespace U_GAS.Editor
 
 
         [LabelText("持续时间")]
+        [HideIf("@this.durationPolicy == EDurationPolicy.Instant")]
         [LabelWidth(80)]
         public float duration;
 
 
         [LabelText("生效周期")]
         [LabelWidth(80)]
+        [HideIf("@this.durationPolicy == EDurationPolicy.Instant")]
         public float period;
 
+        [LabelText("周期效果")]
+        [LabelWidth(80)]
+        [HideIf("@this.durationPolicy == EDurationPolicy.Instant")]
+        public GameEffectUAssetProvider periodGameEffect;
 
         [Title("标签")]
         [ValueDropdown("@GameTagEditor.GameTagValueDropdown()", IsUniqueList = true)]
@@ -103,45 +111,86 @@ namespace U_GAS.Editor
         [LabelText("GE生效时移除含有以下任一标签的其他GE - 周期性GE每次生效都会尝试删除其他")]
         public List<string> removeGameEffectsWithTags;
 
+        [Title("快照")]
+        [LabelText("是否快照")]
+        [LabelWidth(80)]
+        public bool needSnapShot;
+
+        [Title("堆叠")]
+        [LabelText("堆叠 - TODO")]
+        [LabelWidth(80)]
+        public bool stackingType;
+
+        [Title("视效")]
+        [LabelText("视效 - TODO")]
+        [LabelWidth(80)]
+        public bool cues;
+
         [Title("属性修饰器")]
         public List<GameEffectModifierUAssetProvider> modifier;
 
+        [Title("附加能力")]
+        [LabelText("能力 - TODO")]
+        [LabelWidth(80)]
+        public bool grantedAbility;
+
         [Button]
+        public void Test()
+        {
+            UAssetTemplate.Gen(this);
+            AssetDatabase.Refresh();
+            // var data = GetUAsset();
+            //
+            // byte[] test = null;
+            // using (var ms = new MemoryStream())
+            // {
+            //     Serializer.Serialize(ms, data);
+            //     test = ms.ToArray();
+            // }
+            //
+            // using (var ms = new MemoryStream(test))
+            // {
+            //     var de = Serializer.Deserialize<GameEffect>(ms);
+            // }
+        }
+
         public IUAsset GetUAsset()
         {
             var data = new GameEffect();
             data.durationPolicy = durationPolicy;
             data.duration = duration;
             data.period = period;
+            data.periodGameEffect = (GameEffect)periodGameEffect?.GetUAsset();
             data.assetTags = assetTags;
             data.grantedTags = grantedTags;
             data.requiredTags = requiredTags;
             data.conflictTags = conflictTags;
             data.removeGameEffectsWithTags = removeGameEffectsWithTags;
+            data.needSnapShot = needSnapShot;
             data.modifiers = new List<GameEffectModifier>();
             foreach (var provider in modifier)
             {
                 data.modifiers.Add((GameEffectModifier)provider.GetUAsset());
             }
 
-            byte[] test = null;
-            using (var ms = new MemoryStream())
-            {
-                Serializer.Serialize(ms, data);
-                test = ms.ToArray();
-            }
-
-            using (var ms = new MemoryStream(test))
-            {
-                var de = Serializer.Deserialize<GameEffect>(ms);
-                foreach (var m in de.modifiers)
-                {
-                    var value = m.magnitude.CalculateMagnitude(null,m.input);
-                    Debug.LogError($"{m.attribute}  {value}");
-                }
-            }
-
             return data;
         }
+
+    #region IUAssetTemplate
+        public string GetGenPath()
+        {
+            return UConst.UGAS_PATH + "/GameEffect/Gen";
+        }
+
+        public string GetSaveName()
+        {
+            return name;
+        }
+
+        public string GetSaveType()
+        {
+            return nameof(GameEffect);
+        }
+    #endregion
     }
 }
