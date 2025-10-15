@@ -12,13 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f65fcbef274ee28bcceb2876888485, type: 3}
   m_Name: NewGameEffect
   m_EditorClassIdentifier: 
-  asset:
-    backUp: test1
-    durationPolicy: 0
-    duration: 0
-    period: 0
-    assetTags: []
-    grantedTags: []
-    requiredTags: []
-    conflictTags: []
-    removeGameEffectsWithTags: []
+  backUp: 
+  durationPolicy: 1
+  duration: 1
+  period: 2
+  assetTags: []
+  grantedTags: []
+  requiredTags: []
+  conflictTags: []
+  removeGameEffectsWithTags: []
+  modifier:
+  - attribute: 0
+    input: 100
+    magnitude: {fileID: 11400000, guid: d9256aea02ddae4478469627cde31eba, type: 2}

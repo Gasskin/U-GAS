@@ -22,14 +22,14 @@ namespace U_GAS
         }
     }
     
-    public class LinearMagnitudeUAssetProvider : ModifierMagnitudeCalculationUAssetProvider, IUAssetProvider
+    public class LinearMagnitudeUAssetProvider : ModifierMagnitudeUAssetProvider, IUAssetProvider
     {
         public float k;
         public float b;
 
         public IUAsset GetUAsset()
         {
-            var data = new LinearMagnitudeCalculation();
+            var data = new LinearMagnitude();
             data.k = k;
             data.b = b;
             return data;

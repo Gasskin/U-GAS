@@ -20,13 +20,13 @@ namespace U_GAS
         }
     }
     
-    public class TestMagnitudeUAssetProvider : ModifierMagnitudeCalculationUAssetProvider, IUAssetProvider
+    public class TestMagnitudeUAssetProvider : ModifierMagnitudeUAssetProvider, IUAssetProvider
     {
         public float k;
         
         public IUAsset GetUAsset()
         {
-            var data = new TestMagnitudeCalculation();
+            var data = new TestMagnitude();
             data.k = k;
             return data;
         }

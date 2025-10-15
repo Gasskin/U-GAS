@@ -11,7 +11,7 @@ namespace U_GAS
     {
         private GameAttribute _taget;
         private GameAbilityComponent _owner;
-        private readonly List<string> _modifierCache = new();
+        private readonly List<ModifierMagnitude> _modifierCache = new();
         
         public GameAttributeAggregator(GameAttribute attribute, GameAbilityComponent owner)
         {

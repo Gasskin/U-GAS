@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using ProtoBuf;
@@ -26,6 +27,32 @@ namespace U_GAS.Editor
         [MenuItem("U-GAS/Game Effect/Gen All")]
         public static void GenAll()
         {
+        }
+    }
+    
+    [Serializable]
+    public class GameEffectModifierUAssetProvider : IUAssetProvider
+    {
+        [LabelText("目标属性")]
+        [LabelWidth(80)]
+        public EGameAttribute attribute;
+        [LabelText("输入值")]
+        [LabelWidth(80)]
+        public float input;
+        [LabelText("规格计算器")]
+        [LabelWidth(80)]
+        public ModifierMagnitudeUAssetProvider magnitude;
+
+        public IUAsset GetUAsset()
+        {
+            var asset = new GameEffectModifier();
+            asset.attribute = attribute;
+            asset.input = input;
+            if (magnitude is IUAssetProvider provider)
+            {
+                asset.magnitude = (ModifierMagnitude)provider.GetUAsset();
+            }
+            return asset;
         }
     }
 
@@ -58,32 +85,26 @@ namespace U_GAS.Editor
         [Title("标签")]
         [ValueDropdown("@GameTagEditor.GameTagValueDropdown()", IsUniqueList = true)]
         [LabelText("该GE的标签 - 判断移除GE时，会采用这个标签作为依据")]
-        [LabelWidth(80)]
         public List<string> assetTags;
 
         [ValueDropdown("@GameTagEditor.GameTagValueDropdown()", IsUniqueList = true)]
         [LabelText("该GE会附加的标签 - 生效时添加，失效时移除")]
-        [LabelWidth(80)]
         public List<string> grantedTags;
 
         [ValueDropdown("@GameTagEditor.GameTagValueDropdown()", IsUniqueList = true)]
         [LabelText("应用该GE所必须的标签 - 必须拥有全部标签才可以应用该GE")]
-        [LabelWidth(80)]
         public List<string> requiredTags;
 
         [ValueDropdown("@GameTagEditor.GameTagValueDropdown()", IsUniqueList = true)]
         [LabelText("应用该GE所冲突的标签 - 只要存在任一标签则不可应用该GE")]
-        [LabelWidth(80)]
         public List<string> conflictTags;
 
         [ValueDropdown("@GameTagEditor.GameTagValueDropdown()", IsUniqueList = true)]
         [LabelText("GE生效时移除含有以下任一标签的其他GE - 周期性GE每次生效都会尝试删除其他")]
-        [LabelWidth(80)]
         public List<string> removeGameEffectsWithTags;
 
-        [LabelText("计算器")]
-        [LabelWidth(80)]
-        public List<ModifierMagnitudeCalculationUAssetProvider> magnitudes;
+        [Title("属性修饰器")]
+        public List<GameEffectModifierUAssetProvider> modifier;
 
         [Button]
         public IUAsset GetUAsset()
@@ -97,13 +118,10 @@ namespace U_GAS.Editor
             data.requiredTags = requiredTags;
             data.conflictTags = conflictTags;
             data.removeGameEffectsWithTags = removeGameEffectsWithTags;
-            data.magnitude = new List<ModifierMagnitudeCalculation>();
-            foreach (var m in magnitudes)
+            data.modifiers = new List<GameEffectModifier>();
+            foreach (var provider in modifier)
             {
-                if (m is IUAssetProvider asset)
-                {
-                    data.magnitude.Add((ModifierMagnitudeCalculation)asset.GetUAsset());
-                }
+                data.modifiers.Add((GameEffectModifier)provider.GetUAsset());
             }
 
             byte[] test = null;
@@ -116,9 +134,10 @@ namespace U_GAS.Editor
             using (var ms = new MemoryStream(test))
             {
                 var de = Serializer.Deserialize<GameEffect>(ms);
-                foreach (var m in de.magnitude)
+                foreach (var m in de.modifiers)
                 {
-                    Debug.LogError(m.CalculateMagnitude(null, de.duration));
+                    var value = m.magnitude.CalculateMagnitude(null,m.input);
+                    Debug.LogError($"{m.attribute}  {value}");
                 }
             }
 

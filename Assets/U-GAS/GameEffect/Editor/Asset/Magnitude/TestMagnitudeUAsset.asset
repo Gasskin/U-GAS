@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e99ec38627c54033aafa584d55759765, type: 3}
   m_Name: TestMagnitudeUAsset
   m_EditorClassIdentifier: 
-  k: 0
+  k: 999
