@@ -11,7 +11,7 @@ namespace Scenes
         public TextMeshProUGUI num;
 
         private int entity;
-
+        
         private void Start()
         {
             entity = EntitySystem.Instance.CreateEntity();

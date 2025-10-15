@@ -24,9 +24,6 @@ namespace U_GAS
     [Serializable]
     public class GameAttribute
     {
-        private EGameAttribute add;
-        private EGameAttribute multiply;
-
         private event Action<GameAttribute, float> OnPreCurrentValueChange;
 
         private event Action<GameAttribute, float, float> OnPostCurrentValueChange;
@@ -54,7 +51,7 @@ namespace U_GAS
         public void InitValue(float value)
         {
             BaseValue = value;
-            CurrentValue = CalculateCurrent(BaseValue);
+            CurrentValue = BaseValue;
         }
 
         public void SetCurrentValue(float value)
@@ -82,20 +79,6 @@ namespace U_GAS
             {
                 OnPostBaseValueChange?.Invoke(this, oldValue, value);
             }
-        }
-
-        private float CalculateCurrent(float input)
-        {
-            var value = input;
-            // if (multiply != null)
-            // {
-            //     value *= multiply.CurrentValue;
-            // }
-            // if (add != null)
-            // {
-            //     value += add.CurrentValue;
-            // }
-            return value;
         }
 
         public void RegisterPreBaseValueChange(Func<GameAttribute, float, float> func)
