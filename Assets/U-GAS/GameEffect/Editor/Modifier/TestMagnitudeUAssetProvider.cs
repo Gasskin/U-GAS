@@ -7,12 +7,12 @@ namespace U_GAS
     {
         private const string _GEN_PATH = "GameEffect/Editor/Asset/Magnitude";
 
-        private static string GenPath => UConst.UGAS_PATH + "/" + _GEN_PATH + "/TestMagnitudeUAsset.asset";
+        private static string GenPath => UConst.UGAS_PATH + "/" + _GEN_PATH + "/NewTestMagnitudeUAsset.asset";
         
         [MenuItem("U-GAS/Game Effect/Magnitude/New TestMagnitudeUAsset")]
         public static void Create()
         {
-            var so = ScriptableObject.CreateInstance<TestMagnitudeUAsset>();
+            var so = ScriptableObject.CreateInstance<TestMagnitudeUAssetProvider>();
             AssetDatabase.CreateAsset(so, GenPath);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
@@ -20,13 +20,13 @@ namespace U_GAS
         }
     }
     
-    public class TestMagnitudeUAsset : ModifierMagnitudeCalculationUAsset, IUAsset
+    public class TestMagnitudeUAssetProvider : ModifierMagnitudeCalculationUAssetProvider, IUAssetProvider
     {
         public float k;
         
-        public IUData GetUData()
+        public IUAsset GetUAsset()
         {
-            var data = new TestMagnitudeUData();
+            var data = new TestMagnitudeCalculation();
             data.k = k;
             return data;
         }

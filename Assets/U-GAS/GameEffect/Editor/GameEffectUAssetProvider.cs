@@ -12,11 +12,11 @@ namespace U_GAS.Editor
         private const string _GEN_PATH = "GameEffect/Editor/Asset/GameEffect";
 
         private static string GenPath => UConst.UGAS_PATH + "/" + _GEN_PATH + "/NewGameEffect.asset";
-        
+
         [MenuItem("U-GAS/Game Effect/Create New")]
         public static void Create()
         {
-            var so = ScriptableObject.CreateInstance<GameEffectUAsset>();
+            var so = ScriptableObject.CreateInstance<GameEffectUAssetProvider>();
             AssetDatabase.CreateAsset(so, GenPath);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
@@ -26,11 +26,10 @@ namespace U_GAS.Editor
         [MenuItem("U-GAS/Game Effect/Gen All")]
         public static void GenAll()
         {
-            
         }
     }
-    
-    public class GameEffectUAsset: ScriptableObject, IUAsset
+
+    public class GameEffectUAssetProvider : ScriptableObject, IUAssetProvider
     {
         [Title("备注")]
         [HideLabel]
@@ -81,15 +80,15 @@ namespace U_GAS.Editor
         [LabelText("GE生效时移除含有以下任一标签的其他GE - 周期性GE每次生效都会尝试删除其他")]
         [LabelWidth(80)]
         public List<string> removeGameEffectsWithTags;
-        
+
         [LabelText("计算器")]
         [LabelWidth(80)]
-        public List<ModifierMagnitudeCalculationUAsset> magnitudes;
+        public List<ModifierMagnitudeCalculationUAssetProvider> magnitudes;
 
         [Button]
-        public IUData GetUData()
+        public IUAsset GetUAsset()
         {
-            var data = new GameEffectUData();
+            var data = new GameEffect();
             data.durationPolicy = durationPolicy;
             data.duration = duration;
             data.period = period;
@@ -98,12 +97,12 @@ namespace U_GAS.Editor
             data.requiredTags = requiredTags;
             data.conflictTags = conflictTags;
             data.removeGameEffectsWithTags = removeGameEffectsWithTags;
-            data.magnitude = new List<ModifierMagnitudeCalculationUData>();
+            data.magnitude = new List<ModifierMagnitudeCalculation>();
             foreach (var m in magnitudes)
             {
-                if (m is IUAsset asset)
+                if (m is IUAssetProvider asset)
                 {
-                    data.magnitude.Add((ModifierMagnitudeCalculationUData)asset.GetUData());
+                    data.magnitude.Add((ModifierMagnitudeCalculation)asset.GetUAsset());
                 }
             }
 
@@ -113,12 +112,16 @@ namespace U_GAS.Editor
                 Serializer.Serialize(ms, data);
                 test = ms.ToArray();
             }
-            
+
             using (var ms = new MemoryStream(test))
             {
-                var de = Serializer.Deserialize<GameEffectUData>(ms);
+                var de = Serializer.Deserialize<GameEffect>(ms);
+                foreach (var m in de.magnitude)
+                {
+                    Debug.LogError(m.CalculateMagnitude(null, de.duration));
+                }
             }
-            
+
             return data;
         }
     }

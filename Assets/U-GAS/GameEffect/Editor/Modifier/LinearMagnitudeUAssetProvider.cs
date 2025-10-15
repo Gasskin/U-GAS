@@ -14,7 +14,7 @@ namespace U_GAS
         [MenuItem("U-GAS/Game Effect/Magnitude/New LinearMagnitude")]
         public static void Create()
         {
-            var so = ScriptableObject.CreateInstance<LinearMagnitudeUAsset>();
+            var so = ScriptableObject.CreateInstance<LinearMagnitudeUAssetProvider>();
             AssetDatabase.CreateAsset(so, GenPath);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
@@ -22,14 +22,14 @@ namespace U_GAS
         }
     }
     
-    public class LinearMagnitudeUAsset : ModifierMagnitudeCalculationUAsset, IUAsset
+    public class LinearMagnitudeUAssetProvider : ModifierMagnitudeCalculationUAssetProvider, IUAssetProvider
     {
         public float k;
         public float b;
 
-        public IUData GetUData()
+        public IUAsset GetUAsset()
         {
-            var data = new LinearMagnitudeUData();
+            var data = new LinearMagnitudeCalculation();
             data.k = k;
             data.b = b;
             return data;
