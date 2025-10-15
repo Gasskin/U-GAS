@@ -12,7 +12,7 @@ namespace U_GAS
 
         // 所有属性对应的修改器
         private readonly Dictionary<EGameAttribute, GameAttributeAggregator> _aggregatorDict = new();
-
+        
         public void OnStart(GameAbilityComponent gameAbilityComponent)
         {
             _owner = gameAbilityComponent;
@@ -27,14 +27,14 @@ namespace U_GAS
         }
 
 
-        public void AddAttribute(EGameAttribute eGameAttribute, GameAttribute attr)
+        public void AddAttribute(GameAttribute attr)
         {
-            if (!_attributeDict.TryAdd(eGameAttribute, attr))
+            if (!_attributeDict.TryAdd(attr.Attribute, attr))
             {
                 return;
             }
             var agg = new GameAttributeAggregator(attr, _owner);
-            _aggregatorDict[eGameAttribute] = agg;
+            _aggregatorDict[attr.Attribute] = agg;
             agg.OnStart();
         }
 
@@ -59,6 +59,15 @@ namespace U_GAS
         public GameAttribute GetAttribute(EGameAttribute eGameAttribute)
         {
             return _attributeDict.GetValueOrDefault(eGameAttribute, null);
+        }
+
+        public void DoSnapShot(Dictionary<EGameAttribute, float> snap)
+        {
+            snap.Clear();
+            foreach (var attr in _attributeDict)
+            {
+                snap.Add(attr.Key, attr.Value.CurrentValue);
+            }
         }
     }
 }

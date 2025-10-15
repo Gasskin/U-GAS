@@ -7,13 +7,31 @@ namespace U_GAS
     public enum EDurationPolicy
     {
         [LabelText("瞬时")]
-        Instant,
+        Instant = 0,
 
         [LabelText("永久")]
-        Infinite,
+        Infinite = 1,
 
         [LabelText("限时")]
-        Duration
+        Duration = 2,
+    }
+
+    public enum EModifierOperation
+    {
+        [LabelText("加")]
+        Add = 0,
+
+        [LabelText("减")]
+        Minus = 1,
+
+        [LabelText("乘")]
+        Multiply = 2,
+
+        [LabelText("除")]
+        Divide = 3,
+
+        [LabelText("替")]
+        Override = 4,
     }
 
     [ProtoContract]
@@ -23,9 +41,12 @@ namespace U_GAS
         public EGameAttribute attribute;
 
         [ProtoMember(2)]
+        public EModifierOperation operation;
+        
+        [ProtoMember(3)]
         public float input;
 
-        [ProtoMember(3)]
+        [ProtoMember(4)]
         public ModifierMagnitude magnitude;
     }
 
@@ -48,21 +69,24 @@ namespace U_GAS
         public List<string> grantedTags;
 
         [ProtoMember(6)]
-        public List<string> requiredTags;
+        public List<string> applyRequiredTags;
 
         [ProtoMember(7)]
-        public List<string> conflictTags;
-
+        public List<string> ongoingRequiredTags;
+        
         [ProtoMember(8)]
-        public List<string> removeGameEffectsWithTags;
+        public List<string> immuneTags;
 
         [ProtoMember(9)]
-        public List<GameEffectModifier> modifiers;
+        public List<string> removeGameEffectsWithTags;
 
         [ProtoMember(10)]
-        public GameEffect periodGameEffect;
+        public List<GameEffectModifier> modifiers;
 
         [ProtoMember(11)]
+        public GameEffect periodGameEffect;
+
+        [ProtoMember(12)]
         public bool needSnapShot;
     }
 }

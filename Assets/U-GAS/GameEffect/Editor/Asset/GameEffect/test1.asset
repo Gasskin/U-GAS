@@ -12,13 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f65fcbef274ee28bcceb2876888485, type: 3}
   m_Name: test1
   m_EditorClassIdentifier: 
-  asset:
-    backUp: 
-    durationPolicy: 0
-    duration: 0
-    period: 0
-    assetTags: []
-    grantedTags: []
-    requiredTags: []
-    conflictTags: []
-    removeGameEffectsWithTags: []
+  backUp: 
+  durationPolicy: 0
+  duration: 0
+  period: 0
+  periodGameEffect: {fileID: 0}
+  assetTags: []
+  grantedTags: []
+  applyRequiredTags: []
+  ongoingRequiredTags: []
+  immuneTags: []
+  removeGameEffectsWithTags: []
+  needSnapShot: 0
+  stackingType: 0
+  cues: 0
+  modifier:
+  - attribute: 2
+    operation: 0
+    input: 222
+    magnitude: {fileID: 11400000, guid: d9256aea02ddae4478469627cde31eba, type: 2}
+  grantedAbility: 0

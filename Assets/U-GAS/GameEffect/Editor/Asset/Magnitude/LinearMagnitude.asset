@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5211ba0ec954de6b942f7d5d0095601, type: 3}
-  m_Name: NewLinearMagnitude
+  m_Name: LinearMagnitude
   m_EditorClassIdentifier: 
   k: 5
-  b: 0
+  b: 5

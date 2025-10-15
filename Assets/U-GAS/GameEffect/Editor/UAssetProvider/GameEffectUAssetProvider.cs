@@ -37,6 +37,10 @@ namespace U_GAS.Editor
         [LabelWidth(80)]
         public EGameAttribute attribute;
 
+        [LabelText("操作类型")]
+        [LabelWidth(80)]
+        public EModifierOperation operation;
+        
         [LabelText("输入值")]
         [LabelWidth(80)]
         public float input;
@@ -49,6 +53,7 @@ namespace U_GAS.Editor
         {
             var asset = new GameEffectModifier();
             asset.attribute = attribute;
+            asset.operation = operation;
             asset.input = input;
             if (magnitude is IUAssetProvider provider)
             {
@@ -101,11 +106,15 @@ namespace U_GAS.Editor
 
         [ValueDropdown("@GameTagEditor.GameTagValueDropdown()", IsUniqueList = true)]
         [LabelText("应用该GE所必须的标签 - 必须拥有全部标签才可以应用该GE")]
-        public List<string> requiredTags;
+        public List<string> applyRequiredTags;
+        
+        [ValueDropdown("@GameTagEditor.GameTagValueDropdown()", IsUniqueList = true)]
+        [LabelText("表示该GE处于可激活的标签")]
+        public List<string> ongoingRequiredTags;
 
         [ValueDropdown("@GameTagEditor.GameTagValueDropdown()", IsUniqueList = true)]
-        [LabelText("应用该GE所冲突的标签 - 只要存在任一标签则不可应用该GE")]
-        public List<string> conflictTags;
+        [LabelText("免疫该GE的标签 - 只要存在任一标签则不可应用该GE")]
+        public List<string> immuneTags;
 
         [ValueDropdown("@GameTagEditor.GameTagValueDropdown()", IsUniqueList = true)]
         [LabelText("GE生效时移除含有以下任一标签的其他GE - 周期性GE每次生效都会尝试删除其他")]
@@ -163,8 +172,9 @@ namespace U_GAS.Editor
             data.periodGameEffect = (GameEffect)periodGameEffect?.GetUAsset();
             data.assetTags = assetTags;
             data.grantedTags = grantedTags;
-            data.requiredTags = requiredTags;
-            data.conflictTags = conflictTags;
+            data.applyRequiredTags = applyRequiredTags;
+            data.ongoingRequiredTags = ongoingRequiredTags;
+            data.immuneTags = immuneTags;
             data.removeGameEffectsWithTags = removeGameEffectsWithTags;
             data.needSnapShot = needSnapShot;
             data.modifiers = new List<GameEffectModifier>();

@@ -7,7 +7,7 @@ namespace U_GAS
     {
         private int[] _gameTag;
 
-        protected void OnStart()
+        public void OnStart()
         {
             if (GameTagRegister.Size != GameTagRegister.Tree.Length)
             {
@@ -17,7 +17,7 @@ namespace U_GAS
             Array.Clear(_gameTag, 0, _gameTag.Length);
         }
 
-        protected void OnStop()
+        public void OnStop()
         {
             _gameTag = null;
         }
@@ -49,6 +49,19 @@ namespace U_GAS
             return true;
         }
 
+        public bool HasAllTag(List<string> gameTags)
+        {
+            foreach (string gameTag in gameTags)
+            {
+                var tag = GameTagRegister.String2Enum[gameTag];
+                if (!HasTag(tag))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public bool HasNoTags(List<EGameTag> gameTags)
         {
             foreach (EGameTag gameTag in gameTags)
@@ -61,11 +74,37 @@ namespace U_GAS
             return true;
         }
 
+        public bool HasNoTags(List<string> gameTags)
+        {
+            foreach (string gameTag in gameTags)
+            {
+                var tag = GameTagRegister.String2Enum[gameTag];
+                if (HasTag(tag))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public bool HasAnyTags(List<EGameTag> gameTags)
         {
             foreach (EGameTag gameTag in gameTags)
             {
                 if (HasTag(gameTag))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool HasAnyTags(List<string> gameTags)
+        {
+            foreach (string gameTag in gameTags)
+            {
+                var tag = GameTagRegister.String2Enum[gameTag];
+                if (HasTag(tag))
                 {
                     return true;
                 }

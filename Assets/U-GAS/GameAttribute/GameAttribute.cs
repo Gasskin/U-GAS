@@ -24,28 +24,37 @@ namespace U_GAS
     [Serializable]
     public class GameAttribute
     {
-        private event Action<GameAttribute, float> OnPreCurrentValueChange;
+        public event Action<GameAttribute, float> OnPreCurrentValueChange;
 
-        private event Action<GameAttribute, float, float> OnPostCurrentValueChange;
+        public event Action<GameAttribute, float, float> OnPostCurrentValueChange;
 
-        // private event Func<BaseGameAttribute, float, float> OnPreBaseValueChange;
-        private List<Func<GameAttribute, float, float>> preBaseValueChangeListeners = new(32);
-        private event Action<GameAttribute, float, float> OnPostBaseValueChange;
+        private List<Func<GameAttribute, float, float>> _preBaseValueChangeListeners = new(32);
+        
+        public event Func<GameAttribute, float, float> PreBaseValueChangeListeners
+        {
+            add => _preBaseValueChangeListeners.Add(value);
+            remove => _preBaseValueChangeListeners.Remove(value);
+        }
+        public event Action<GameAttribute, float, float> OnPostBaseValueChange;
 
-        public ECalculateMode ECalculateMode { get; private set; }
+        public ECalculateMode CalculateMode { get; private set; }
         public float MinValue { get; private set; }
         public float MaxValue { get; private set; }
 
         public float BaseValue { get; private set; }
         public float CurrentValue { get; private set; }
 
+        public EGameAttribute Attribute { get; private set; }
 
-        public GameAttribute(float initValue, float min, float max)
+
+        public GameAttribute(EGameAttribute attribute,ECalculateMode calculateMode, float initValue, float min, float max)
         {
             BaseValue = initValue;
+            CalculateMode = calculateMode;
             CurrentValue = initValue;
             MinValue = min;
             MaxValue = max;
+            Attribute = attribute;
         }
 
         public void InitValue(float value)
@@ -68,9 +77,9 @@ namespace U_GAS
 
         public void SetBaseValue(float value)
         {
-            if (preBaseValueChangeListeners != null)
+            if (_preBaseValueChangeListeners != null)
             {
-                foreach (var t in preBaseValueChangeListeners)
+                foreach (var t in _preBaseValueChangeListeners)
                     value = t.Invoke(this, value);
             }
             var oldValue = BaseValue;
@@ -79,46 +88,6 @@ namespace U_GAS
             {
                 OnPostBaseValueChange?.Invoke(this, oldValue, value);
             }
-        }
-
-        public void RegisterPreBaseValueChange(Func<GameAttribute, float, float> func)
-        {
-            preBaseValueChangeListeners.Add(func);
-        }
-
-        public void RegisterPostBaseValueChange(Action<GameAttribute, float, float> action)
-        {
-            OnPostBaseValueChange += action;
-        }
-
-        public void RegisterPreCurrentValueChange(Action<GameAttribute, float> action)
-        {
-            OnPreCurrentValueChange += action;
-        }
-
-        public void RegisterPostCurrentValueChange(Action<GameAttribute, float, float> action)
-        {
-            OnPostCurrentValueChange += action;
-        }
-
-        public void UnregisterPreBaseValueChange(Func<GameAttribute, float, float> func)
-        {
-            preBaseValueChangeListeners.Remove(func);
-        }
-
-        public void UnregisterPostBaseValueChange(Action<GameAttribute, float, float> action)
-        {
-            OnPostBaseValueChange -= action;
-        }
-
-        public void UnregisterPreCurrentValueChange(Action<GameAttribute, float> action)
-        {
-            OnPreCurrentValueChange -= action;
-        }
-
-        public void UnregisterPostCurrentValueChange(Action<GameAttribute, float, float> action)
-        {
-            OnPostCurrentValueChange -= action;
         }
     }
 }

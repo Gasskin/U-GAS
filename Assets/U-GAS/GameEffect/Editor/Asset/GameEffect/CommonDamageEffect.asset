@@ -10,26 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03f65fcbef274ee28bcceb2876888485, type: 3}
-  m_Name: NewGameEffect
+  m_Name: CommonDamageEffect
   m_EditorClassIdentifier: 
   backUp: 
-  durationPolicy: 2
+  durationPolicy: 0
   duration: 22
   period: 2
   periodGameEffect: {fileID: 11400000, guid: 908ebbaeb776e1e43adbe0ac90bc15e5, type: 2}
   assetTags: []
   grantedTags: []
-  requiredTags: []
-  conflictTags: []
+  applyRequiredTags: []
+  ongoingRequiredTags: []
+  immuneTags: []
   removeGameEffectsWithTags: []
-  needSnapShot: 0
+  needSnapShot: 1
   stackingType: 0
   cues: 0
   modifier:
   - attribute: 0
-    input: 100
+    operation: 1
+    input: 10
     magnitude: {fileID: 11400000, guid: d9256aea02ddae4478469627cde31eba, type: 2}
-  - attribute: 2
-    input: 10.99
-    magnitude: {fileID: 11400000, guid: edddb2c929d9aef40be871eb41760c0c, type: 2}
   grantedAbility: 0
