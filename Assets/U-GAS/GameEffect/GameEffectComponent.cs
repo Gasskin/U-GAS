@@ -66,6 +66,5 @@ namespace U_GAS
                 OnGameEffectContainerDirty?.Invoke();   
             }
         }
-        
     }
 }
