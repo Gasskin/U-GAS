@@ -23,8 +23,14 @@ MonoBehaviour:
   ongoingRequiredTags: []
   immuneTags: []
   removeGameEffectsWithTags: []
-  needSnapShot: 1
-  stackingType: 0
+  needSnapShot: 0
+  gameEffectStackUAssetProvider:
+    key: CommonDamageEffect
+    stackPolicy: 1
+    maxCount: 0
+    durationRefreshPolicy: 1
+    periodResetPolicy: 1
+    expirePolicy: 0
   cues: 0
   modifier:
   - attribute: 0

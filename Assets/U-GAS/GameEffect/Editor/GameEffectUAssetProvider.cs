@@ -30,57 +30,26 @@ namespace U_GAS.Editor
         }
     }
 
-    [Serializable]
-    public class GameEffectModifierUAssetProvider : IUAssetProvider
-    {
-        [LabelText("目标属性")]
-        [LabelWidth(80)]
-        public EGameAttribute attribute;
 
-        [LabelText("操作类型")]
-        [LabelWidth(80)]
-        public EModifierOperation operation;
-        
-        [LabelText("输入值")]
-        [LabelWidth(80)]
-        public float input;
-
-        [LabelText("规格计算器")]
-        [LabelWidth(80)]
-        public ModifierMagnitudeUAssetProvider magnitude;
-
-        public IUAsset GetUAsset()
-        {
-            var asset = new GameEffectModifier();
-            asset.attribute = attribute;
-            asset.operation = operation;
-            asset.input = input;
-            if (magnitude is IUAssetProvider provider)
-            {
-                asset.magnitude = (ModifierMagnitude)provider.GetUAsset();
-            }
-            return asset;
-        }
-    }
 
     public class GameEffectUAssetProvider : ScriptableObject, IUAssetProvider, IUAssetTemplate
     {
-        [Title("备注")]
+        [Title("<备注>")]
         [HideLabel]
         [TextArea]
         public string backUp;
 
-        [Title("类型")]
-        [InfoBox(@"1.瞬时：释放GE时立刻生效1次，随后立刻删除，此时持续时间与生效周期没有意义
-2.永久：释放GE时立刻生效1次，随后每个生效周期生效1次，生效周期为0时仅生效1次
-3.限时：释放GE时立刻生效1次，随后每个生效周期生效1次，到达持续时间后删除")]
+        [Title("<类型>")]
         [LabelText("持续类型")]
         [LabelWidth(80)]
+        [Tooltip("1.瞬时：释放GE时立刻生效1次，随后立刻删除，此时持续时间与生效周期没有意义\n\n" +
+                 "2.永久：释放GE时立刻生效1次，随后每个生效周期生效1次，生效周期为0时仅生效1次\n\n" +
+                 "3.限时：释放GE时立刻生效1次，随后每个生效周期生效1次，到达持续时间后删除")]
         public EDurationPolicy durationPolicy;
 
 
         [LabelText("持续时间")]
-        [HideIf("@this.durationPolicy == EDurationPolicy.Instant")]
+        [HideIf("@this.durationPolicy != EDurationPolicy.Duration")]
         [LabelWidth(80)]
         public float duration;
 
@@ -95,50 +64,49 @@ namespace U_GAS.Editor
         [HideIf("@this.durationPolicy == EDurationPolicy.Instant")]
         public GameEffectUAssetProvider periodGameEffect;
 
-        [Title("标签")]
+        [Title("<标签>")]
         [ValueDropdown("@GameTagEditor.GameTagValueDropdown()", IsUniqueList = true)]
-        [LabelText("该GE的标签 - 判断移除GE时，会采用这个标签作为依据")]
+        [Tooltip("该GE的标签，判断移除GE时，会采用这个标签作为依据")]
         public List<string> assetTags;
 
         [ValueDropdown("@GameTagEditor.GameTagValueDropdown()", IsUniqueList = true)]
-        [LabelText("该GE会附加的标签 - 生效时添加，失效时移除")]
+        [Tooltip("该GE会附加的标签，生效时添加，失效时移除")]
         public List<string> grantedTags;
 
         [ValueDropdown("@GameTagEditor.GameTagValueDropdown()", IsUniqueList = true)]
-        [LabelText("应用该GE所必须的标签 - 必须拥有全部标签才可以应用该GE")]
+        [Tooltip("应用该GE所必须的标签，必须拥有全部标签才可以应用该GE")]
         public List<string> applyRequiredTags;
         
         [ValueDropdown("@GameTagEditor.GameTagValueDropdown()", IsUniqueList = true)]
-        [LabelText("表示该GE处于可激活的标签")]
+        [Tooltip("表示该GE处于可激活的标签")]
         public List<string> ongoingRequiredTags;
 
         [ValueDropdown("@GameTagEditor.GameTagValueDropdown()", IsUniqueList = true)]
-        [LabelText("免疫该GE的标签 - 只要存在任一标签则不可应用该GE")]
+        [Tooltip("免疫该GE的标签，只要存在任一标签则不可应用该GE")]
         public List<string> immuneTags;
 
         [ValueDropdown("@GameTagEditor.GameTagValueDropdown()", IsUniqueList = true)]
-        [LabelText("GE生效时移除含有以下任一标签的其他GE - 周期性GE每次生效都会尝试删除其他")]
+        [Tooltip("GE生效时移除含有以下任一标签的其他GE，周期性GE每次生效都会尝试删除其他")]
         public List<string> removeGameEffectsWithTags;
 
-        [Title("快照")]
-        [LabelText("是否快照")]
+        [Title("<快照>")]
+        [LabelText("是否快照属性")]
         [LabelWidth(80)]
         public bool needSnapShot;
 
-        [Title("堆叠")]
-        [LabelText("堆叠 - TODO")]
-        [LabelWidth(80)]
-        public bool stackingType;
+        [Title("<堆叠>")]
+        [HideLabel]
+        public GameEffectStackUAssetProvider gameEffectStackUAssetProvider;
 
-        [Title("视效")]
+        [Title("<视效>")]
         [LabelText("视效 - TODO")]
         [LabelWidth(80)]
         public bool cues;
 
-        [Title("属性修饰器")]
+        [Title("<属性修饰器>")]
         public List<GameEffectModifierUAssetProvider> modifier;
 
-        [Title("附加能力")]
+        [Title("<附加能力>")]
         [LabelText("能力 - TODO")]
         [LabelWidth(80)]
         public bool grantedAbility;
@@ -166,17 +134,23 @@ namespace U_GAS.Editor
         public IUAsset GetUAsset()
         {
             var data = new GameEffect();
+            // duration
             data.durationPolicy = durationPolicy;
             data.duration = duration;
             data.period = period;
             data.periodGameEffect = (GameEffect)periodGameEffect?.GetUAsset();
+            // tag
             data.assetTags = assetTags;
             data.grantedTags = grantedTags;
             data.applyRequiredTags = applyRequiredTags;
             data.ongoingRequiredTags = ongoingRequiredTags;
             data.immuneTags = immuneTags;
             data.removeGameEffectsWithTags = removeGameEffectsWithTags;
+            // snap
             data.needSnapShot = needSnapShot;
+            // stack
+            data.stack = (GameEffectStack)gameEffectStackUAssetProvider.GetUAsset();
+            // modifier
             data.modifiers = new List<GameEffectModifier>();
             foreach (var provider in modifier)
             {

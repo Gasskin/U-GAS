@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using ProtoBuf;
 
@@ -29,7 +30,9 @@ namespace U_GAS
             using var ms = new MemoryStream();
             Serializer.Serialize(ms, data);
             var base64 = Convert.ToBase64String(ms.ToArray());
-
+            string wrapped = string.Join("\n", Enumerable
+                .Range(0, (base64.Length + 69) / 70)
+                .Select(i => base64.Substring(i * 70, Math.Min(70, base64.Length - i * 70))));
             var sb = new StringBuilder();
             sb.AppendLine("using System;");
             sb.AppendLine("using System.IO;");
@@ -38,7 +41,7 @@ namespace U_GAS
             sb.AppendLine("{");
             sb.AppendLine($"    public static class {template.GetSaveName()}Template");
             sb.AppendLine("    {");
-            sb.AppendLine($"        private static string _base64 = \"{base64}\";");
+            sb.AppendLine($"        private static string _base64 = @\"\n{wrapped}\";");
             sb.AppendLine($"        private static {template.GetSaveType()} _template;");
             sb.AppendLine($"        public static {template.GetSaveType()} Get()");
             sb.AppendLine("        {");

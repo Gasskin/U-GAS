@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace U_GAS
@@ -27,6 +28,8 @@ namespace U_GAS
             public Dictionary<EGameAttribute, float> SourceSnap { get; private set; } = new();
             public Dictionary<EGameAttribute, float> TargetSnap { get; private set; } = new();
 
+            public float ActiveTime { get; private set; }
+
             public void Init(GameEffect gameEffect, GameAbilityComponent source, GameAbilityComponent target)
             {
                 GameEffect = gameEffect;
@@ -36,6 +39,7 @@ namespace U_GAS
                 Target = target;
                 SourceSnap.Clear();
                 TargetSnap.Clear();
+                ActiveTime = 0;
             }
 
             public void OnRelease()
@@ -47,6 +51,7 @@ namespace U_GAS
                 Target = null;
                 SourceSnap.Clear();
                 TargetSnap.Clear();
+                ActiveTime = 0;
             }
 
             public void Start()
@@ -104,6 +109,7 @@ namespace U_GAS
 
             public void OnAdd()
             {
+                // On Cue Add
             }
 
             public void OnRemove()
@@ -112,10 +118,49 @@ namespace U_GAS
 
             public void OnActive()
             {
+                if (IsActive)
+                {
+                    return;
+                }
+                IsActive = true;
+                ActiveTime = UTime.CurrentTime;
+
+          
+                Target.GameTagComponent.AddTagsWithDirty(GameEffect.grantedTags);
+                // todo remove effect
+
+                // AddTag可能会触发TagDirty，可能会导致GE被删除
+                if (IsValid)
+                {
+                    // TryActivateGrantedAbilities();
+                    // ability可能导致自身失效
+                    if (IsValid)
+                    {
+                        // TriggerCueOnActivation();
+                    }
+                }
             }
+
 
             public void OnDeActive()
             {
+                if (!IsActive)
+                {
+                    return;
+                }
+                IsActive = false;
+                
+                Target.GameTagComponent.RemoveTagsWithDirty(GameEffect.grantedTags);
+
+                if (IsValid)
+                {
+                    // TryDeactivateGrantedAbilities();
+                    // ability可能导致自身失效
+                    if (IsValid)
+                    {
+                        // TriggerCueOnDeactivation();
+                    }
+                }
             }
         }
     }

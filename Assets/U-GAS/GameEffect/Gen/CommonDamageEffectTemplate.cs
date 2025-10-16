@@ -5,7 +5,9 @@ namespace U_GAS
 {
     public static class CommonDamageEffectTemplate
     {
-        private static string _base64 = "FQAAsEEdAAAAQFIWEAEdAAAgQSINogYKDQAAoEAVAACgQFoYUhYIAh0AAF5DIg2iBgoNAACgQBUAAKBAYAE=";
+        private static string _base64 = @"
+FQAAsEEdAAAAQFIWEAEdAAAgQSINogYKDQAAoEAVAACgQFoYUhYIAh0AAF5DIg2iBgoNAA
+CgQBUAAKBAYAE=";
         private static GameEffect _template;
         public static GameEffect Get()
         {

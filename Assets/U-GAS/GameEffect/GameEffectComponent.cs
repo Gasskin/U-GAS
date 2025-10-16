@@ -43,6 +43,29 @@ namespace U_GAS
                 UPool<GameEffect.GameEffectSpec>.Release(spec);
                 return;
             }
+
+            switch (spec.GameEffect.stack.stackPolicy)
+            {
+                case EGameEffectStackPolicy.None:
+                    break;
+                case EGameEffectStackPolicy.Source:
+                    break;
+                case EGameEffectStackPolicy.Target:
+                    break;
+            }
+
+            void AddNewGameEffectSpec()
+            {
+                _gameEffectSpecList.Add(spec);
+                spec.OnAdd();
+                if (spec.CanRunning())
+                {
+                    spec.OnActive();
+                }
+                
+                OnGameEffectContainerDirty?.Invoke();   
+            }
         }
+        
     }
 }

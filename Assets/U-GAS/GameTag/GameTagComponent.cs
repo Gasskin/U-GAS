@@ -5,7 +5,10 @@ namespace U_GAS
 {
     public class GameTagComponent
     {
+        public event Action OnTagIsDirty;
+
         private int[] _gameTag;
+        private bool _isDirty;
 
         public void OnStart()
         {
@@ -25,6 +28,42 @@ namespace U_GAS
         public void AddTag(EGameTag gameTag)
         {
             TravelAdd(gameTag, 1);
+        }
+
+        public void AddTagsWithDirty(List<string> gameTags)
+        {
+            if (gameTags == null) 
+            {
+                return;
+            }
+            _isDirty = false;
+            foreach (string gameTag in gameTags)
+            {
+                AddTag(GameTagRegister.String2Enum[gameTag]);
+            }
+
+            if (_isDirty)
+            {
+                OnTagIsDirty?.Invoke();
+            }
+        }
+
+        public void RemoveTagsWithDirty(List<string> gameTags)
+        {
+            if (gameTags == null) 
+            {
+                return;
+            }
+            _isDirty = false;
+            foreach (string gameTag in gameTags)
+            {
+                RemoveTag(GameTagRegister.String2Enum[gameTag]);
+            }
+
+            if (_isDirty)
+            {
+                OnTagIsDirty?.Invoke();
+            }
         }
 
         public void RemoveTag(EGameTag gameTag)
@@ -111,12 +150,15 @@ namespace U_GAS
             }
             return false;
         }
-        
+
         private void TravelAdd(EGameTag tag, int value)
         {
             var idx = (int)tag;
+            var oldValue = _gameTag[idx];
             _gameTag[idx] += value;
             _gameTag[idx] = Math.Clamp(_gameTag[idx], 0, int.MaxValue);
+            var newValue = _gameTag[idx];
+            _isDirty = _isDirty || ((oldValue == 0) != (newValue == 0));
             if (GameTagRegister.Tree[idx] > 0)
             {
                 TravelAdd((EGameTag)GameTagRegister.Tree[idx], value);
