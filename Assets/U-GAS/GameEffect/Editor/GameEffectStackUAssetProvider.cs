@@ -51,7 +51,7 @@ namespace U_GAS.Editor
         public IUAsset GetUAsset()
         {
             var data = new GameEffectStack();
-            data.hashKey = $"{key}{stackPolicy}{maxCount}{durationRefreshPolicy}{periodResetPolicy}{expirePolicy}".GetHashCode();
+            data.hashKey = key.GetHashCode();
             data.stackPolicy = stackPolicy;
             data.maxCount = maxCount;
             data.durationRefreshPolicy = durationRefreshPolicy;

@@ -10,7 +10,7 @@ namespace U_GAS
         [ProtoMember(2)]
         public float b;
 
-        public override float CalculateMagnitude(GameEffect.GameEffectSpec spec, float input)
+        public override float CalculateMagnitude(GameEffectSpec spec, float input)
         {
             return input * k + b;
         }

@@ -7,7 +7,7 @@ namespace U_GAS
     [ProtoInclude(101, typeof(TestMagnitude))] 
     public class ModifierMagnitude : IUAsset
     {
-        public virtual float CalculateMagnitude(GameEffect.GameEffectSpec spec, float input)
+        public virtual float CalculateMagnitude(GameEffectSpec spec, float input)
         {
             return 0;
         }

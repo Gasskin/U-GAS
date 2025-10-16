@@ -8,30 +8,30 @@ namespace U_GAS
     {
         public event Action OnGameEffectContainerDirty;
         private GameAbilityComponent _owner;
-        private List<GameEffect.GameEffectSpec> _gameEffectSpecList = new();
+        private List<GameEffectSpec> _gameEffectSpecList = new();
 
         public void OnStart(GameAbilityComponent owner)
         {
             _owner = owner;
         }
         
-        public void GetSpecList(List<GameEffect.GameEffectSpec> list)
+        public void GetSpecList(List<GameEffectSpec> list)
         {
             list.Clear();
             list.AddRange(_gameEffectSpecList);
         }
 
-        public void AddGameEffectSpec(GameEffect.GameEffectSpec spec)
+        public void AddGameEffectSpec(GameEffectSpec spec)
         {
             if (!spec.CanApply())
             {
-                UPool<GameEffect.GameEffectSpec>.Release(spec);
+                UPool<GameEffectSpec>.Release(spec);
                 return;
             }
 
             if (spec.IsImmune())
             {
-                UPool<GameEffect.GameEffectSpec>.Release(spec);
+                UPool<GameEffectSpec>.Release(spec);
                 return;
             }
             
@@ -40,18 +40,50 @@ namespace U_GAS
             if (spec.GameEffect.durationPolicy == EDurationPolicy.Instant)
             {
                 spec.OnExecute();
-                UPool<GameEffect.GameEffectSpec>.Release(spec);
+                UPool<GameEffectSpec>.Release(spec);
                 return;
             }
 
             switch (spec.GameEffect.stack.stackPolicy)
             {
                 case EGameEffectStackPolicy.None:
+                {
+                    AddNewGameEffectSpec();
                     break;
-                case EGameEffectStackPolicy.Source:
-                    break;
+                }
                 case EGameEffectStackPolicy.Target:
+                {
+                    if (spec.GameEffect.stack.hashKey == 0) 
+                    {
+                        AddNewGameEffectSpec();
+                        return;
+                    }
+                    GameEffectSpec stackSpec = null;
+                    foreach (var tSpec in _gameEffectSpecList)
+                    {
+                        if (tSpec.IsValid && tSpec.GameEffect.StackEqualTo(spec.GameEffect))
+                        {
+                            stackSpec = tSpec;
+                        }
+                    }
+                    if (stackSpec == null) 
+                    {
+                        AddNewGameEffectSpec();
+                        return;
+                    }
+                    
                     break;
+                }
+                case EGameEffectStackPolicy.Source:
+                {
+                    if (spec.GameEffect.stack.hashKey == 0)
+                    {
+                        AddNewGameEffectSpec();
+                        return;
+                    }
+                    // todo
+                    break;
+                }
             }
 
             void AddNewGameEffectSpec()

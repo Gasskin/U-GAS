@@ -7,11 +7,11 @@ namespace U_GAS
 {
     public class GameEffectModifierSpec : IUPoolObject
     {
-        public GameEffect.GameEffectSpec Spec { get; private set; }
+        public GameEffectSpec Spec { get; private set; }
 
         public GameEffectModifier Modifier { get; private set; }
 
-        public void Init(GameEffect.GameEffectSpec arg1, GameEffectModifier arg2)
+        public void Init(GameEffectSpec arg1, GameEffectModifier arg2)
         {
             Spec = arg1;
             Modifier = arg2;
@@ -57,7 +57,7 @@ namespace U_GAS
             var isDirty = _modifierCache.Count > 0;
             ReleaseModifierSpecCache();
 
-            var specList = ListPool<GameEffect.GameEffectSpec>.Get();
+            var specList = ListPool<GameEffectSpec>.Get();
             _owner.GameEffectComponent.GetSpecList(specList);
             foreach (var spec in specList)
             {

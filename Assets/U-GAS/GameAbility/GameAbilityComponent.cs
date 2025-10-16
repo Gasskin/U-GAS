@@ -34,7 +34,7 @@ namespace U_GAS
             target.GameEffectComponent.AddGameEffectSpec(spec);
         }
 
-        public void ApplyModFromInstantGameEffect(GameEffect.GameEffectSpec spec)
+        public void ApplyModFromInstantGameEffect(GameEffectSpec spec)
         {
             foreach (var modifier in spec.GameEffect.modifiers)
             {
