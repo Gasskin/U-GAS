@@ -1,0 +1,18 @@
+<module name="Gas">
+    <!-- 基类 -->
+    <bean name="BaseMagnitude">
+    </bean>
+
+    <!-- y = k * x + b -->
+    <bean name="SimpleFloatMagnitude" parent="BaseMagnitude">
+        <var name="k" type="float"/>
+        <var name="b" type="float"/>
+    </bean>
+
+    <!-- y = attr.current * k + b -->
+    <bean name="AttrBasedMagnitude" parent="BaseMagnitude">
+        <var name="attr" type="float"/>
+        <var name="k" type="float"/>
+        <var name="b" type="float"/>
+    </bean>
+</module>

@@ -1,0 +1,18 @@
+<module name="Gas">
+    <bean name="GameEffectDuration">
+        <var name="duration_type" type="EGameEffectDurationType"/>
+        <var name="duration" type="float"/>
+        <var name="period" type="float"/>
+        <var name="period_ge" type="int#ref=Gas.TbGameEffect?"/>
+    </bean>
+
+    <bean name="GameEffectTags">
+        <var name="assets" type="(list#sep=,),string"/>
+        <var name="granted" type="(list#sep=,),string"/>
+        <var name="apply_required" type="(list#sep=,),string"/>
+        <var name="on_going_required" type="(list#sep=,),string"/>
+        <var name="immune_when" type="(list#sep=,),string"/>
+        <var name="remove_ge_with" type="(list#sep=,),string"/>
+        <var name="block_ge_with" type="(list#sep=,),string"/>
+    </bean>
+</module>

@@ -4,10 +4,8 @@ set CLIENT_ROOT=..\..\Assets\Design
 
 dotnet %LUBAN_DLL% ^
     -t client ^
-    -c cs-bin ^
-    -d bin ^
+    -d json ^
     --conf %CONF_ROOT%\luban.conf ^
-    -x outputDataDir=%CLIENT_ROOT%\Data ^
-    -x outputCodeDir=%CLIENT_ROOT%\Code
+    -x outputDataDir=debug
 
 pause
