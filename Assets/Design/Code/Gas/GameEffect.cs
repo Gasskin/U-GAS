@@ -19,7 +19,8 @@ public sealed partial class GameEffect : Luban.BeanBase
         Id = _buf.ReadInt();
         Duration = global::cfg.Gas.GameEffectDuration.DeserializeGameEffectDuration(_buf);
         Tags = global::cfg.Gas.GameEffectTags.DeserializeGameEffectTags(_buf);
-        Test1 = global::cfg.Gas.BaseMagnitude.DeserializeBaseMagnitude(_buf);
+        Stack = global::cfg.Gas.GameEffectStack.DeserializeGameEffectStack(_buf);
+        Magnitude = global::cfg.Gas.BaseMagnitude.DeserializeBaseMagnitude(_buf);
     }
 
     public static GameEffect DeserializeGameEffect(ByteBuf _buf)
@@ -30,7 +31,8 @@ public sealed partial class GameEffect : Luban.BeanBase
     public readonly int Id;
     public readonly Gas.GameEffectDuration Duration;
     public readonly Gas.GameEffectTags Tags;
-    public readonly Gas.BaseMagnitude Test1;
+    public readonly Gas.GameEffectStack Stack;
+    public readonly Gas.BaseMagnitude Magnitude;
    
     public const int __ID__ = -1113892200;
     public override int GetTypeId() => __ID__;
@@ -39,7 +41,8 @@ public sealed partial class GameEffect : Luban.BeanBase
     {
         Duration?.ResolveRef(tables);
         Tags?.ResolveRef(tables);
-        Test1?.ResolveRef(tables);
+        Stack?.ResolveRef(tables);
+        Magnitude?.ResolveRef(tables);
     }
 
     public override string ToString()
@@ -48,7 +51,8 @@ public sealed partial class GameEffect : Luban.BeanBase
         + "id:" + Id + ","
         + "duration:" + Duration + ","
         + "tags:" + Tags + ","
-        + "test1:" + Test1 + ","
+        + "stack:" + Stack + ","
+        + "magnitude:" + Magnitude + ","
         + "}";
     }
 }

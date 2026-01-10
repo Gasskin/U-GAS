@@ -3,6 +3,8 @@
         <var name="duration_type" type="EGameEffectDurationType"/>
         <var name="duration" type="float"/>
         <var name="period" type="float"/>
+        <!-- 第一周期立刻执行 -->
+        <var name="first_period_immediately" type="bool"/>
         <var name="period_ge" type="int#ref=Gas.TbGameEffect?"/>
     </bean>
 

@@ -19,6 +19,7 @@ public sealed partial class GameEffectDuration : Luban.BeanBase
         DurationType = (Gas.EGameEffectDurationType)_buf.ReadInt();
         Duration = _buf.ReadFloat();
         Period = _buf.ReadFloat();
+        FirstPeriodImmediately = _buf.ReadBool();
         PeriodGe = _buf.ReadInt();
         PeriodGe_Ref = null;
     }
@@ -31,6 +32,7 @@ public sealed partial class GameEffectDuration : Luban.BeanBase
     public readonly Gas.EGameEffectDurationType DurationType;
     public readonly float Duration;
     public readonly float Period;
+    public readonly bool FirstPeriodImmediately;
     public readonly int PeriodGe;
     public Gas.GameEffect PeriodGe_Ref;
    
@@ -48,6 +50,7 @@ public sealed partial class GameEffectDuration : Luban.BeanBase
         + "durationType:" + DurationType + ","
         + "duration:" + Duration + ","
         + "period:" + Period + ","
+        + "firstPeriodImmediately:" + FirstPeriodImmediately + ","
         + "periodGe:" + PeriodGe + ","
         + "}";
     }

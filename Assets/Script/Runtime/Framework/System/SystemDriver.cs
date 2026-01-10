@@ -3,9 +3,30 @@ using UnityEngine;
 
 public class SystemDriver : MonoBehaviour
 {
+#region static
+    private static SystemDriver s_instance;
+
+    public static T GetSystem<T>() where T : BaseSystem
+    {
+        if (s_instance == null)
+        {
+            return null;
+        }
+        for (int i = 0; i < s_instance._baseSystems.Count; i++)
+        {
+            if (s_instance._baseSystems[i] is T sys)
+            {
+                return sys;
+            }
+        }
+        return null;
+    }
+#endregion
+
     private List<BaseSystem> _baseSystems = new()
     {
         new EntitySystem(),
+        new DesignSystem(),
     };
 
     private List<ITickSystem> _tickSystems = new();
@@ -30,6 +51,8 @@ public class SystemDriver : MonoBehaviour
                 _lateTickSystems.Add(lateTick);
             }
         }
+        DontDestroyOnLoad(this);
+        s_instance = this;
     }
 
     private void OnDestroy()

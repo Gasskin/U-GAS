@@ -5,14 +5,21 @@
 
     <!-- y = k * x + b -->
     <bean name="SimpleFloatMagnitude" parent="BaseMagnitude">
-        <var name="k" type="float"/>
-        <var name="b" type="float"/>
+        <var name="simple_float_k" type="float"/>
+        <var name="simple_float_b" type="float"/>
     </bean>
 
     <!-- y = attr.current * k + b -->
     <bean name="AttrBasedMagnitude" parent="BaseMagnitude">
-        <var name="attr" type="float"/>
-        <var name="k" type="float"/>
-        <var name="b" type="float"/>
+        <var name="attr_based_attr" type="EAttributeId"/>
+        <var name="attr_based_k" type="float"/>
+        <var name="attr_based_b" type="float"/>
+    </bean>
+
+
+    <bean name="Modifiers">
+        <var name="target_attr" type="EAttributeId"/>
+        <var name="operate" type="EModifierOperation"/>
+        <var name="magenitude" type="BaseMagnitude"/>
     </bean>
 </module>
