@@ -15,4 +15,12 @@
         <var name="remove_ge_with" type="(list#sep=,),string"/>
         <var name="block_ge_with" type="(list#sep=,),string"/>
     </bean>
+
+    <bean name="GameEffectStack">
+        <var name="stack_type" type="EGameEffectStackType"/>
+        <var name="count_limit" type="int"/>
+        <var name="refresh_duration_on_stack" type="bool"/>
+        <var name="refresh_period_on_stack" type="bool"/>
+        <var name="expire_type" type="EGameEffectStackExpireType"/>
+    </bean>
 </module>
