@@ -16,9 +16,9 @@ public sealed partial class AttrBasedMagnitude : BaseMagnitude
 {
     public AttrBasedMagnitude(ByteBuf _buf)  : base(_buf) 
     {
-        Attr = _buf.ReadFloat();
-        K = _buf.ReadFloat();
-        B = _buf.ReadFloat();
+        AttrBasedAttr = (Gas.EAttributeId)_buf.ReadInt();
+        AttrBasedK = _buf.ReadFloat();
+        AttrBasedB = _buf.ReadFloat();
     }
 
     public static AttrBasedMagnitude DeserializeAttrBasedMagnitude(ByteBuf _buf)
@@ -26,9 +26,9 @@ public sealed partial class AttrBasedMagnitude : BaseMagnitude
         return new Gas.AttrBasedMagnitude(_buf);
     }
 
-    public readonly float Attr;
-    public readonly float K;
-    public readonly float B;
+    public readonly Gas.EAttributeId AttrBasedAttr;
+    public readonly float AttrBasedK;
+    public readonly float AttrBasedB;
    
     public const int __ID__ = 16082275;
     public override int GetTypeId() => __ID__;
@@ -41,9 +41,9 @@ public sealed partial class AttrBasedMagnitude : BaseMagnitude
     public override string ToString()
     {
         return "{ "
-        + "attr:" + Attr + ","
-        + "k:" + K + ","
-        + "b:" + B + ","
+        + "attrBasedAttr:" + AttrBasedAttr + ","
+        + "attrBasedK:" + AttrBasedK + ","
+        + "attrBasedB:" + AttrBasedB + ","
         + "}";
     }
 }

@@ -2,9 +2,9 @@ namespace cfg.Gas
 {
     public partial class AttrBasedMagnitude
     {
-        public override float Calculate(float inValue)
+        public override float Calculate(GameEffectSpec spec)
         {
-            return Attr * K + B;
+            return 0;
         }
     }
 }

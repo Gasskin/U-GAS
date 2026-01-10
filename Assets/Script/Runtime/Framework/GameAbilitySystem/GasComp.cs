@@ -60,16 +60,16 @@ public class GasComp : EntityComp
 
     public void ApplyInstantGameEffect(GameEffectSpec spec)
     {
-        foreach (var modifier in spec.GameEffect.modifiers)
+        foreach (var modifier in spec.GameEffect.Modifiers)
         {
-            var stat = GameAttributeComponent.GetAttribute(modifier.attribute);
+            var stat = GameAttributeComponent.GetAttribute(modifier.TargetAttr);
             if (stat == null)
             {
-                throw new NullReferenceException($"Stat of '{modifier.attribute}' not found!");
+                throw new NullReferenceException($"Attribute is null: {modifier.TargetAttr}");
             }
-            var magnitude = modifier.magnitude.CalculateMagnitude(spec);
+            var magnitude = modifier.Magenitude.Calculate(spec);
             var newValue = stat.BaseValue;
-            switch (modifier.operation)
+            switch (modifier.Operate)
             {
                 case EModifierOperation.Add:
                     newValue += magnitude;
@@ -87,7 +87,7 @@ public class GasComp : EntityComp
                     newValue = magnitude;
                     break;
                 default:
-                    throw new NotSupportedException($"Operation '{modifier.operation}' not supported!");
+                    throw new NotSupportedException($"Operation '{modifier.Operate}' not supported!");
             }
             stat.SetBaseValue(newValue, false);
         }

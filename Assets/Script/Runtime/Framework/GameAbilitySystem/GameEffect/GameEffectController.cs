@@ -23,7 +23,8 @@ public class GameEffectController
             Pool<GameEffectSpec>.Release(spec);
             return 0;
         }
+
+
+        return 0;
     }
-    
-    
 }

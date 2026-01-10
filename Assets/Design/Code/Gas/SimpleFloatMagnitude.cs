@@ -16,8 +16,8 @@ public sealed partial class SimpleFloatMagnitude : BaseMagnitude
 {
     public SimpleFloatMagnitude(ByteBuf _buf)  : base(_buf) 
     {
-        K = _buf.ReadFloat();
-        B = _buf.ReadFloat();
+        SimpleFloatK = _buf.ReadFloat();
+        SimpleFloatB = _buf.ReadFloat();
     }
 
     public static SimpleFloatMagnitude DeserializeSimpleFloatMagnitude(ByteBuf _buf)
@@ -25,8 +25,8 @@ public sealed partial class SimpleFloatMagnitude : BaseMagnitude
         return new Gas.SimpleFloatMagnitude(_buf);
     }
 
-    public readonly float K;
-    public readonly float B;
+    public readonly float SimpleFloatK;
+    public readonly float SimpleFloatB;
    
     public const int __ID__ = -1815466597;
     public override int GetTypeId() => __ID__;
@@ -39,8 +39,8 @@ public sealed partial class SimpleFloatMagnitude : BaseMagnitude
     public override string ToString()
     {
         return "{ "
-        + "k:" + K + ","
-        + "b:" + B + ","
+        + "simpleFloatK:" + SimpleFloatK + ","
+        + "simpleFloatB:" + SimpleFloatB + ","
         + "}";
     }
 }

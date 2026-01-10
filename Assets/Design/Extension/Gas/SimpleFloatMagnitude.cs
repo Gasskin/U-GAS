@@ -2,9 +2,9 @@ namespace cfg.Gas
 {
     public partial class SimpleFloatMagnitude
     {
-        public override float Calculate(float inValue)
+        public override float Calculate(GameEffectSpec spec)
         {
-            return inValue * K + B;
+            return 0;
         }
     }
 }
