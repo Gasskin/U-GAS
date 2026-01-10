@@ -5,6 +5,7 @@ public class SystemDriver : MonoBehaviour
 {
     private List<BaseSystem> _baseSystems = new()
     {
+        new EntitySystem(),
     };
 
     private List<ITickSystem> _tickSystems = new();

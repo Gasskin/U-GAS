@@ -9,37 +9,37 @@ using UnityEngine;
 
 public class TagNode
 {
-    public string backup;
-    public string parentFullPath;
-    public string tagName;
-    public TagNode parent;
-    public int index;
-    public List<TagNode> childTag;
+    public string Backup;
+    public string ParentFullPath;
+    public string TagName;
+    public TagNode Parent;
+    public int Index;
+    public List<TagNode> ChildTag;
 }
 
 [CreateAssetMenu(fileName = "GameAbilitySystemConfig", menuName = "Gas/GameAbilitySystemConfig")]
 public class GameAbilitySystemConfig : ScriptableObject
 {
-    public DefaultAsset gameTagRoot;
-    public DefaultAsset gameTagGenCodeRoot;
+    public DefaultAsset GameTagRoot;
+    public DefaultAsset GameTagGenCodeRoot;
 
-    private readonly Dictionary<string, TagNode> s_TagDic = new();
-    private readonly List<TagNode> s_TagTree = new();
-    private int s_TagIdx;
+    private readonly Dictionary<string, TagNode> _tagDic = new();
+    private readonly List<TagNode> _tagTree = new();
+    private int _tagIdx;
 
     [Button]
     public void GenGameTag()
     {
-        var path = AssetDatabase.GetAssetPath(gameTagRoot);
+        var path = AssetDatabase.GetAssetPath(GameTagRoot);
         var folder1 = Directory.GetDirectories(path, "*", SearchOption.AllDirectories);
         var folder2 = folder1.Select((s => s.Replace($"{path}\\", ""))).ToList();
 
-        s_TagDic.Clear();
-        s_TagTree.Clear();
-        s_TagIdx = 1;
+        _tagDic.Clear();
+        _tagTree.Clear();
+        _tagIdx = 1;
 
         CreateTagTree(folder2);
-        foreach (var tagNode in s_TagTree)
+        foreach (var tagNode in _tagTree)
         {
             SetTagIndex(tagNode);
         }
@@ -68,34 +68,34 @@ public class GameAbilitySystemConfig : ScriptableObject
             var backup = split.Length > 1 ? split[1] : "空";
             var tag = new TagNode()
             {
-                parentFullPath = parentFullPath,
-                tagName = split[0],
-                backup = backup,
-                childTag = new List<TagNode>()
+                ParentFullPath = parentFullPath,
+                TagName = split[0],
+                Backup = backup,
+                ChildTag = new List<TagNode>()
             };
-            s_TagDic.Add(f, tag);
+            _tagDic.Add(f, tag);
             // 说明是根节点
             if (string.IsNullOrEmpty(parentFullPath))
             {
-                s_TagTree.Add(tag);
+                _tagTree.Add(tag);
             }
         }
         // 添加父子关系
-        foreach (var tag in s_TagDic.Values)
+        foreach (var tag in _tagDic.Values)
         {
-            if (!string.IsNullOrEmpty(tag.parentFullPath))
+            if (!string.IsNullOrEmpty(tag.ParentFullPath))
             {
-                var parent = s_TagDic[tag.parentFullPath];
-                tag.parent = parent;
-                parent.childTag.Add(tag);
+                var parent = _tagDic[tag.ParentFullPath];
+                tag.Parent = parent;
+                parent.ChildTag.Add(tag);
             }
         }
     }
 
     private void SetTagIndex(TagNode tagNode)
     {
-        tagNode.index = s_TagIdx++;
-        foreach (var tag in tagNode.childTag)
+        tagNode.Index = _tagIdx++;
+        foreach (var tag in tagNode.ChildTag)
         {
             SetTagIndex(tag);
         }
@@ -103,7 +103,7 @@ public class GameAbilitySystemConfig : ScriptableObject
 
     private void GenTagEnum()
     {
-        var path = AssetDatabase.GetAssetPath(gameTagGenCodeRoot) + "/EGameTag.cs";
+        var path = AssetDatabase.GetAssetPath(GameTagGenCodeRoot) + "/EGameTag.cs";
         if (File.Exists(path))
         {
             File.Delete(path);
@@ -116,7 +116,7 @@ public class GameAbilitySystemConfig : ScriptableObject
         sb.AppendLine("\tpublic enum EGameTag");
         sb.AppendLine("\t{");
         sb.AppendLine($"\t\tNone = 0,");
-        foreach (var tagNode in s_TagTree)
+        foreach (var tagNode in _tagTree)
         {
             AddTag(tagNode);
         }
@@ -127,17 +127,17 @@ public class GameAbilitySystemConfig : ScriptableObject
 
         void AddTag(TagNode tagNode)
         {
-            if (!string.IsNullOrEmpty(tagNode.backup))
+            if (!string.IsNullOrEmpty(tagNode.Backup))
             {
-                var backup = GetTagFullBackup(tagNode, tagNode.backup);
+                var backup = GetTagFullBackup(tagNode, tagNode.Backup);
                 sb.AppendLine($"\t\t/// <summary>");
                 sb.AppendLine($"\t\t/// \"{backup}\"");
                 sb.AppendLine($"\t\t/// </summary>");
                 sb.AppendLine($"\t\t[LabelText(\"{backup}\")]");
             }
-            var fullName = GetTagFullName(tagNode, tagNode.tagName);
-            sb.AppendLine($"\t\t{fullName} = {tagNode.index},");
-            foreach (var tag in tagNode.childTag)
+            var fullName = GetTagFullName(tagNode, tagNode.TagName);
+            sb.AppendLine($"\t\t{fullName} = {tagNode.Index},");
+            foreach (var tag in tagNode.ChildTag)
             {
                 AddTag(tag);
             }
@@ -146,25 +146,25 @@ public class GameAbilitySystemConfig : ScriptableObject
 
     private string GetTagFullName(TagNode tagNode, string tagName)
     {
-        if (tagNode.parent == null)
+        if (tagNode.Parent == null)
         {
             return tagName;
         }
-        return GetTagFullName(tagNode.parent, $"{tagNode.parent.tagName}_{tagName}");
+        return GetTagFullName(tagNode.Parent, $"{tagNode.Parent.TagName}_{tagName}");
     }
 
     private string GetTagFullBackup(TagNode tagNode, string backup)
     {
-        if (tagNode.parent == null)
+        if (tagNode.Parent == null)
         {
             return backup;
         }
-        return GetTagFullBackup(tagNode.parent, $"{tagNode.parent.backup}/{backup}");
+        return GetTagFullBackup(tagNode.Parent, $"{tagNode.Parent.Backup}/{backup}");
     }
 
     private void GenTagRegister()
     {
-        var path = AssetDatabase.GetAssetPath(gameTagGenCodeRoot) + "/GameTagRegister.cs";
+        var path = AssetDatabase.GetAssetPath(GameTagGenCodeRoot) + "/GameTagRegister.cs";
         if (File.Exists(path))
         {
             File.Delete(path);
@@ -178,20 +178,20 @@ public class GameAbilitySystemConfig : ScriptableObject
         // sb.AppendLine("{");
         sb.AppendLine("\tpublic static class GameTagRegister");
         sb.AppendLine("\t{");
-        sb.AppendLine($"\t\tpublic static readonly int Size = {s_TagIdx};");
-        sb.AppendLine("\t\tpublic static readonly int[] Tree =");
+        sb.AppendLine($"\t\tpublic static readonly int s_Size = {_tagIdx};");
+        sb.AppendLine("\t\tpublic static readonly int[] s_Tree =");
         sb.AppendLine("\t\t{");
         sb.AppendLine("\t\t\t0,\t// 0 Null");
-        foreach (var tagNode in s_TagTree)
+        foreach (var tagNode in _tagTree)
         {
             AddTree(tagNode);
         }
         sb.AppendLine("\t\t};");
-        sb.AppendLine("\t\tpublic static readonly Dictionary<string, EGameTag> StringToEnum = new()");
+        sb.AppendLine("\t\tpublic static readonly Dictionary<string, EGameTag> s_StringToEnum = new()");
         sb.AppendLine("\t\t{");
-        foreach (var tagNode in s_TagDic.Values)
+        foreach (var tagNode in _tagDic.Values)
         {
-            var fullName = GetTagFullName(tagNode, tagNode.tagName);
+            var fullName = GetTagFullName(tagNode, tagNode.TagName);
             sb.AppendLine($"\t\t\t{{ \"{fullName}\", EGameTag.{fullName} }},");
         }
         sb.AppendLine("\t\t};");
@@ -240,9 +240,9 @@ public class GameAbilitySystemConfig : ScriptableObject
 
         void AddTree(TagNode tagNode)
         {
-            var parentIndex = tagNode.parent?.index ?? 0;
-            sb.AppendLine($"\t\t\t{parentIndex},\t// {tagNode.index} {GetTagFullName(tagNode, tagNode.tagName)}");
-            foreach (var tag in tagNode.childTag)
+            var parentIndex = tagNode.Parent?.Index ?? 0;
+            sb.AppendLine($"\t\t\t{parentIndex},\t// {tagNode.Index} {GetTagFullName(tagNode, tagNode.TagName)}");
+            foreach (var tag in tagNode.ChildTag)
             {
                 AddTree(tag);
             }
