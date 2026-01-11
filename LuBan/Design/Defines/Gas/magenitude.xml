@@ -3,23 +3,21 @@
     <bean name="BaseMagnitude">
     </bean>
 
-    <!-- y = k * x + b -->
-    <bean name="SimpleFloatMagnitude" parent="BaseMagnitude">
-        <var name="simple_float_k" type="float"/>
-        <var name="simple_float_b" type="float"/>
-    </bean>
-
-    <!-- y = attr.current * k + b -->
-    <bean name="AttrBasedMagnitude" parent="BaseMagnitude">
-        <var name="attr_based_attr" type="EAttributeId"/>
-        <var name="attr_based_k" type="float"/>
-        <var name="attr_based_b" type="float"/>
-    </bean>
-
-
-    <bean name="Modifiers">
+    <bean name="Modifier">
         <var name="target_attr" type="EAttributeId"/>
         <var name="operate" type="EModifierOperation"/>
-        <var name="magenitude" type="BaseMagnitude"/>
+        <var name="magnitude" type="BaseMagnitude"/>
+    </bean>
+
+    <!-- y = b -->
+    <bean name="FloatMagnitude" parent="BaseMagnitude">
+        <var name="float_b" type="float"/>
+    </bean>
+
+    <!-- y = attr_base * (1 + attr_k) + attr_b -->
+    <bean name="RelativeAttrMagnitude" parent="BaseMagnitude">
+        <var name="relative_attr_base" type="EAttributeId"/>
+        <var name="relative_attr_k" type="EAttributeId"/>
+        <var name="relative_attr_b" type="EAttributeId"/>
     </bean>
 </module>

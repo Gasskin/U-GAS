@@ -23,10 +23,12 @@ public class SystemDriver : MonoBehaviour
     }
 #endregion
 
-    private List<BaseSystem> _baseSystems = new()
+    private readonly List<BaseSystem> _baseSystems = new()
     {
-        new EntitySystem(),
         new DesignSystem(),
+        new BattleTimeSystem(),
+        new EntitySystem(),
+        new ProcedureSystem(),
     };
 
     private List<ITickSystem> _tickSystems = new();
@@ -35,6 +37,8 @@ public class SystemDriver : MonoBehaviour
 
     private void Start()
     {
+        DontDestroyOnLoad(this);
+        s_instance = this;
         foreach (var sys in _baseSystems)
         {
             sys.Initialize();
@@ -51,8 +55,6 @@ public class SystemDriver : MonoBehaviour
                 _lateTickSystems.Add(lateTick);
             }
         }
-        DontDestroyOnLoad(this);
-        s_instance = this;
     }
 
     private void OnDestroy()
@@ -73,7 +75,7 @@ public class SystemDriver : MonoBehaviour
 
     private void LateUpdate()
     {
-        for (int i = 0; i < _tickSystems.Count; i++)
+        for (int i = 0; i < _lateTickSystems.Count; i++)
         {
             _lateTickSystems[i].LateTick(Time.deltaTime);
         }
@@ -81,7 +83,7 @@ public class SystemDriver : MonoBehaviour
 
     private void FixedUpdate()
     {
-        for (int i = 0; i < _tickSystems.Count; i++)
+        for (int i = 0; i < _fixedTickSystems.Count; i++)
         {
             _fixedTickSystems[i].FixedTick(Time.deltaTime);
         }

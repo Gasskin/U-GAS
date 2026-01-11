@@ -22,8 +22,8 @@ public abstract partial class BaseMagnitude : Luban.BeanBase
     {
         switch (_buf.ReadInt())
         {
-            case Gas.SimpleFloatMagnitude.__ID__: return new Gas.SimpleFloatMagnitude(_buf);
-            case Gas.AttrBasedMagnitude.__ID__: return new Gas.AttrBasedMagnitude(_buf);
+            case Gas.FloatMagnitude.__ID__: return new Gas.FloatMagnitude(_buf);
+            case Gas.RelativeAttrMagnitude.__ID__: return new Gas.RelativeAttrMagnitude(_buf);
             default: throw new SerializationException();
         }
     }

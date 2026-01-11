@@ -7,7 +7,7 @@ namespace cfg.Gas
     {
         public List<EGameTag> Tags;
 
-        private int[] _tags = new int[GameTagRegister.Size];
+        private int[] _tags = new int[GameTagRegister.s_Size];
 
         public GameTagContainer(List<string> tags)
         {
@@ -32,8 +32,25 @@ namespace cfg.Gas
                     throw new ArgumentOutOfRangeException($"Tag index out of range");
                 }
                 _tags[idx] += 1;
-                idx = GameTagRegister.Tree[idx];
+                idx = GameTagRegister.s_Tree[idx];
             }
+        }
+
+        public bool HasTag(EGameTag tag)
+        {
+            return _tags[(int)tag] > 0;
+        }
+
+        public bool HasAnyTags(List<EGameTag> tags)
+        {
+            for (int i = 0; i < tags.Count; i++)
+            {
+                if (HasTag(tags[i]))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

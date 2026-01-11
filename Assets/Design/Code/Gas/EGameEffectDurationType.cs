@@ -23,7 +23,7 @@ namespace cfg.Gas
         /// </summary>
         Infinite = 2,
         /// <summary>
-        /// 时间
+        /// 持续
         /// </summary>
         Duration = 3,
     }

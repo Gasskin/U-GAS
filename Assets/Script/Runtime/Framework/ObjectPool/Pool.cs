@@ -5,9 +5,9 @@ public interface IPoolObject
     void OnRelease();
 }
 
-public static class Pool<T> where T : class, IPoolObject
+public static class Pool<T> where T : class, IPoolObject, new()
 {
-    private static ObjectPool<T> s_pool = new(null);
+    private static ObjectPool<T> s_pool = new((() => new T()));
 
     public static T Get()
     {
