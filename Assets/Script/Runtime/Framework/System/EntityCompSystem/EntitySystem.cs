@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Cysharp.Threading.Tasks;
 using UnityEngine.Pool;
 
 public class EntitySystem : BaseSystem, ITickSystem, IFixedTickSystem, ILateTickSystem
@@ -14,8 +15,9 @@ public class EntitySystem : BaseSystem, ITickSystem, IFixedTickSystem, ILateTick
 
     private ulong _entityIdGenerator = 1;
 
-    public override void Initialize()
+    public override async UniTask Initialize()
     {
+        await UniTask.Yield();
     }
 
     public override void Close()

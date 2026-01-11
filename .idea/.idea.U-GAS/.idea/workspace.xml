@@ -5,43 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0c3c9b50-d8a9-4143-81cd-bf63752d18e6" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/GameAbilitySystem/GameEffect/GameEffectController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/GameAbilitySystem/GameEffect/GameEffectSpec.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.U-GAS/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.U-GAS/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Design/Code/Gas/AttrBasedMagnitude.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Design/Code/Gas/BaseMagnitude.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Design/Code/Gas/BaseMagnitude.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Design/Code/Gas/EAttributeId.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Design/Code/Gas/EAttributeId.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Design/Code/Gas/EGameEffectDurationType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Design/Code/Gas/EGameEffectDurationType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Design/Code/Gas/GameEffect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Design/Code/Gas/GameEffect.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Design/Code/Gas/Modifiers.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Design/Code/Gas/Modifier.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Design/Code/Gas/SimpleFloatMagnitude.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Design/Data/gas_tbgameeffect.bytes" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Design/Data/gas_tbgameeffect.bytes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Design/Extension/Gas/AttrBasedMagnitude.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Design/Extension/Gas/GameEffect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Design/Extension/Gas/GameEffect.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Design/Extension/Gas/GameTagContainer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Design/Extension/Gas/GameTagContainer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Design/Extension/Gas/SimpleFloatMagnitude.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Empty.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Empty.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Editor.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Editor.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/DesignSystem/DesignSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/DesignSystem/DesignSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/EntityCompSystem/Entity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/EntityCompSystem/Entity.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/EntityCompSystem/EntityComp.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/EntityCompSystem/EntityComp.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/EntityCompSystem/EntityCompAttribute.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/EntityCompSystem/EntitySystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/EntityCompSystem/EntitySystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/GameAbilitySystem/Editor/Editor.asmref" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/GameAbilitySystem/Editor/GameAbilitySystemConfig.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/GameAbilitySystem/Editor/GameAbilitySystemConfig.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/GameAbilitySystem/GameEffect/GameEffectController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/GameAbilitySystem/GameEffect/GameEffectSpec.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/GameAbilitySystem/GameTag/GameTagController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/GameAbilitySystem/GameTag/GameTagController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/GameAbilitySystem/GasComp.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/GameAbilitySystem/GasComp.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/ObjectPool/Pool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/ObjectPool/Pool.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Editor.asmdef" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Gas/GameAbilitySystemConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Gas/GameAbilitySystemConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Editor/Gas/GasWindow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Editor/Gas/GasWindow.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/BaseSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/BaseSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/BattleTimeSystem/BattleTimeSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/BattleTimeSystem/BattleTimeSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/DesignSystem/DesignSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/DesignSystem/DesignSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/EntityCompSystem/Entity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/EntityCompSystem/Entity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/EntityCompSystem/EntityComp.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/EntityCompSystem/EntityComp.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/EntityCompSystem/EntitySystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/EntityCompSystem/EntitySystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/GameAbilitySystem/GasComp.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/GameAbilitySystem/GasComp.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/ProcedureSystem/ProcedureSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/ProcedureSystem/ProcedureSystem.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/SystemDriver.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/SystemDriver.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Game/GameAbility/GameTag/EGameTag.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Game/GameAbility/GameTag/GameTagRegister.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LuBan/Design/Datas/__tables__.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/LuBan/Design/Datas/__tables__.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LuBan/Design/Datas/技能/GameEffect.xlsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LuBan/Design/Datas/技能/__enums__.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/LuBan/Design/Datas/技能/__enums__.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LuBan/Design/Defines/Gas/magenitude.xml" beforeDir="false" afterPath="$PROJECT_DIR$/LuBan/Design/Defines/Gas/magenitude.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Runtime/Runtime.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Runtime/Runtime.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-6000.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-6000.dwlt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_GAS.zip" beforeDir="false" />
@@ -58,6 +38,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4433099e545d41c7811d6234e87bfc959c2400/07/768bf4fe/Toolbar.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4433099e545d41c7811d6234e87bfc959c2400/74/e4729370/EditorWindow.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4ea9c5843f6c401888efb0bdc93eda2146ae00/0a/4704947a/Dictionary`2.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4ea9c5843f6c401888efb0bdc93eda2146ae00/2f/9640c2da/Single.cs" root0="SKIP_HIGHLIGHTING" />
@@ -66,8 +47,9 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4ea9c5843f6c401888efb0bdc93eda2146ae00/f9/8fcba766/NullReferenceException.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Design/Code/Gas/FloatMagnitude.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/Editor/Gas/GasWindow.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/BattleTimeSystem/BattleTimeSystem.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/BattleTimeSystem/BattleTimeSystem.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/GameAbilitySystem/GameEffect/GameEffectSpec.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Script/Runtime/Framework/System/YooSystem/YooSystem.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -94,7 +76,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "preferences.sourceCode.C#",
     "vue.rearranger.settings.migration": "true",
     "附加到 Unity 编辑器.附加到 Unity 编辑器.executor": "Debug"
   }
@@ -122,10 +104,10 @@
       <option name="PTY_MODE" value="Auto" />
       <method v="2" />
     </configuration>
-    <configuration name="附加到 Unity 编辑器" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="30960">
+    <configuration name="附加到 Unity 编辑器" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="43996">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="30960" />
+      <option name="pid" value="43996" />
       <option name="projectPathOnTarget" />
       <option name="runtimes">
         <list>
@@ -176,7 +158,7 @@
       <workItem from="1768061455693" duration="10000" />
       <workItem from="1768061539919" duration="3649000" />
       <workItem from="1768065259799" duration="2109000" />
-      <workItem from="1768105973982" duration="15885000" />
+      <workItem from="1768105973982" duration="24984000" />
     </task>
     <servers />
   </component>
@@ -238,6 +220,7 @@
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="Type#U_GAS.Editor.TagNode" memberName="parent" />
+        <PinnedItemInfo parentTag="Type#cfg.Gas.Modifier" memberName="Magnitude" />
       </pinned-members>
     </pin-to-top-manager>
   </component>

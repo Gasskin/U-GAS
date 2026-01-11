@@ -1,0 +1,11 @@
+{
+    "FileVersion": "1.0.0",
+    "PackageName": "DefaultPackage",
+    "PackageVersion": "2026-01-11-1247",
+    "Wrappers": [
+        {
+            "BundleGUID": "0a44c0f790ef651a2ee5dfd1af6e97de",
+            "FileName": "defaultpackage_assets_bundles_prefabs_unit.bundle"
+        }
+    ]
+}

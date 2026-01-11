@@ -1,5 +1,10 @@
 public abstract class EntityComp 
 {
+#region Priority
+    public const int c_Gas = 1;
+    public const int c_EntityView = 2;
+#endregion
+    
     public abstract int Priority { get; } 
 
     public Entity Entity;
@@ -27,12 +32,4 @@ public abstract class EntityComp
     public virtual void FixedTick(float dt)
     {
     }
-}
-
-/// <summary>
-/// 要求>0
-/// </summary>
-public class EntityCompPriority
-{
-    public const int c_Gas = 1;
 }

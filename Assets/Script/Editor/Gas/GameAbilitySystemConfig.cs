@@ -6,6 +6,7 @@ using System.Text;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class TagNode
 {
@@ -20,8 +21,8 @@ public class TagNode
 [CreateAssetMenu(fileName = "GameAbilitySystemConfig", menuName = "Gas/GameAbilitySystemConfig")]
 public class GameAbilitySystemConfig : ScriptableObject
 {
-    public DefaultAsset GameTagRoot;
-    public DefaultAsset GameTagGenCodeRoot;
+    public Object GameTagRoot;
+    public Object GameTagGenCodeRoot;
 
     private readonly Dictionary<string, TagNode> _tagDic = new();
     private readonly List<TagNode> _tagTree = new();

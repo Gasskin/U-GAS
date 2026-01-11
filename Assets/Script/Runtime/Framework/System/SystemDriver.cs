@@ -1,20 +1,27 @@
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+
+public enum EYooAssetsMode
+{
+    Editor,
+    Offline,
+}
 
 public class SystemDriver : MonoBehaviour
 {
 #region static
-    private static SystemDriver s_instance;
+    public static SystemDriver Instance { get;private set; }
 
     public static T GetSystem<T>() where T : BaseSystem
     {
-        if (s_instance == null)
+        if (Instance == null)
         {
             return null;
         }
-        for (int i = 0; i < s_instance._baseSystems.Count; i++)
+        for (int i = 0; i < Instance._baseSystems.Count; i++)
         {
-            if (s_instance._baseSystems[i] is T sys)
+            if (Instance._baseSystems[i] is T sys)
             {
                 return sys;
             }
@@ -23,8 +30,13 @@ public class SystemDriver : MonoBehaviour
     }
 #endregion
 
+    public RectTransform EntityRoot;
+    
+    public EYooAssetsMode YooAssetsMode;
+
     private readonly List<BaseSystem> _baseSystems = new()
     {
+        new YooSystem(),
         new DesignSystem(),
         new BattleTimeSystem(),
         new EntitySystem(),
@@ -38,10 +50,16 @@ public class SystemDriver : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(this);
-        s_instance = this;
+        Instance = this;
+        StartAsync().Forget();
+
+    }
+
+    private async UniTaskVoid StartAsync()
+    {
         foreach (var sys in _baseSystems)
         {
-            sys.Initialize();
+            await sys.Initialize();
             if (sys is ITickSystem tick)
             {
                 _tickSystems.Add(tick);
@@ -59,10 +77,11 @@ public class SystemDriver : MonoBehaviour
 
     private void OnDestroy()
     {
-        foreach (var sys in _baseSystems)
+        for (int i = _baseSystems.Count - 1; i >= 0; i--)
         {
-            sys.Close();
+            _baseSystems[i].Close();
         }
+        Instance = null;
     }
 
     private void Update()

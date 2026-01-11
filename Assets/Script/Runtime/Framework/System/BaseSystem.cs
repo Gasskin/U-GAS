@@ -1,6 +1,8 @@
+using Cysharp.Threading.Tasks;
+
 public abstract class BaseSystem
 {
-    public abstract void Initialize();
+    public abstract UniTask Initialize();
     public abstract void Close();
 }
 

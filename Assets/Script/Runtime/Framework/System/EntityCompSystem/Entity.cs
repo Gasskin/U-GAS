@@ -87,7 +87,7 @@ public class Entity : IPoolObject
         }
     }
 
-    public T AddComp<T>(T comp) where T : EntityComp, new()
+    public T AddComp<T>(T comp) where T : EntityComp
     {
         var p = comp.Priority;
         if (comp.Priority <= 0)

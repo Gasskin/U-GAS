@@ -10,7 +10,7 @@ public class GasComp : EntityComp
     public GameEffectController GameEffectController { get; private set; }
     public GameAttributeController GameAttributeController { get; private set; }
 
-    public override int Priority => EntityCompPriority.c_Gas;
+    public override int Priority => c_Gas;
     public override bool NeedUpdate => true;
 
     public override void OnAdd()

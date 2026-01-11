@@ -1,8 +1,11 @@
 {
   "dependencies": {
     "com.code-philosophy.luban": "file:com.code-philosophy.luban",
+    "com.tuyoogame.yooasset": "file:com.tuyoogame.yooasset",
+    "com.unity.scriptablebuildpipeline": "1.21.25",
     "com.unity.ide.rider": "com.unity.ide.rider",
     "com.unity.multiplayer.center": "1.0.0",
+    "com.unity.ugui": "2.0.0",
     "com.unity.modules.accessibility": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
@@ -35,5 +38,14 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
-  }
+  },
+  "scopedRegistries": [
+    {
+      "name": "package.openupm.com",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.tuyoogame.yooasset"
+      ]
+    }
+  ]
 }
