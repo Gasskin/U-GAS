@@ -112,8 +112,8 @@ MonoBehaviour:
     - rid: 4268527625974317301
       type: {class: TestDamage2, ns: , asm: Runtime}
       data:
-        Test1: 44
-        Test2: 222
+        Test1: 4433
+        Test2: 2222
 --- !u!114 &-2742616243306325228
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfda56da833e2384a9677cd3c976a436, type: 3}
-  m_Name: 101001
+  m_Name: 101002
   m_EditorClassIdentifier: 
   m_Version: 0
   m_Tracks:
@@ -248,4 +248,4 @@ MonoBehaviour:
     - rid: 4268527625974317278
       type: {class: TestDamage, ns: , asm: Runtime}
       data:
-        Test: 33
+        Test: 33333
