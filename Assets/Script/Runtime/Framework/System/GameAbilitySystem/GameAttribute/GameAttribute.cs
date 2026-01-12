@@ -180,6 +180,11 @@ public class GameAttribute
         var newValue = BaseValue;
         foreach (var mod in _modifierSpecs)
         {
+            if (mod.Modifier.Magnitude.IsMetaMagnitude)
+            {
+                Debug.LogError("MetaMagnitude 在此处不合法");
+                continue;
+            }
             var magnitude = mod.Modifier.Magnitude.Calculate(mod.Spec);
 
             switch (mod.Modifier.Operate)

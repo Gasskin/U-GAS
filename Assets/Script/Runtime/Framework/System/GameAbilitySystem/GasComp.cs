@@ -81,6 +81,10 @@ public class GasComp : EntityComp
                 throw new NullReferenceException($"Attribute is null: {modifier.TargetAttr}");
             }
             var magnitude = modifier.Magnitude.Calculate(spec);
+            if (modifier.Magnitude.IsMetaMagnitude)
+            {
+                continue;
+            }
             var newValue = attr.BaseValue;
             switch (modifier.Operate)
             {
