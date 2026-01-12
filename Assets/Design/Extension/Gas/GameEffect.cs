@@ -15,12 +15,12 @@ namespace cfg.Gas
         public void AfterTableInitialize()
         {
             AssetTagContainer = new GameTagContainer(Tags.Assets);
-            AssetTagContainer = new GameTagContainer(Tags.Granted);
-            AssetTagContainer = new GameTagContainer(Tags.ApplyRequired);
-            AssetTagContainer = new GameTagContainer(Tags.ImmuneWhen);
-            AssetTagContainer = new GameTagContainer(Tags.OnGoingRequired);
-            AssetTagContainer = new GameTagContainer(Tags.RemoveGeWith);
-            AssetTagContainer = new GameTagContainer(Tags.BlockGeWith);
+            GrantedTagContainer = new GameTagContainer(Tags.Granted);
+            ApplyRequiredTagContainer = new GameTagContainer(Tags.ApplyRequired);
+            ImmuneWhenTagContainer = new GameTagContainer(Tags.ImmuneWhen);
+            OnGoingRequiredTagContainer = new GameTagContainer(Tags.OnGoingRequired);
+            RemoveGeWithTagContainer = new GameTagContainer(Tags.RemoveGeWith);
+            BlockGeWithTagContainer = new GameTagContainer(Tags.BlockGeWith);
         }
     }
 }

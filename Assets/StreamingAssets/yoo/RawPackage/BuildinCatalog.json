@@ -1,0 +1,11 @@
+{
+    "FileVersion": "1.0.0",
+    "PackageName": "RawPackage",
+    "PackageVersion": "2026-01-11-1248",
+    "Wrappers": [
+        {
+            "BundleGUID": "d435d25e3b323c53dc22bb701234e628",
+            "FileName": "rawpackage_assets_design_data_gas_tbgameeffect.bundle"
+        }
+    ]
+}

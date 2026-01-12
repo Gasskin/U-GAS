@@ -17,15 +17,171 @@ namespace cfg.Gas
         /// <summary>
         /// 基础生命
         /// </summary>
-        HpBase = 1,
+        HpBase = 101,
         /// <summary>
         /// 生命加成
         /// </summary>
-        HpMult = 2,
+        HpMult = 102,
         /// <summary>
         /// 额外生命
         /// </summary>
-        HpAdd = 3,
+        HpAdd = 103,
+        /// <summary>
+        /// 最大生命
+        /// </summary>
+        HpMax = 104,
+        /// <summary>
+        /// 当前生命
+        /// </summary>
+        HpNow = 105,
+        /// <summary>
+        /// 基础攻击
+        /// </summary>
+        AtkBase = 201,
+        /// <summary>
+        /// 攻击加成
+        /// </summary>
+        AtkMult = 202,
+        /// <summary>
+        /// 额外攻击
+        /// </summary>
+        AtkAdd = 203,
+        /// <summary>
+        /// 当前攻击
+        /// </summary>
+        AtkNow = 204,
+        /// <summary>
+        /// 基础火焰攻击
+        /// </summary>
+        FireAtkBase = 205,
+        /// <summary>
+        /// 火焰攻击加成
+        /// </summary>
+        FireAtkMult = 206,
+        /// <summary>
+        /// 额外火焰攻击
+        /// </summary>
+        FireAtkAdd = 207,
+        /// <summary>
+        /// 当前火焰攻击
+        /// </summary>
+        FireAtkNow = 208,
+        /// <summary>
+        /// 基础冰霜攻击
+        /// </summary>
+        IceAtkBase = 209,
+        /// <summary>
+        /// 冰霜攻击加成
+        /// </summary>
+        IceAtkMult = 210,
+        /// <summary>
+        /// 额外冰霜攻击
+        /// </summary>
+        IceAtkAdd = 211,
+        /// <summary>
+        /// 当前冰霜攻击
+        /// </summary>
+        IceAtkNow = 212,
+        /// <summary>
+        /// 基础闪电攻击
+        /// </summary>
+        LightAtkBase = 213,
+        /// <summary>
+        /// 闪电攻击加成
+        /// </summary>
+        LightAtkMult = 214,
+        /// <summary>
+        /// 额外闪电攻击
+        /// </summary>
+        LightAtkAdd = 215,
+        /// <summary>
+        /// 当前闪电攻击
+        /// </summary>
+        LightAtkNow = 216,
+        /// <summary>
+        /// 基础混乱攻击
+        /// </summary>
+        ChaosAtkBase = 217,
+        /// <summary>
+        /// 混乱攻击加成
+        /// </summary>
+        ChaosAtkMult = 218,
+        /// <summary>
+        /// 额外混乱攻击
+        /// </summary>
+        ChaosAtkAdd = 219,
+        /// <summary>
+        /// 当前混乱攻击
+        /// </summary>
+        ChaosAtkNow = 220,
+        /// <summary>
+        /// 基础护甲
+        /// </summary>
+        ArmorBase = 301,
+        /// <summary>
+        /// 护甲加成
+        /// </summary>
+        ArmorMult = 302,
+        /// <summary>
+        /// 额外护甲
+        /// </summary>
+        ArmorAdd = 303,
+        /// <summary>
+        /// 当前护甲
+        /// </summary>
+        ArmorNow = 304,
+        /// <summary>
+        /// 火焰抗性
+        /// </summary>
+        FireArmorNow = 401,
+        /// <summary>
+        /// 最大火焰抗性
+        /// </summary>
+        FireArmorMax = 402,
+        /// <summary>
+        /// 冰霜抗性
+        /// </summary>
+        IceArmorNow = 403,
+        /// <summary>
+        /// 最大冰霜抗性
+        /// </summary>
+        IceArmorMax = 404,
+        /// <summary>
+        /// 闪电抗性
+        /// </summary>
+        LightArmorNow = 405,
+        /// <summary>
+        /// 最大闪电抗性
+        /// </summary>
+        LightArmorMax = 406,
+        /// <summary>
+        /// 混乱抗性
+        /// </summary>
+        ChaosArmorNow = 407,
+        /// <summary>
+        /// 最大混乱抗性
+        /// </summary>
+        ChaosArmorMax = 408,
+        /// <summary>
+        /// 基础护盾
+        /// </summary>
+        ShieldBase = 501,
+        /// <summary>
+        /// 护盾加成
+        /// </summary>
+        ShieldMult = 502,
+        /// <summary>
+        /// 额外护盾
+        /// </summary>
+        ShieldAdd = 503,
+        /// <summary>
+        /// 最大护盾
+        /// </summary>
+        ShieldMax = 504,
+        /// <summary>
+        /// 当前护盾
+        /// </summary>
+        ShieldNow = 505,
     }
 
 } 

@@ -1,20 +1,27 @@
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+
+public enum EYooAssetsMode
+{
+    Editor,
+    Offline,
+}
 
 public class SystemDriver : MonoBehaviour
 {
 #region static
-    private static SystemDriver s_instance;
+    public static SystemDriver Instance { get;private set; }
 
     public static T GetSystem<T>() where T : BaseSystem
     {
-        if (s_instance == null)
+        if (Instance == null)
         {
             return null;
         }
-        for (int i = 0; i < s_instance._baseSystems.Count; i++)
+        for (int i = 0; i < Instance._baseSystems.Count; i++)
         {
-            if (s_instance._baseSystems[i] is T sys)
+            if (Instance._baseSystems[i] is T sys)
             {
                 return sys;
             }
@@ -23,10 +30,17 @@ public class SystemDriver : MonoBehaviour
     }
 #endregion
 
-    private List<BaseSystem> _baseSystems = new()
+    public RectTransform EntityRoot;
+    
+    public EYooAssetsMode YooAssetsMode;
+
+    private readonly List<BaseSystem> _baseSystems = new()
     {
-        new EntitySystem(),
+        new YooSystem(),
         new DesignSystem(),
+        new BattleTimeSystem(),
+        new EntitySystem(),
+        new ProcedureSystem(),
     };
 
     private List<ITickSystem> _tickSystems = new();
@@ -35,9 +49,17 @@ public class SystemDriver : MonoBehaviour
 
     private void Start()
     {
+        DontDestroyOnLoad(this);
+        Instance = this;
+        StartAsync().Forget();
+
+    }
+
+    private async UniTaskVoid StartAsync()
+    {
         foreach (var sys in _baseSystems)
         {
-            sys.Initialize();
+            await sys.Initialize();
             if (sys is ITickSystem tick)
             {
                 _tickSystems.Add(tick);
@@ -51,16 +73,15 @@ public class SystemDriver : MonoBehaviour
                 _lateTickSystems.Add(lateTick);
             }
         }
-        DontDestroyOnLoad(this);
-        s_instance = this;
     }
 
     private void OnDestroy()
     {
-        foreach (var sys in _baseSystems)
+        for (int i = _baseSystems.Count - 1; i >= 0; i--)
         {
-            sys.Close();
+            _baseSystems[i].Close();
         }
+        Instance = null;
     }
 
     private void Update()
@@ -73,7 +94,7 @@ public class SystemDriver : MonoBehaviour
 
     private void LateUpdate()
     {
-        for (int i = 0; i < _tickSystems.Count; i++)
+        for (int i = 0; i < _lateTickSystems.Count; i++)
         {
             _lateTickSystems[i].LateTick(Time.deltaTime);
         }
@@ -81,7 +102,7 @@ public class SystemDriver : MonoBehaviour
 
     private void FixedUpdate()
     {
-        for (int i = 0; i < _tickSystems.Count; i++)
+        for (int i = 0; i < _fixedTickSystems.Count; i++)
         {
             _fixedTickSystems[i].FixedTick(Time.deltaTime);
         }
