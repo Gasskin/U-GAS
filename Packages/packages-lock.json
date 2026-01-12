@@ -32,13 +32,12 @@
       }
     },
     "com.unity.inputsystem": {
-      "version": "1.14.2",
+      "version": "file:com.unity.inputsystem",
       "depth": 0,
-      "source": "registry",
+      "source": "embedded",
       "dependencies": {
         "com.unity.modules.uielements": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
+      }
     },
     "com.unity.multiplayer.center": {
       "version": "1.0.0",

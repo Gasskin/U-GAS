@@ -3,7 +3,7 @@
     "com.code-philosophy.luban": "file:com.code-philosophy.luban",
     "com.tuyoogame.yooasset": "file:com.tuyoogame.yooasset",
     "com.unity.ide.rider": "file:com.unity.ide.rider",
-    "com.unity.inputsystem": "1.14.2",
+    "com.unity.inputsystem": "file:com.unity.inputsystem",
     "com.unity.multiplayer.center": "1.0.0",
     "com.unity.scriptablebuildpipeline": "1.21.25",
     "com.unity.timeline": "file:com.unity.timeline",
