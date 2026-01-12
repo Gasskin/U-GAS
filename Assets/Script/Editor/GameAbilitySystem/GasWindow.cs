@@ -640,7 +640,7 @@ public class GasWindow : EditorWindow
         _gasByEntityId.Clear();
 
         var comps = new List<GasComp>();
-        SystemDriver.GetSystem<EntitySystem>().Search(EntityComp.c_Gas, comps);
+        SystemDriver.Get<EntitySystem>().Search(EntityComp.c_Gas, comps);
 
         var set = new HashSet<ulong>();
         for (int i = 0; i < comps.Count; i++)

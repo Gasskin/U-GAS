@@ -35,7 +35,7 @@ public class GasComp : EntityComp
 #region ApplyGameEffect
     public ulong ApplyGameEffectTo(int effectId, GasComp target)
     {
-        var effect = SystemDriver.GetSystem<DesignSystem>().Tables.TbGameEffect.GetOrDefault(effectId);
+        var effect = SystemDriver.Get<DesignSystem>().Tables.TbGameEffect.GetOrDefault(effectId);
         if (effect != null)
         {
             return ApplyGameEffectTo(effect, default, target);
@@ -45,7 +45,7 @@ public class GasComp : EntityComp
 
     public ulong ApplyGameEffectTo(int effectId, GameEffectContext context, GasComp target)
     {
-        var effect = SystemDriver.GetSystem<DesignSystem>().Tables.TbGameEffect.GetOrDefault(effectId);
+        var effect = SystemDriver.Get<DesignSystem>().Tables.TbGameEffect.GetOrDefault(effectId);
         if (effect != null)
         {
             return ApplyGameEffectTo(effect, context, target);

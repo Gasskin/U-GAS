@@ -8,6 +8,8 @@ public abstract class EntityComp
     public abstract int Priority { get; } 
 
     public Entity Entity;
+
+    public bool IsValid => Entity is { Id: > 0 };
     
     public virtual bool NeedUpdate { get; } = false;
     public virtual bool NeedLateUpdate { get; } = false;

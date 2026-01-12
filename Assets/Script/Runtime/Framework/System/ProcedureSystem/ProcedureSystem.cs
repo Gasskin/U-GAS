@@ -6,7 +6,7 @@ public class ProcedureSystem : BaseSystem
 {
     public override async UniTask Initialize()
     {
-        var sys = SystemDriver.GetSystem<EntitySystem>();
+        var sys = SystemDriver.Get<EntitySystem>();
         var e = sys.CreateEntity();
         var gas = e.AddComp(new GasComp());
         gas.Init(new Dictionary<EAttributeId, float>()

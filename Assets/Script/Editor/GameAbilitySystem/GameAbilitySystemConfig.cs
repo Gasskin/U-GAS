@@ -18,7 +18,7 @@ public class TagNode
     public List<TagNode> ChildTag;
 }
 
-[CreateAssetMenu(fileName = "GameAbilitySystemConfig", menuName = "Gas/GameAbilitySystemConfig")]
+[CreateAssetMenu(fileName = "GameAbilitySystemConfig", menuName = "Battle/Gas/GameAbilitySystemConfig")]
 public class GameAbilitySystemConfig : ScriptableObject
 {
     public Object GameTagRoot;

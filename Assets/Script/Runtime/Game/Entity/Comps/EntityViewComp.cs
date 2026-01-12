@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class EntityViewComp : EntityComp
@@ -15,10 +16,23 @@ public class EntityViewComp : EntityComp
 
     public override void OnAdd()
     {
-        View = SystemDriver.GetSystem<YooSystem>().InitializeGameObjectSync(SystemDriver.Instance.EntityRoot, _assetPath);
+        AddViewAsync().Forget();
     }
 
     public override void OnRemove()
     {
+        if (View != null) 
+        {
+            Object.Destroy(View);
+        }
+    }
+
+    private async UniTaskVoid AddViewAsync()
+    {
+        View = await SystemDriver.Get<YooSystem>().InitializeGameObjectAsync(SystemDriver.Instance.EntityRoot, _assetPath);
+        if (!IsValid)
+        {
+            Object.Destroy(View);
+        }
     }
 }

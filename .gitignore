@@ -63,3 +63,4 @@ crashlytics-build.properties
 *.DotSettings
 Assembly-CSharp.csproj.DotSettings
 UserSettings
+.idea

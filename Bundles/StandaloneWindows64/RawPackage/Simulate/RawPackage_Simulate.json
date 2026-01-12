@@ -1,0 +1,36 @@
+{
+    "FileVersion": "2025.9.30",
+    "EnableAddressable": false,
+    "SupportExtensionless": true,
+    "LocationToLower": false,
+    "IncludeAssetGUID": false,
+    "ReplaceAssetPathWithAddress": false,
+    "OutputNameStyle": 0,
+    "BuildBundleType": 1,
+    "BuildPipeline": "EditorSimulateBuildPipeline",
+    "PackageName": "RawPackage",
+    "PackageVersion": "Simulate",
+    "PackageNote": "2026/1/12 14:02:37",
+    "AssetList": [
+        {
+            "Address": "",
+            "AssetPath": "Assets/Design/Data/gas_tbgameeffect.bytes",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 0,
+            "DependBundleIDs": []
+        }
+    ],
+    "BundleList": [
+        {
+            "BundleName": "rawpackage_assets_design_data_gas_tbgameeffect.bundle",
+            "UnityCRC": 0,
+            "FileHash": "22f36b461ef1e511ac2730d57a4a1043",
+            "FileCRC": 0,
+            "FileSize": 427,
+            "Encrypted": false,
+            "Tags": [],
+            "DependBundleIDs": []
+        }
+    ]
+}

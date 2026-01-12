@@ -26,7 +26,7 @@ public class DesignSystem : BaseSystem
     
     private static ByteBuf LoadByteBuf(string file)
     {
-        var handle = SystemDriver.GetSystem<YooSystem>().LoadRawSync($"Assets/Design/Data/{file}.bytes");
+        var handle = SystemDriver.Get<YooSystem>().LoadRawSync($"Assets/Design/Data/{file}.bytes");
         var bytes = handle.GetRawFileData();
         var buf = new ByteBuf(bytes);
         handle.Dispose();

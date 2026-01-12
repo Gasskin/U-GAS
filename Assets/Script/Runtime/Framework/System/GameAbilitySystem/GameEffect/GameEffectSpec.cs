@@ -177,7 +177,7 @@ public class GameEffectSpec : IPoolObject
             return;
         }
         IsActive = true;
-        ActiveTime = SystemDriver.GetSystem<BattleTimeSystem>().Now;
+        ActiveTime = SystemDriver.Get<BattleTimeSystem>().Now;
         
         Target.GameTagController.AddTagsWithDirty(GameEffect.GrantedTagContainer.Tags);
 
@@ -295,7 +295,7 @@ public class GameEffectSpec : IPoolObject
 
         // 警告：如果配置的period间隔太小的话，这里会存在问题
         // 首帧保护，runningTime如果是一个极小值，可能会有浮点数精度问题，干脆第一帧不进行逻辑运算
-        var runningTime = SystemDriver.GetSystem<BattleTimeSystem>().Now - ActiveTime;
+        var runningTime = SystemDriver.Get<BattleTimeSystem>().Now - ActiveTime;
         if (runningTime < Mathf.Epsilon)
         {
             return;
@@ -363,7 +363,7 @@ public class GameEffectSpec : IPoolObject
 
     private void RefreshDuration()
     {
-        ActiveTime = SystemDriver.GetSystem<BattleTimeSystem>().Now;
+        ActiveTime = SystemDriver.Get<BattleTimeSystem>().Now;
         ElapsedTime = 0.0f;
     }
 #endregion

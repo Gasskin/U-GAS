@@ -2,9 +2,10 @@
   "dependencies": {
     "com.code-philosophy.luban": "file:com.code-philosophy.luban",
     "com.tuyoogame.yooasset": "file:com.tuyoogame.yooasset",
-    "com.unity.scriptablebuildpipeline": "1.21.25",
-    "com.unity.ide.rider": "com.unity.ide.rider",
+    "com.unity.ide.rider": "file:com.unity.ide.rider",
+    "com.unity.inputsystem": "1.14.2",
     "com.unity.multiplayer.center": "1.0.0",
+    "com.unity.scriptablebuildpipeline": "1.21.25",
     "com.unity.ugui": "2.0.0",
     "com.unity.modules.accessibility": "1.0.0",
     "com.unity.modules.ai": "1.0.0",

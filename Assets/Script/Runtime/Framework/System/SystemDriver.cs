@@ -13,7 +13,7 @@ public class SystemDriver : MonoBehaviour
 #region static
     public static SystemDriver Instance { get;private set; }
 
-    public static T GetSystem<T>() where T : BaseSystem
+    public static T Get<T>() where T : BaseSystem
     {
         if (Instance == null)
         {
@@ -36,11 +36,14 @@ public class SystemDriver : MonoBehaviour
 
     private readonly List<BaseSystem> _baseSystems = new()
     {
+        // Framework System
         new YooSystem(),
         new DesignSystem(),
         new BattleTimeSystem(),
         new EntitySystem(),
         new ProcedureSystem(),
+        // Game System
+        new InputSystem(),
     };
 
     private List<ITickSystem> _tickSystems = new();
