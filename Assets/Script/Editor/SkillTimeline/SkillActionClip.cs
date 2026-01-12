@@ -5,6 +5,9 @@ using UnityEngine.Timeline;
 [System.Serializable]
 public class SkillActionClip: PlayableAsset, ITimelineClipAsset
 {
+    [SerializeReference]
+    public BaseSkillAction Action;
+    
     public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
     {
         var playable = ScriptPlayable<SkillActionBehaviour>.Create(graph);

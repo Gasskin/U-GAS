@@ -22,7 +22,7 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 0
+    m_Start: 0.8333333333333334
     m_ClipIn: 0
     m_Asset: {fileID: 5041885037964200740}
     m_Duration: 3.0166666666666666
@@ -125,3 +125,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a108a1913c8545fa8d24889ae16afe1b, type: 3}
   m_Name: SkillActionClip
   m_EditorClassIdentifier: 
+  Action:
+    rid: 4268527625974317278
+  references:
+    version: 2
+    RefIds:
+    - rid: 4268527625974317278
+      type: {class: TestDamage, ns: , asm: Runtime}
+      data:
+        Test: 22
