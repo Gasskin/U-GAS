@@ -30,8 +30,6 @@ public class SystemDriver : MonoBehaviour
     }
 #endregion
 
-    public RectTransform EntityRoot;
-    
     public EYooAssetsMode YooAssetsMode;
 
     public static YooSystem YooSystem => Get<YooSystem>();

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using cfg.Gas;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class GasComp : EntityComp
@@ -10,14 +11,23 @@ public class GasComp : EntityComp
     public GameEffectController GameEffectController { get; private set; }
     public GameAttributeController GameAttributeController { get; private set; }
 
-    public override int Priority => c_Gas;
+    public override int Priority => GAS;
     public override bool NeedTick => true;
 
-    public override void OnAdd()
+    public GasComp(Dictionary<EAttributeId, float> inAttr)
     {
         GameTagController = new();
         GameEffectController = new();
         GameAttributeController = new();
+        
+        GameTagController.Init(this);
+        GameEffectController.Init(this);
+        GameAttributeController.Init(this, inAttr);
+    }
+
+    public override async UniTask Initialize()
+    {
+        await UniTask.Yield();
     }
 
     public override void Tick(float dt)
@@ -25,12 +35,6 @@ public class GasComp : EntityComp
         GameEffectController?.Tick(dt);
     }
 
-    public void Init(Dictionary<EAttributeId, float> initAttr)
-    {
-        GameTagController.Init(this);
-        GameEffectController.Init(this);
-        GameAttributeController.Init(this, initAttr);
-    }
 
 #region ApplyGameEffect
     public ulong ApplyGameEffectTo(int effectId, GasComp target)

@@ -7,7 +7,7 @@ public class InputSystem : BaseSystem
 
     public override async UniTask Initialize()
     {
-        _input = await SystemDriver.Get<YooSystem>().InitializeGameObjectAsync(null, "Assets/Bundles/Input/PlayerInput.prefab");
+        // _input = await SystemDriver.Get<YooSystem>().InitializeGameObjectAsync(null, "Assets/Bundles/Input/PlayerInput.prefab");
         await UniTask.Yield();
     }
 

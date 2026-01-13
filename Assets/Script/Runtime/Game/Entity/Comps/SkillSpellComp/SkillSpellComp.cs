@@ -1,20 +1,22 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class SkillSpellComp: EntityComp
+public class SkillSpellComp : EntityComp
 {
-    public override int Priority => c_SkillSpell;
+    public override int Priority => SKILL_SPELL;
     public override bool NeedTick => true;
-    
-    private TimelineDriver _timelineDriver ;
 
-    public override void OnAdd()
+    private TimelineDriver _timelineDriver;
+
+    public override async UniTask Initialize()
     {
         _timelineDriver = new(OnTimelineEnd);
+        await UniTask.Yield();
     }
 
     public override void Tick(float dt)
     {
-        if (!_timelineDriver.IsValid) 
+        if (!_timelineDriver.IsValid)
         {
             return;
         }

@@ -10,7 +10,7 @@
     "BuildPipeline": "EditorSimulateBuildPipeline",
     "PackageName": "DefaultPackage",
     "PackageVersion": "Simulate",
-    "PackageNote": "2026/1/13 12:20:20",
+    "PackageNote": "2026/1/14 0:32:50",
     "AssetList": [
         {
             "Address": "",
@@ -33,9 +33,9 @@
         {
             "BundleName": "defaultpackage_assets_bundles_prefabs_unit.bundle",
             "UnityCRC": 0,
-            "FileHash": "11670f8c5e672f2324ac0d491fb3ed9f",
+            "FileHash": "989d1d47aaf681916edddad4a765b39f",
             "FileCRC": 0,
-            "FileSize": 4359,
+            "FileSize": 11744,
             "Encrypted": false,
             "Tags": [],
             "DependBundleIDs": []

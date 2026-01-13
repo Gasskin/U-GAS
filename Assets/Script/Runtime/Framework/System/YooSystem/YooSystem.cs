@@ -98,7 +98,7 @@ public class YooSystem : BaseSystem
 
     public async UniTask<GameObject> InitializeGameObjectAsync(Transform parent, string path)
     {
-        var handle = _defaultPackage.LoadAssetAsync<GameObject>(path);
+            var handle = _defaultPackage.LoadAssetAsync<GameObject>(path);
         await handle.ToUniTask();
         if (handle.Status == EOperationStatus.Succeed)
         {

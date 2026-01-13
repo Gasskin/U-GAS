@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Unity.IO.LowLevel.Unsafe;
 
 public class Entity : IPoolObject
@@ -18,45 +19,48 @@ public class Entity : IPoolObject
     // 在FixedUpdate Entities列表中的序号
     public int FixedTickIndex;
 
-    private bool _needTick;
-    private bool _needLateTick;
-    private bool _needFixedTick;
+    private bool needTick;
+    private bool needLateTick;
+    private bool needFixedTick;
 
     public bool IsValid => Id > 0;
 
-    private List<EntityComp> _comps = new(32);
-    private LinkedList<EntityComp> _updateComps = new();
-    private LinkedList<EntityComp> _lateUpdateComps = new();
-    private LinkedList<EntityComp> _fixedUpdateComps = new();
+    public bool IsInitialized { get; private set; } = false;
 
-    private EntitySystem _system;
+    private EntityComp[] comps = new EntityComp[32];
+    private readonly LinkedList<EntityComp> updateComps = new();
+    private readonly LinkedList<EntityComp> lateUpdateComps = new();
+    private readonly LinkedList<EntityComp> fixedUpdateComps = new();
 
-    public void Init(ulong id, EntitySystem system)
+    private EntitySystem system;
+
+    public void Init(ulong id, EntitySystem inSystem)
     {
         Id = id;
-        _system = system;
+        system = inSystem;
     }
 
     public void Destroy()
     {
         Id = 0;
+        IsInitialized = false;
         Index = 0;
         TickIndex = -1;
         LateTickIndex = -1;
         FixedTickIndex = -1;
-        _needTick = false;
-        _needLateTick = false;
-        _needFixedTick = false;
-        _system = null;
+        needTick = false;
+        needLateTick = false;
+        needFixedTick = false;
+        system = null;
 
-        for (int i = 0; i < _comps.Count; i++)
+        for (int i = 0; i < comps.Length; i++)
         {
-            _comps[i]?.OnRemove();
+            comps[i]?.Destroy();
         }
-        _comps.Clear();
-        _updateComps.Clear();
-        _lateUpdateComps.Clear();
-        _fixedUpdateComps.Clear();
+        comps = null;
+        updateComps.Clear();
+        lateUpdateComps.Clear();
+        fixedUpdateComps.Clear();
     }
 
     public void OnRelease()
@@ -65,7 +69,11 @@ public class Entity : IPoolObject
 
     public void Tick(float dt)
     {
-        var first = _updateComps.First;
+        if (!IsInitialized)
+        {
+            return;
+        }
+        var first = updateComps.First;
         while (first != null)
         {
             first.Value.Tick(dt);
@@ -75,7 +83,11 @@ public class Entity : IPoolObject
 
     public void LateTick(float dt)
     {
-        var first = _lateUpdateComps.First;
+        if (!IsInitialized)
+        {
+            return;
+        }
+        var first = lateUpdateComps.First;
         while (first != null)
         {
             first.Value.Tick(dt);
@@ -85,7 +97,11 @@ public class Entity : IPoolObject
 
     public void FixedTick(float dt)
     {
-        var first = _fixedUpdateComps.First;
+        if (!IsInitialized)
+        {
+            return;
+        }
+        var first = fixedUpdateComps.First;
         while (first != null)
         {
             first.Value.Tick(dt);
@@ -101,44 +117,48 @@ public class Entity : IPoolObject
             throw new ArgumentOutOfRangeException($"组件权重异常：{typeof(T).Name}");
         }
         comp.Entity = this;
-        if (_comps.Capacity <= p)
+        if (comps.Length <= p)
         {
-            var newComps = new List<EntityComp>(2 * _comps.Capacity);
-            for (int i = 0; i < _comps.Count; i++)
+            var capacity = comps.Length;
+            while (capacity <= p)
             {
-                newComps[i] = _comps[i];
+                capacity *= 2;
             }
-            _comps = newComps;
+            var newComps = new EntityComp[capacity];
+            for (int i = 0; i < comps.Length; i++)
+            {
+                newComps[i] = comps[i];
+            }
+            comps = newComps;
         }
-        _comps[p] = comp;
-        comp.OnAdd();
+        comps[p] = comp;
 
         if (comp.NeedTick)
         {
-            if (!_needTick)
+            if (!needTick)
             {
-                _needTick = true;
-                _system.RegisterUpdate(this);
+                needTick = true;
+                system.RegisterUpdate(this);
             }
-            Insert(_updateComps);
+            Insert(updateComps);
         }
         if (comp.NeedLateTick)
         {
-            if (!_needLateTick)
+            if (!needLateTick)
             {
-                _needLateTick = true;
-                _system.RegisterLateUpdate(this);
+                needLateTick = true;
+                system.RegisterLateUpdate(this);
             }
-            Insert(_lateUpdateComps);
+            Insert(lateUpdateComps);
         }
         if (comp.NeedFixedTick)
         {
-            if (!_needFixedTick)
+            if (!needFixedTick)
             {
-                _needFixedTick = true;
-                _system.RegisterFixedUpdate(this);
+                needFixedTick = true;
+                system.RegisterFixedUpdate(this);
             }
-            Insert(_fixedUpdateComps);
+            Insert(fixedUpdateComps);
         }
 
         return comp;
@@ -165,12 +185,25 @@ public class Entity : IPoolObject
         }
     }
 
-    public bool HasComp(int priority, out EntityComp comp)
+    public async UniTask Initialize()
+    {
+        for (int i = 0; i < comps.Length; i++)
+        {
+            if (comps[i] == null)
+            {
+                continue;
+            }
+            await comps[i].Initialize();
+        }
+        IsInitialized = true;
+    }
+
+    public bool HasComp<T>(int priority, out T comp) where T : EntityComp
     {
         comp = null;
-        if (_comps != null && _comps.Count > priority)
+        if (comps != null && comps.Length > priority)
         {
-            comp = _comps[priority];
+            comp = (T)comps[priority];
             return true;
         }
         return false;

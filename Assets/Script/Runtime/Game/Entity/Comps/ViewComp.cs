@@ -3,34 +3,29 @@ using UnityEngine;
 
 public class ViewComp : EntityComp
 {
-    public override int Priority => c_View;
+    public override int Priority => VIEW;
 
-    private string _assetPath;
+    private string assetPath;
 
     public GameObject View { get; private set; }
 
     public ViewComp(string path)
     {
-        _assetPath = path;
+        assetPath = path;
     }
 
-    public override void OnAdd()
+    public override async UniTask Initialize()
     {
-        AddViewAsync().Forget();
-    }
-
-    public override void OnRemove()
-    {
-        if (View != null) 
+        View = await SystemDriver.Get<YooSystem>().InitializeGameObjectAsync(null, assetPath);
+        if (!IsValid)
         {
             Object.Destroy(View);
         }
     }
 
-    private async UniTaskVoid AddViewAsync()
+    public override void Destroy()
     {
-        View = await SystemDriver.Get<YooSystem>().InitializeGameObjectAsync(SystemDriver.Instance.EntityRoot, _assetPath);
-        if (!IsValid)
+        if (View != null) 
         {
             Object.Destroy(View);
         }

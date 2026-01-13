@@ -102,18 +102,18 @@ public class EntitySystem : BaseSystem, ITickSystem, IFixedTickSystem, ILateTick
         }
     }
 
-    public void Search<T>(int priority, List<T> comps) where T : EntityComp, new()
+    public void Search<T>(int priority, List<T> comps) where T : EntityComp
     {
         comps.Clear();
         if (priority < 0)
         {
             return;
         }
-        foreach (var e in _entities)
+        for (int i = 0; i < _entities.Count; i++)
         {
-            if (e.HasComp(priority, out var comp))
+            if (_entities[i].HasComp(priority, out T comp))
             {
-                comps.Add((T)comp);
+                comps.Add(comp);
             }
         }
     }
