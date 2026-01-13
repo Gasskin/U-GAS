@@ -10,27 +10,51 @@ namespace cfg.Gas
     {
         [HideInInspector]
         public int StartFrame;
+
         [HideInInspector]
         public int EndFrame;
 
-        public virtual void OnStart()
+        private bool _isStart;
+        private bool _isEnd;
+
+        public void Reset()
         {
-            
+            _isStart = false;
+            _isEnd = false;
         }
 
-        public virtual void OnTick(float dt)
+        public void Tick(float dt, int frame)
         {
-            
+            if (!_isStart && frame >= StartFrame)
+            {
+                OnStart();
+                _isStart = true;
+            }
+            if (!_isEnd && frame >= EndFrame)
+            {
+                OnEnd();
+                _isEnd = true;
+            }
+            if (frame >= StartFrame && frame <= EndFrame) 
+            {
+                OnTick(dt);
+            }
         }
 
-        public virtual void OnEnd()
+        protected virtual void OnStart()
         {
-            
+        }
+
+        protected virtual void OnTick(float dt)
+        {
+        }
+
+        protected virtual void OnEnd()
+        {
         }
 
         public virtual void OnInterrupt()
         {
-            
         }
     }
 }

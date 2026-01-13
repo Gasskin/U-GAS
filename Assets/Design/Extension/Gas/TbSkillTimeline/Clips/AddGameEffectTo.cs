@@ -8,7 +8,7 @@ namespace cfg.Gas
     {
         public int Id;
 
-        public override void OnStart()
+        protected override void OnStart()
         {
             var design = SystemDriver.DesignSystem.Tables.TbGameEffect.GetOrDefault(Id);
             if (design != null) 

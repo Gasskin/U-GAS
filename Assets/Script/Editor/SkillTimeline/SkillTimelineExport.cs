@@ -61,8 +61,8 @@ public class SkillTimelineExport
             {
                 if (timelineClip.asset is SkillTimelineClipAsset clip)
                 {
-                    clip.SkillClip.StartFrame = Mathf.RoundToInt((float)(timelineClip.start * 60));
-                    clip.SkillClip.EndFrame = Mathf.RoundToInt((float)(timelineClip.end * 60));
+                    clip.SkillClip.StartFrame = Mathf.RoundToInt((float)(timelineClip.start * TimelineDriver.c_TimelineFrame));
+                    clip.SkillClip.EndFrame = Mathf.RoundToInt((float)(timelineClip.end * TimelineDriver.c_TimelineFrame));
                     result.AddClip(clip.SkillClip);
                 }
             }
