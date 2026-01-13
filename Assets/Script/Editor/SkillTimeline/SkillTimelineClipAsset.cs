@@ -1,16 +1,17 @@
-﻿using UnityEngine;
+﻿using cfg.Gas;
+using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
 [System.Serializable]
-public class SkillActionClip: PlayableAsset, ITimelineClipAsset
+public class SkillTimelineClipAsset: PlayableAsset, ITimelineClipAsset
 {
     [SerializeReference]
-    public BaseSkillAction Action;
+    public cfg.Gas.SkillTimelineClip SkillClip;
     
     public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
     {
-        var playable = ScriptPlayable<SkillActionBehaviour>.Create(graph);
+        var playable = ScriptPlayable<SkillTimelineBehaviour>.Create(graph);
         // 获取 Behaviour 实例并赋值
         var behaviour = playable.GetBehaviour();
         return playable;

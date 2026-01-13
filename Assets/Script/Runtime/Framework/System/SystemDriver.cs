@@ -34,6 +34,13 @@ public class SystemDriver : MonoBehaviour
     
     public EYooAssetsMode YooAssetsMode;
 
+    public static YooSystem YooSystem => Get<YooSystem>();
+    public static DesignSystem DesignSystem => Get<DesignSystem>();
+    public static BattleTimeSystem BattleTimeSystem => Get<BattleTimeSystem>();
+    public static EntitySystem EntitySystem => Get<EntitySystem>();
+    public static ProcedureSystem ProcedureSystem => Get<ProcedureSystem>();
+    public static InputSystem InputSystem => Get<InputSystem>();
+
     private readonly List<BaseSystem> _baseSystems = new()
     {
         // Framework System

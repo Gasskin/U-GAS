@@ -14,16 +14,19 @@ namespace cfg
 public partial class Tables
 {
     public Gas.TbGameEffect TbGameEffect {get; }
+    public Gas.TbSkill TbSkill {get; }
 
     public Tables(System.Func<string, ByteBuf> loader)
     {
         TbGameEffect = new Gas.TbGameEffect(loader("gas_tbgameeffect"));
+        TbSkill = new Gas.TbSkill(loader("gas_tbskill"));
         ResolveRef();
     }
     
     private void ResolveRef()
     {
         TbGameEffect.ResolveRef(this);
+        TbSkill.ResolveRef(this);
     }
 }
 

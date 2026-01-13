@@ -10,7 +10,7 @@
     "BuildPipeline": "EditorSimulateBuildPipeline",
     "PackageName": "RawPackage",
     "PackageVersion": "Simulate",
-    "PackageNote": "2026/1/12 14:02:37",
+    "PackageNote": "2026/1/13 12:20:21",
     "AssetList": [
         {
             "Address": "",
@@ -18,6 +18,22 @@
             "AssetGUID": "",
             "AssetTags": [],
             "BundleID": 0,
+            "DependBundleIDs": []
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/Design/Data/gas_tbskill.bytes",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 1,
+            "DependBundleIDs": []
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/Design/Data/gas_tbskilltimeline.bytes",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 2,
             "DependBundleIDs": []
         }
     ],
@@ -28,6 +44,26 @@
             "FileHash": "22f36b461ef1e511ac2730d57a4a1043",
             "FileCRC": 0,
             "FileSize": 427,
+            "Encrypted": false,
+            "Tags": [],
+            "DependBundleIDs": []
+        },
+        {
+            "BundleName": "rawpackage_assets_design_data_gas_tbskill.bundle",
+            "UnityCRC": 0,
+            "FileHash": "24de1e5359f881c76e01a0c342f3affe",
+            "FileCRC": 0,
+            "FileSize": 10,
+            "Encrypted": false,
+            "Tags": [],
+            "DependBundleIDs": []
+        },
+        {
+            "BundleName": "rawpackage_assets_design_data_gas_tbskilltimeline.bundle",
+            "UnityCRC": 0,
+            "FileHash": "68e986a39f72287899d8dc123db7789b",
+            "FileCRC": 0,
+            "FileSize": 63,
             "Encrypted": false,
             "Tags": [],
             "DependBundleIDs": []
