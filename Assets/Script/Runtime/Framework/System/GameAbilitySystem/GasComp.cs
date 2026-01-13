@@ -11,7 +11,7 @@ public class GasComp : EntityComp
     public GameAttributeController GameAttributeController { get; private set; }
 
     public override int Priority => c_Gas;
-    public override bool NeedUpdate => true;
+    public override bool NeedTick => true;
 
     public override void OnAdd()
     {

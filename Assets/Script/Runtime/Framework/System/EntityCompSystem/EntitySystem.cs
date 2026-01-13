@@ -41,7 +41,7 @@ public class EntitySystem : BaseSystem, ITickSystem, IFixedTickSystem, ILateTick
     {
         for (int i = 0; i < _lateUpdateEntities.Count; i++)
         {
-            _lateUpdateEntities[i]?.Tick(dt);
+            _lateUpdateEntities[i]?.LateTick(dt);
         }
     }
 
@@ -49,7 +49,7 @@ public class EntitySystem : BaseSystem, ITickSystem, IFixedTickSystem, ILateTick
     {
         for (int i = 0; i < _fixedUpdateEntities.Count; i++)
         {
-            _fixedUpdateEntities[i]?.Tick(dt);
+            _fixedUpdateEntities[i]?.FixedTick(dt);
         }
     }
 
@@ -85,17 +85,17 @@ public class EntitySystem : BaseSystem, ITickSystem, IFixedTickSystem, ILateTick
             _id2Entity.Remove(eId);
 
             _entities.RemoveAt(entity.Index);
-            if (entity.NeedUpdate)
+            if (entity.TickIndex >= 0)
             {
-                _updateEntities.RemoveAt(entity.UpdateIndex);
+                _updateEntities.RemoveAt(entity.TickIndex);
             }
-            if (entity.NeedLateUpdate)
+            if (entity.LateTickIndex >= 0)
             {
-                _lateUpdateEntities.RemoveAt(entity.LateUpdateIndex);
+                _lateUpdateEntities.RemoveAt(entity.LateTickIndex);
             }
-            if (entity.NeedFixedUpdate)
+            if (entity.FixedTickIndex >= 0)
             {
-                _fixedUpdateEntities.RemoveAt(entity.FixedUpdateIndex);
+                _fixedUpdateEntities.RemoveAt(entity.FixedTickIndex);
             }
 
             Pool<Entity>.Release(entity);
@@ -121,18 +121,18 @@ public class EntitySystem : BaseSystem, ITickSystem, IFixedTickSystem, ILateTick
     public void RegisterUpdate(Entity entity)
     {
         _updateEntities.Add(entity);
-        entity.UpdateIndex = _updateEntities.Count - 1;
+        entity.TickIndex = _updateEntities.Count - 1;
     }
 
     public void RegisterLateUpdate(Entity entity)
     {
         _lateUpdateEntities.Add(entity);
-        entity.LateUpdateIndex = _lateUpdateEntities.Count - 1;
+        entity.LateTickIndex = _lateUpdateEntities.Count - 1;
     }
 
     public void RegisterFixedUpdate(Entity entity)
     {
         _fixedUpdateEntities.Add(entity);
-        entity.FixedUpdateIndex = _fixedUpdateEntities.Count - 1;
+        entity.FixedTickIndex = _fixedUpdateEntities.Count - 1;
     }
 }

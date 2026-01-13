@@ -20,7 +20,7 @@ public class ProcedureSystem : BaseSystem
         gas.GameTagController.AddTag(EGameTag.Recover);
         gas.GameTagController.AddTag(EGameTag.Skill);
 
-        e.AddComp(new EntityViewComp("Assets/Bundles/Prefabs/Unit/Hero.prefab"));
+        e.AddComp(new ViewComp("Assets/Bundles/Prefabs/Unit/Hero.prefab"));
         
         await UniTask.Yield();
     }

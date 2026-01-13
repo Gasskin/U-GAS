@@ -1,15 +1,15 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class EntityViewComp : EntityComp
+public class ViewComp : EntityComp
 {
-    public override int Priority => c_EntityView;
+    public override int Priority => c_View;
 
     private string _assetPath;
 
     public GameObject View { get; private set; }
 
-    public EntityViewComp(string path)
+    public ViewComp(string path)
     {
         _assetPath = path;
     }

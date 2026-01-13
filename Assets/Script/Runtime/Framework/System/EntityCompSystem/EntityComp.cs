@@ -1,20 +1,21 @@
-public abstract class EntityComp 
+public abstract class EntityComp
 {
 #region Priority
-    public const int c_Gas = 1;
-    public const int c_EntityView = 2;
+    public const int c_Gas = 0;
+    public const int c_View = 1;
+    public const int c_SkillSpell = 2;
 #endregion
-    
-    public abstract int Priority { get; } 
+
+    public abstract int Priority { get; }
 
     public Entity Entity;
 
     public bool IsValid => Entity is { Id: > 0 };
-    
-    public virtual bool NeedUpdate { get; } = false;
-    public virtual bool NeedLateUpdate { get; } = false;
-    public virtual bool NeedFixedUpdate { get; } = false;
-    
+
+    public virtual bool NeedTick { get; } = false;
+    public virtual bool NeedLateTick { get; } = false;
+    public virtual bool NeedFixedTick { get; } = false;
+
     public virtual void OnAdd()
     {
     }
