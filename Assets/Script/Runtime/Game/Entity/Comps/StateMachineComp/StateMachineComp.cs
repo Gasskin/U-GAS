@@ -10,20 +10,22 @@ public partial class StateMachineComp : EntityComp
 
     public override bool NeedFixedTick => true;
     
+    public StateMachineSetting Settings { get; private set; }
+    
     // state machine
-    private BaseState curState;
+    private BaseState _curState;
 
-    private readonly Dictionary<Type, BaseState> stateDic = new();
+    private readonly Dictionary<Type, BaseState> _stateDic = new();
 
-    private readonly List<BaseState> states;
+    private readonly List<BaseState> _states;
 
     public StateMachineComp(params BaseState[] inStates)
     {
-        states = new List<BaseState>();
-        states.AddRange(inStates);
-        foreach (var state in states)
+        _states = new List<BaseState>();
+        _states.AddRange(inStates);
+        foreach (var state in _states)
         {
-            stateDic.Add(state.GetType(), state);
+            _stateDic.Add(state.GetType(), state);
         }
     }
 
@@ -32,16 +34,17 @@ public partial class StateMachineComp : EntityComp
         Entity.HasComp(VIEW,out ViewComp view);
 
         Animator  = view.View.GetComponentInChildren<Animator>();
+        Settings = view.View.GetComponent<StateMachineSetting>();
         
-        var setting = view.View.GetComponent<StateMachineSetting>();
-        CheckCollision.Initialize(setting);
-        CheckTurn.Initialize(setting);
+        CheckCollision.Initialize(this);
+        CheckTurn.Initialize(this);
+        Velocity.Initialize(this);
 
-        for (int i = 0; i < states.Count; i++)
+        for (int i = 0; i < _states.Count; i++)
         {
-            states[i].Initialize(this);
+            _states[i].Initialize(this);
         }
-        ChangeState(stateDic[typeof(IdleState)]);
+        ChangeState(_stateDic[typeof(IdleState)]);
         await UniTask.Yield();
     }
 
@@ -49,43 +52,45 @@ public partial class StateMachineComp : EntityComp
     {
         CheckCollision.TickCheck(dt);
         
-        for (int i = 0; i < states.Count; i++)
+        for (int i = 0; i < _states.Count; i++)
         {
-            if (curState != states[i] && states[i].CanEnter())
+            if (_curState != _states[i] && _states[i].CanEnter())
             {
-                ChangeState(states[i]);
+                ChangeState(_states[i]);
                 return;
             }
         }
 
-        if (curState != null)
+        if (_curState != null)
         {
-            for (int i = 0; i < curState.ToState.Count; i++)
+            for (int i = 0; i < _curState.ToState.Count; i++)
             {
-                if (curState.CanEnterTo(curState.ToState[i]))
+                if (_curState.CanEnterTo(_curState.ToState[i]))
                 {
-                    ChangeState(curState.ToState[i]);
+                    ChangeState(_curState.ToState[i]);
                     return;
                 }
             }
         }
-        curState?.Tick(dt);
+        _curState?.Tick(dt);
     }
 
     public override void FixedTick(float dt)
     {
-        curState?.FixedTick(dt);
+        Velocity.FixedTick(dt);
+        
+        _curState?.FixedTick(dt);
     }
 
 
     private void ChangeState(BaseState state)
     {
-        if (state == curState)
+        if (state == _curState)
         {
             return;
         }
-        curState?.OnExit();
-        curState = state;
-        curState?.OnEnter();
+        _curState?.OnExit();
+        _curState = state;
+        _curState?.OnEnter();
     }
 }

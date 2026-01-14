@@ -204,11 +204,11 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_GravityScale: 0
+  m_Material: {fileID: 6200000, guid: 344ade1054828ad46afb4fd0c44a4d04, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -234,6 +234,8 @@ MonoBehaviour:
   Sprite: {fileID: 1509574520324346947}
   Body: {fileID: 6586916354844717146}
   Foot: {fileID: 7899840795252765108}
+  Rg: {fileID: 5711690936578414638}
+  FallGravity: -1.5
   GroundDetectionRayLength: 0.02
 --- !u!1 &8323629523910714289
 GameObject:

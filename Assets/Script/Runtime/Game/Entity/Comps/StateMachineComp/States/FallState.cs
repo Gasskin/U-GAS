@@ -1,4 +1,6 @@
-﻿public class FallState : BaseState
+﻿using UnityEngine;
+
+public class FallState : BaseState
 {
     public override void OnEnter()
     {
@@ -7,6 +9,7 @@
 
     public override void Tick(float dt)
     {
+        StateMachine.CheckTurn.CheckAndTurn(StateMachine.Context.MoveDir);
     }
 
     public override void FixedTick(float dt)
@@ -22,7 +25,7 @@
         switch (to)
         {
             case IdleState idle:
-                return StateMachine.CheckCollision.IsGrounded;
+                return StateMachine.CheckCollision.IsGrounded && StateMachine.Velocity.VelocityAbsX <= 0.1f;
         }
         return false;
     }

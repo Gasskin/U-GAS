@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 public class IdleState : BaseState
 {
@@ -14,6 +15,8 @@ public class IdleState : BaseState
 
     public override void FixedTick(float dt)
     {
+        var velocity = new Vector2(0f, StateMachine.Settings.FallGravity);
+        StateMachine.Velocity.AddVelocity(velocity);
     }
 
     public override void OnExit()
