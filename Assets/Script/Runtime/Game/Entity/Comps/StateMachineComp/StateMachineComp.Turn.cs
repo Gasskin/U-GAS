@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CheckTurn
+public class StateMachineTurn
 {
     public bool IsFacingRight { get; private set; } = true;
     
@@ -11,8 +11,9 @@ public class CheckTurn
         _stateMachine = machine;
     }
     
-    public void CheckAndTurn(Vector2 moveDirection)
+    public void CheckAndTurn()
     {
+        var moveDirection = _stateMachine.Context.MoveDir;
         if ((moveDirection.x < 0 && IsFacingRight) || (moveDirection.x > 0 && !IsFacingRight))
         {
             Turn();
@@ -32,5 +33,5 @@ public class CheckTurn
 
 public partial class StateMachineComp
 {
-    public CheckTurn CheckTurn = new();
+    public StateMachineTurn Turn = new();
 }

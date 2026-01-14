@@ -90,7 +90,7 @@ public class Entity : IPoolObject
         var first = lateUpdateComps.First;
         while (first != null)
         {
-            first.Value.Tick(dt);
+            first.Value.LateTick(dt);
             first = first.Next;
         }
     }
@@ -104,7 +104,7 @@ public class Entity : IPoolObject
         var first = fixedUpdateComps.First;
         while (first != null)
         {
-            first.Value.Tick(dt);
+            first.Value.FixedTick(dt);
             first = first.Next;
         }
     }

@@ -5,17 +5,17 @@ public class IdleState : BaseState
 {
     public override void OnEnter()
     {
-        StateMachine.Animator.Play(StateMachineComp.STATE_NAME_IDLE);
+        StateMachine.Animator.Play(StateMachineComp.StateName_Idle);
     }
 
     public override void Tick(float dt)
     {
-        StateMachine.CheckTurn.CheckAndTurn(StateMachine.Context.MoveDir);
+        StateMachine.Turn.CheckAndTurn();
     }
 
     public override void FixedTick(float dt)
     {
-        var velocity = new Vector2(0f, StateMachine.Settings.FallGravity);
+        var velocity = new Vector2(0f, StateMachine.Settings.GroundGravity);
         StateMachine.Velocity.AddVelocity(velocity);
     }
 
@@ -27,12 +27,16 @@ public class IdleState : BaseState
     {
         switch (to)
         {
-            case FallState fall:
+            // case FallState fall:
+            // {
+            //     return !StateMachine.Collision.IsGrounded;
+            // }
+            case JumpState jump:
             {
-                return !StateMachine.CheckCollision.IsGrounded;
+                return StateMachine.Context.Jump.IsPressedThisFrame;
             }
         }
-        throw new ArgumentOutOfRangeException($"{GetType().Name} can not change to {to.GetType().Name}");
+        return false;
     }
     
     

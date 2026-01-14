@@ -34,7 +34,7 @@ public class SystemDriver : MonoBehaviour
 
     public static YooSystem YooSystem => Get<YooSystem>();
     public static DesignSystem DesignSystem => Get<DesignSystem>();
-    public static BattleTimeSystem BattleTimeSystem => Get<BattleTimeSystem>();
+    public static TimeSystem TimeSystem => Get<TimeSystem>();
     public static EntitySystem EntitySystem => Get<EntitySystem>();
     public static ProcedureSystem ProcedureSystem => Get<ProcedureSystem>();
     public static InputSystem InputSystem => Get<InputSystem>();
@@ -47,7 +47,7 @@ public class SystemDriver : MonoBehaviour
         new EntitySystem(),
         new ProcedureSystem(),
         // Game System
-        new BattleTimeSystem(),
+        new TimeSystem(),
         new InputSystem(),
     };
 
@@ -60,7 +60,6 @@ public class SystemDriver : MonoBehaviour
         DontDestroyOnLoad(this);
         Instance = this;
         StartAsync().Forget();
-
     }
 
     private async UniTaskVoid StartAsync()

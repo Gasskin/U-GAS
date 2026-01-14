@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,23 +10,21 @@ public enum EInputMapping
     UI,
 }
 
-public class InputSystem : BaseSystem
+public partial class InputSystem : BaseSystem
 {
     private PlayerInput _playerInput;
     private GameObject _input;
-    private Dictionary<EInputMapping, BaseMap> _inputMapping = new();
+    
+    private InputSystem_Actions _actions;
 
     public override async UniTask Initialize()
     {
-        _input = await SystemDriver.YooSystem.InitializeGameObjectAsync(null, "Assets/Bundles/Input/Input.prefab");
-        _playerInput = _input.GetComponent<PlayerInput>();
-        Object.DontDestroyOnLoad(_input);
-
-        _inputMapping.Add(EInputMapping.Player,
-            new PlayerMap(_playerInput.actions.FindActionMap(nameof(EInputMapping.Player))));
-        _inputMapping.Add(EInputMapping.UI,
-            new UIMap(_playerInput.actions.FindActionMap(nameof(EInputMapping.UI))));
-
+        _actions = new InputSystem_Actions();
+        _actions.Player.SetCallbacks(this);
+        _actions.UI.SetCallbacks(this);
+        
+        SwitchMapping(EInputMapping.Player);
+        
         await UniTask.Yield();
     }
 
@@ -38,21 +34,21 @@ public class InputSystem : BaseSystem
         {
             Object.Destroy(_input);
         }
-        foreach (var input in _inputMapping.Values)
-        {
-            input.Destroy();
-        }
+        _actions.Player.Enable();
+        _actions.UI.Enable();
     }
-    
-    public T GetMap<T>() where T : BaseMap
+
+    public void SwitchMapping(EInputMapping mapping)
     {
-        foreach (var map in _inputMapping.Values)
+        _actions.Disable();
+        switch (mapping)
         {
-            if (map is T m)
-            {
-                return m;
-            }
+            case EInputMapping.Player:
+                _actions.Player.Enable();
+                break;
+            case EInputMapping.UI:
+                _actions.UI.Enable();
+                break;
         }
-        return null;
     }
 }

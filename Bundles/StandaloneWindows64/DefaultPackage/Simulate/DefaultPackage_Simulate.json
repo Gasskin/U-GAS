@@ -10,19 +10,11 @@
     "BuildPipeline": "EditorSimulateBuildPipeline",
     "PackageName": "DefaultPackage",
     "PackageVersion": "Simulate",
-    "PackageNote": "2026/1/14 12:23:03",
+    "PackageNote": "2026/1/15 2:18:34",
     "AssetList": [
         {
             "Address": "",
-            "AssetPath": "Assets/Bundles/Input/Input.prefab",
-            "AssetGUID": "",
-            "AssetTags": [],
-            "BundleID": 0,
-            "DependBundleIDs": []
-        },
-        {
-            "Address": "",
-            "AssetPath": "Assets/Bundles/Input/InputSystem_Actions.inputactions",
+            "AssetPath": "Assets/Bundles/NoFriction.physicsMaterial2D",
             "AssetGUID": "",
             "AssetTags": [],
             "BundleID": 0,
@@ -63,11 +55,11 @@
     ],
     "BundleList": [
         {
-            "BundleName": "defaultpackage_assets_bundles_input.bundle",
+            "BundleName": "defaultpackage_assets_bundles.bundle",
             "UnityCRC": 0,
-            "FileHash": "c7409d4c60c5d3fe9ad5ce9fc8136265",
+            "FileHash": "ae1edc53434ed2802aa108c3e0ce9fc4",
             "FileCRC": 0,
-            "FileSize": 7290,
+            "FileSize": 338,
             "Encrypted": false,
             "Tags": [],
             "DependBundleIDs": []
@@ -75,9 +67,9 @@
         {
             "BundleName": "defaultpackage_assets_bundles_prefabs_unit.bundle",
             "UnityCRC": 0,
-            "FileHash": "11670f8c5e672f2324ac0d491fb3ed9f",
+            "FileHash": "989d1d47aaf681916edddad4a765b39f",
             "FileCRC": 0,
-            "FileSize": 11707,
+            "FileSize": 12249,
             "Encrypted": false,
             "Tags": [],
             "DependBundleIDs": []
@@ -85,9 +77,9 @@
         {
             "BundleName": "defaultpackage_assets_bundles_scene.bundle",
             "UnityCRC": 0,
-            "FileHash": "83437f23a3d1e5b549a277541858ba73",
+            "FileHash": "ccc46077a7eeed838e378a48923dfa96",
             "FileCRC": 0,
-            "FileSize": 26503,
+            "FileSize": 26499,
             "Encrypted": false,
             "Tags": [],
             "DependBundleIDs": []
@@ -95,9 +87,9 @@
         {
             "BundleName": "defaultpackage_assets_bundles_tilemap.bundle",
             "UnityCRC": 0,
-            "FileHash": "a575704562b6e21626844f8aadb6f401",
+            "FileHash": "ea7a0ab00f53db758d2c45f16047666c",
             "FileCRC": 0,
-            "FileSize": 5922,
+            "FileSize": 5703,
             "Encrypted": false,
             "Tags": [],
             "DependBundleIDs": []

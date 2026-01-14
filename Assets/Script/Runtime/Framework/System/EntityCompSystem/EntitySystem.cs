@@ -9,9 +9,9 @@ public class EntitySystem : BaseSystem, ITickSystem, IFixedTickSystem, ILateTick
 {
     private Dictionary<ulong, Entity> _id2Entity = new();
     private List<Entity> _entities = new();
-    private List<Entity> _updateEntities = new();
-    private List<Entity> _lateUpdateEntities = new();
-    private List<Entity> _fixedUpdateEntities = new();
+    private List<Entity> _tickEntities = new();
+    private List<Entity> _lateTickEntities = new();
+    private List<Entity> _fixedTickEntities = new();
 
     private ulong _entityIdGenerator = 1;
 
@@ -31,25 +31,25 @@ public class EntitySystem : BaseSystem, ITickSystem, IFixedTickSystem, ILateTick
 
     public void Tick(float dt)
     {
-        for (int i = 0; i < _updateEntities.Count; i++)
+        for (int i = 0; i < _tickEntities.Count; i++)
         {
-            _updateEntities[i]?.Tick(dt);
+            _tickEntities[i]?.Tick(dt);
         }
     }
 
     public void LateTick(float dt)
     {
-        for (int i = 0; i < _lateUpdateEntities.Count; i++)
+        for (int i = 0; i < _lateTickEntities.Count; i++)
         {
-            _lateUpdateEntities[i]?.LateTick(dt);
+            _lateTickEntities[i]?.LateTick(dt);
         }
     }
 
     public void FixedTick(float dt)
     {
-        for (int i = 0; i < _fixedUpdateEntities.Count; i++)
+        for (int i = 0; i < _fixedTickEntities.Count; i++)
         {
-            _fixedUpdateEntities[i]?.FixedTick(dt);
+            _fixedTickEntities[i]?.FixedTick(dt);
         }
     }
 
@@ -87,15 +87,15 @@ public class EntitySystem : BaseSystem, ITickSystem, IFixedTickSystem, ILateTick
             _entities.RemoveAt(entity.Index);
             if (entity.TickIndex >= 0)
             {
-                _updateEntities.RemoveAt(entity.TickIndex);
+                _tickEntities.RemoveAt(entity.TickIndex);
             }
             if (entity.LateTickIndex >= 0)
             {
-                _lateUpdateEntities.RemoveAt(entity.LateTickIndex);
+                _lateTickEntities.RemoveAt(entity.LateTickIndex);
             }
             if (entity.FixedTickIndex >= 0)
             {
-                _fixedUpdateEntities.RemoveAt(entity.FixedTickIndex);
+                _fixedTickEntities.RemoveAt(entity.FixedTickIndex);
             }
 
             Pool<Entity>.Release(entity);
@@ -120,19 +120,19 @@ public class EntitySystem : BaseSystem, ITickSystem, IFixedTickSystem, ILateTick
 
     public void RegisterUpdate(Entity entity)
     {
-        _updateEntities.Add(entity);
-        entity.TickIndex = _updateEntities.Count - 1;
+        _tickEntities.Add(entity);
+        entity.TickIndex = _tickEntities.Count - 1;
     }
 
     public void RegisterLateUpdate(Entity entity)
     {
-        _lateUpdateEntities.Add(entity);
-        entity.LateTickIndex = _lateUpdateEntities.Count - 1;
+        _lateTickEntities.Add(entity);
+        entity.LateTickIndex = _lateTickEntities.Count - 1;
     }
 
     public void RegisterFixedUpdate(Entity entity)
     {
-        _fixedUpdateEntities.Add(entity);
-        entity.FixedTickIndex = _fixedUpdateEntities.Count - 1;
+        _fixedTickEntities.Add(entity);
+        entity.FixedTickIndex = _fixedTickEntities.Count - 1;
     }
 }

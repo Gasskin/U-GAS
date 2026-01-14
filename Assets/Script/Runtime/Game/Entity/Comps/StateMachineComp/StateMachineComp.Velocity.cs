@@ -2,30 +2,28 @@ using UnityEngine;
 
 public class StateMachineVelocity
 {
-    public Vector2 Velocity;
+    public Vector2 Velocity => _rg.linearVelocity;
 
-    public float VelocityX => Velocity.x;
-    public float VelocityY => Velocity.y;
+    private Vector2 _velocity;
 
-    public float VelocityAbsX => Mathf.Abs(VelocityX);
-    public float VelocityAbsY => Mathf.Abs(VelocityY);
-    
     private StateMachineComp _stateMachine;
-    
+    private Rigidbody2D _rg;
+
     public void Initialize(StateMachineComp machine)
     {
         _stateMachine = machine;
+        _rg = _stateMachine.Settings.Rg;
     }
 
     public void AddVelocity(Vector2 velocity)
     {
-        Velocity += velocity;
+        _velocity += velocity;
     }
 
-    public void FixedTick(float dt)
+    public void FixedTick()
     {
-        _stateMachine.Settings.Rg.linearVelocity = Velocity;
-        Velocity= Vector2.zero;
+        _rg.linearVelocity = _velocity;
+        _velocity = Vector2.zero;
     }
 }
 

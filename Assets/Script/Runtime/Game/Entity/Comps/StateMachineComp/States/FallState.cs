@@ -4,12 +4,11 @@ public class FallState : BaseState
 {
     public override void OnEnter()
     {
-        StateMachine.Animator.Play(StateMachineComp.STATE_NAME_FALL);
+        StateMachine.Animator.Play(StateMachineComp.StateName_Fall);
     }
 
     public override void Tick(float dt)
     {
-        StateMachine.CheckTurn.CheckAndTurn(StateMachine.Context.MoveDir);
     }
 
     public override void FixedTick(float dt)
@@ -22,11 +21,6 @@ public class FallState : BaseState
 
     public override bool CanEnterTo(BaseState to)
     {
-        switch (to)
-        {
-            case IdleState idle:
-                return StateMachine.CheckCollision.IsGrounded && StateMachine.Velocity.VelocityAbsX <= 0.1f;
-        }
         return false;
     }
 

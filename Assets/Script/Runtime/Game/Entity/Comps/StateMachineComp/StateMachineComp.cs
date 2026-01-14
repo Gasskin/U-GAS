@@ -9,7 +9,9 @@ public partial class StateMachineComp : EntityComp
     public override bool NeedTick => true;
 
     public override bool NeedFixedTick => true;
-    
+
+    public override bool NeedLateTick => true;
+
     public StateMachineSetting Settings { get; private set; }
     
     // state machine
@@ -36,9 +38,11 @@ public partial class StateMachineComp : EntityComp
         Animator  = view.View.GetComponentInChildren<Animator>();
         Settings = view.View.GetComponent<StateMachineSetting>();
         
-        CheckCollision.Initialize(this);
-        CheckTurn.Initialize(this);
+        Collision.Initialize(this);
+        Turn.Initialize(this);
         Velocity.Initialize(this);
+        Jump.Initialize(this);
+        Fall.Initialize(this);
 
         for (int i = 0; i < _states.Count; i++)
         {
@@ -50,25 +54,25 @@ public partial class StateMachineComp : EntityComp
 
     public override void Tick(float dt)
     {
-        CheckCollision.TickCheck(dt);
-        
+        Collision.TickCheck(dt);
+
+        var changeAny = false;
         for (int i = 0; i < _states.Count; i++)
         {
             if (_curState != _states[i] && _states[i].CanEnter())
             {
                 ChangeState(_states[i]);
-                return;
+                changeAny = true;
             }
         }
 
-        if (_curState != null)
+        if (!changeAny && _curState != null)
         {
             for (int i = 0; i < _curState.ToState.Count; i++)
             {
                 if (_curState.CanEnterTo(_curState.ToState[i]))
                 {
                     ChangeState(_curState.ToState[i]);
-                    return;
                 }
             }
         }
@@ -77,9 +81,14 @@ public partial class StateMachineComp : EntityComp
 
     public override void FixedTick(float dt)
     {
-        Velocity.FixedTick(dt);
+        Velocity.FixedTick();
         
         _curState?.FixedTick(dt);
+    }
+
+    public override void LateTick(float dt)
+    {
+        Context.LateTick(dt);
     }
 
 

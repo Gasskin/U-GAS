@@ -1,13 +1,13 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class BattleTimeSystem : BaseSystem , ITickSystem
+public class TimeSystem : BaseSystem , ITickSystem
 {
     public float Now { get; private set; }
     
     public override async UniTask Initialize()
     {
-        Now = Time.deltaTime;
+        Now = Time.realtimeSinceStartup;
         await UniTask.Yield();
     }
 

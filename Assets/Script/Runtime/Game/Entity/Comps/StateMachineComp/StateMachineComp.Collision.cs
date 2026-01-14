@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CheckCollision
+public class StateMachineCollision
 {
     public bool IsGrounded { get; private set; }
 
@@ -29,5 +29,5 @@ public class CheckCollision
 
 public partial class StateMachineComp
 {
-    public CheckCollision CheckCollision = new();
+    public StateMachineCollision Collision = new();
 }

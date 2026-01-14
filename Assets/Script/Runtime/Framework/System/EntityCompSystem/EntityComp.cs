@@ -7,8 +7,8 @@ public abstract class EntityComp
     public const int GAS = 1;
     public const int VIEW = 2;
     public const int SKILL_SPELL = 3;
-    public const int STATE_MACHINE = 4;
-    public const int BATTLE_INPUT = 5;
+    public const int BATTLE_INPUT = 4;
+    public const int STATE_MACHINE = 5;
 #endregion
 
     public abstract int Priority { get; }

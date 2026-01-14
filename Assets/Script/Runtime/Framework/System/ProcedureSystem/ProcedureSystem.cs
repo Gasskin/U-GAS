@@ -6,17 +6,30 @@ public class ProcedureSystem : BaseSystem
 {
     public override async UniTask Initialize()
     {
+        Test().Forget();
+
+        await UniTask.Yield();
+    }
+
+    public override void Destroy()
+    {
+    }
+
+    private async UniTaskVoid Test()
+    {
+        await UniTask.Delay(1000);
+        
         var e = SystemDriver.EntitySystem.CreateEntity();
-        var gas = e.AddComp(new GasComp(new Dictionary<EAttributeId, float>()
-        {
-            { EAttributeId.HpBase, 100 },
-            { EAttributeId.HpMult, 2 },
-            { EAttributeId.HpAdd, 50 }
-        }));
-        gas.GameTagController.AddTag(EGameTag.Basic);
-        gas.GameTagController.AddTag(EGameTag.Buff);
-        gas.GameTagController.AddTag(EGameTag.Recover);
-        gas.GameTagController.AddTag(EGameTag.Skill);
+        // var gas = e.AddComp(new GasComp(new Dictionary<EAttributeId, float>()
+        // {
+        //     { EAttributeId.HpBase, 100 },
+        //     { EAttributeId.HpMult, 2 },
+        //     { EAttributeId.HpAdd, 50 }
+        // }));
+        // gas.GameTagController.AddTag(EGameTag.Basic);
+        // gas.GameTagController.AddTag(EGameTag.Buff);
+        // gas.GameTagController.AddTag(EGameTag.Recover);
+        // gas.GameTagController.AddTag(EGameTag.Skill);
 
         e.AddComp(new ViewComp("Assets/Bundles/Prefabs/Unit/Hero.prefab"));
 
@@ -30,6 +43,7 @@ public class ProcedureSystem : BaseSystem
         var dashFall = new DashFallState();
 
         idle.ToState.Add(fall);
+        idle.ToState.Add(jump);
         
         fall.ToState.Add(idle);
 
@@ -37,11 +51,5 @@ public class ProcedureSystem : BaseSystem
         e.AddComp(new BattleInputComp());
 
         e.Initialize().Forget();
-
-        await UniTask.Yield();
-    }
-
-    public override void Destroy()
-    {
     }
 }

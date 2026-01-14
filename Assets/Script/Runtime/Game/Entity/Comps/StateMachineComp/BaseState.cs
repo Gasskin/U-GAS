@@ -5,15 +5,11 @@ public abstract class BaseState
     protected StateMachineComp StateMachine { get; private set; }
 
     protected StateMachineSetting Settings => StateMachine.Settings;
+
     
     public void Initialize(StateMachineComp comp)
     {
         StateMachine = comp;
-        OnInitialize();
-    }
-
-    protected virtual void OnInitialize()
-    {
     }
 
     public abstract void OnEnter();
