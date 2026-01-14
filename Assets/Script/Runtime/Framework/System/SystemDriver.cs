@@ -13,7 +13,7 @@ public class SystemDriver : MonoBehaviour
 #region static
     public static SystemDriver Instance { get;private set; }
 
-    public static T Get<T>() where T : BaseSystem
+    private static T Get<T>() where T : BaseSystem
     {
         if (Instance == null)
         {
@@ -21,7 +21,7 @@ public class SystemDriver : MonoBehaviour
         }
         for (int i = 0; i < Instance._baseSystems.Count; i++)
         {
-            if (Instance._baseSystems[i] is T sys)
+            if (Instance._baseSystems[i] is T { Initialized: true } sys)
             {
                 return sys;
             }
@@ -44,10 +44,10 @@ public class SystemDriver : MonoBehaviour
         // Framework System
         new YooSystem(),
         new DesignSystem(),
-        new BattleTimeSystem(),
         new EntitySystem(),
         new ProcedureSystem(),
         // Game System
+        new BattleTimeSystem(),
         new InputSystem(),
     };
 
@@ -68,6 +68,7 @@ public class SystemDriver : MonoBehaviour
         foreach (var sys in _baseSystems)
         {
             await sys.Initialize();
+            sys.Initialized = true;
             if (sys is ITickSystem tick)
             {
                 _tickSystems.Add(tick);
@@ -87,7 +88,8 @@ public class SystemDriver : MonoBehaviour
     {
         for (int i = _baseSystems.Count - 1; i >= 0; i--)
         {
-            _baseSystems[i].Close();
+            _baseSystems[i].Destroy();
+            _baseSystems[i].Initialized = false;
         }
         Instance = null;
     }

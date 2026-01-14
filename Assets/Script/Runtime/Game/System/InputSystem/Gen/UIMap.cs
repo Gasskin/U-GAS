@@ -2,11 +2,11 @@ using UnityEngine.InputSystem;
     public partial class UIMap : BaseMap
     {
 
-        public UIMap(InputActionAsset inputActionAsset, string inputMap) : base(inputActionAsset, inputMap)
+        public UIMap(InputActionMap inputMap) : base(inputMap)
         {
         }
-        public override void Dispose()
+        public override void Destroy()
         {
-            base.Dispose();
+            base.Destroy();
         }
     }

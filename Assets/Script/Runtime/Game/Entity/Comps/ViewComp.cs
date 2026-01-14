@@ -16,7 +16,7 @@ public class ViewComp : EntityComp
 
     public override async UniTask Initialize()
     {
-        View = await SystemDriver.Get<YooSystem>().InitializeGameObjectAsync(null, assetPath);
+        View = await SystemDriver.YooSystem.InitializeGameObjectAsync(null, assetPath);
         if (!IsValid)
         {
             Object.Destroy(View);

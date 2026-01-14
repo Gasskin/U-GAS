@@ -21,13 +21,13 @@ public class DesignSystem : BaseSystem
         await UniTask.Yield();
     }
 
-    public override void Close()
+    public override void Destroy()
     {
     }
 
     private static ByteBuf LoadByteBuf(string file)
     {
-        var handle = SystemDriver.Get<YooSystem>().LoadRawSync($"Assets/Design/Data/{file}.bytes");
+        var handle = SystemDriver.YooSystem.LoadRawSync($"Assets/Design/Data/{file}.bytes");
         var bytes = handle.GetRawFileData();
         var buf = new ByteBuf(bytes);
         handle.Dispose();
@@ -36,7 +36,7 @@ public class DesignSystem : BaseSystem
 
     private static byte[] LoadBytes(string file)
     {
-        var handle = SystemDriver.Get<YooSystem>().LoadRawSync($"Assets/Design/Data/{file}.bytes");
+        var handle = SystemDriver.YooSystem.LoadRawSync($"Assets/Design/Data/{file}.bytes");
         var bytes = handle.GetRawFileData();
         handle.Dispose();
         return bytes;

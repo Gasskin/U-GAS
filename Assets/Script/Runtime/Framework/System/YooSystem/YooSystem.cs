@@ -25,7 +25,7 @@ public class YooSystem : BaseSystem
         await InitPackage(_rawPackage, mode);
     }
 
-    public override void Close()
+    public override void Destroy()
     {
         _waitForClose = true;
         InternalClose().Forget();

@@ -231,6 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dee164d9450b4bafbe691181e1416533, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Sprite: {fileID: 1509574520324346947}
   Body: {fileID: 6586916354844717146}
   Foot: {fileID: 7899840795252765108}
   GroundDetectionRayLength: 0.02

@@ -53,7 +53,7 @@ public class Entity : IPoolObject
         needFixedTick = false;
         system = null;
 
-        for (int i = 0; i < comps.Length; i++)
+        for (int i = comps.Length - 1; i >= 0; i--)
         {
             comps[i]?.Destroy();
         }

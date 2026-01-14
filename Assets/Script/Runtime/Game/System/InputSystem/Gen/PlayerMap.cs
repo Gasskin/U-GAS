@@ -3,14 +3,14 @@ using UnityEngine.InputSystem;
     {
        public InputAction Move { get; private set; }
 
-        public PlayerMap(InputActionAsset inputActionAsset, string inputMap) : base(inputActionAsset, inputMap)
+        public PlayerMap(InputActionMap inputMap) : base(inputMap)
         {
             Move = InputActionMap.FindAction("Move");
             RegisterAction(Move);
         }
-        public override void Dispose()
+        public override void Destroy()
         {
             UnRegisterAction(Move);
-            base.Dispose();
+            base.Destroy();
         }
     }

@@ -6,8 +6,7 @@ public class ProcedureSystem : BaseSystem
 {
     public override async UniTask Initialize()
     {
-        var sys = SystemDriver.Get<EntitySystem>();
-        var e = sys.CreateEntity();
+        var e = SystemDriver.EntitySystem.CreateEntity();
         var gas = e.AddComp(new GasComp(new Dictionary<EAttributeId, float>()
         {
             { EAttributeId.HpBase, 100 },
@@ -35,13 +34,14 @@ public class ProcedureSystem : BaseSystem
         fall.ToState.Add(idle);
 
         e.AddComp(new StateMachineComp(run, runJump, runFall, jump, idle, fall, dash, dashFall));
+        e.AddComp(new BattleInputComp());
 
         e.Initialize().Forget();
 
         await UniTask.Yield();
     }
 
-    public override void Close()
+    public override void Destroy()
     {
     }
 }

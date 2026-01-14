@@ -22,7 +22,7 @@
         switch (to)
         {
             case IdleState idle:
-                return StateMachine.IsGrounded;
+                return StateMachine.CheckCollision.IsGrounded;
         }
         return false;
     }

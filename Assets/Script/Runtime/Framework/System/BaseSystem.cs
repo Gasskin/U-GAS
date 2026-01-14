@@ -2,8 +2,9 @@ using Cysharp.Threading.Tasks;
 
 public abstract class BaseSystem
 {
+    public bool Initialized = false;
     public abstract UniTask Initialize();
-    public abstract void Close();
+    public abstract void Destroy();
 }
 
 public interface ITickSystem

@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
 
-public partial class StateMachineComp
+public class CheckCollision
 {
     public bool IsGrounded { get; private set; }
 
     private StateMachineSetting setting;
 
-    private void TickCheck(float dt)
+    public void Initialize(StateMachineSetting pSetting)
+    {
+        setting = pSetting;
+    }
+
+    public void TickCheck(float dt)
     {
         CheckIsGrounded();
     }
@@ -20,4 +25,9 @@ public partial class StateMachineComp
 
         IsGrounded = Physics2D.BoxCast(boxCastOrigin, boxCastSize, 0f, Vector2.down, setting.GroundDetectionRayLength, 1 << LayerMask.NameToLayer("Ground")).collider != null;
     }
+}
+
+public partial class StateMachineComp
+{
+    public CheckCollision CheckCollision = new();
 }

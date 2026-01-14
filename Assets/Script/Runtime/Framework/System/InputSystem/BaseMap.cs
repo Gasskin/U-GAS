@@ -31,12 +31,12 @@ public abstract class BaseMap
     private Dictionary<Guid, Dictionary<EInputType, Action<InputAction.CallbackContext, InteractionParam>>> _actionTrigger = new();
 
 
-    protected BaseMap(InputActionAsset inputActionAsset, string inputMap)
+    protected BaseMap(InputActionMap inputMap)
     {
-        InputActionMap = inputActionAsset.FindActionMap(inputMap);
+        InputActionMap = inputMap;
     }
 
-    public virtual void Dispose()
+    public virtual void Destroy()
     {
         InputActionMap = null;
         _actionTrigger = null;
@@ -64,6 +64,17 @@ public abstract class BaseMap
         }
     }
 
+    public void Active()
+    {
+        InputActionMap?.Enable();
+    }
+
+    public void DeActive()
+    {
+        InputActionMap?.Disable();
+        _holdState.Clear();
+        _holdStartTime.Clear();
+    }
 
     protected void RegisterAction(InputAction action)
     {
@@ -178,7 +189,6 @@ public abstract class BaseMap
             _holdState[ctx.action.id] = false;
         }
     }
-
 
     private void InvokeTrigger(EInputType type, InputAction.CallbackContext ctx, InteractionParam param = default)
     {

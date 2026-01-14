@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public struct StateMachineContext
-{
-}
-
 public partial class StateMachineComp : EntityComp
 {
     public override int Priority => STATE_MACHINE;
@@ -36,7 +32,10 @@ public partial class StateMachineComp : EntityComp
         Entity.HasComp(VIEW,out ViewComp view);
 
         Animator  = view.View.GetComponentInChildren<Animator>();
-        setting = view.View.GetComponent<StateMachineSetting>();
+        
+        var setting = view.View.GetComponent<StateMachineSetting>();
+        CheckCollision.Initialize(setting);
+        CheckTurn.Initialize(setting);
 
         for (int i = 0; i < states.Count; i++)
         {
@@ -48,7 +47,7 @@ public partial class StateMachineComp : EntityComp
 
     public override void Tick(float dt)
     {
-        TickCheck(dt);
+        CheckCollision.TickCheck(dt);
         
         for (int i = 0; i < states.Count; i++)
         {

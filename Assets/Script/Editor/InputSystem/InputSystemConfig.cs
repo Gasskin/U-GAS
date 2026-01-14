@@ -44,7 +44,7 @@ public class InputSystemConfig : ScriptableObject
             sb.AppendLine($"       public InputAction {action.name} {{ get; private set; }}");
         }
         sb.AppendLine();
-        sb.AppendLine($"        public {map.name}Map(InputActionAsset inputActionAsset, string inputMap) : base(inputActionAsset, inputMap)");
+        sb.AppendLine($"        public {map.name}Map(InputActionMap inputMap) : base(inputMap)");
         sb.AppendLine($"        {{");
         foreach (var action in map.actions)
         {
@@ -57,7 +57,7 @@ public class InputSystemConfig : ScriptableObject
             sb.AppendLine($"            RegisterAction({field});");
         }
         sb.AppendLine("        }");
-        sb.AppendLine("        public override void Dispose()");
+        sb.AppendLine("        public override void Destroy()");
         sb.AppendLine("        {");
         foreach (var action in map.actions)
         {
@@ -65,7 +65,7 @@ public class InputSystemConfig : ScriptableObject
             sb.AppendLine($"            UnRegisterAction({field});");
         }
         {
-            sb.AppendLine($"            base.Dispose();");
+            sb.AppendLine($"            base.Destroy();");
         }
         sb.AppendLine("        }");
         sb.AppendLine("    }");

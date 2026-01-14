@@ -11,7 +11,7 @@ public class BattleTimeSystem : BaseSystem , ITickSystem
         await UniTask.Yield();
     }
 
-    public override void Close()
+    public override void Destroy()
     {
         
     }

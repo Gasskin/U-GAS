@@ -20,7 +20,7 @@ public class EntitySystem : BaseSystem, ITickSystem, IFixedTickSystem, ILateTick
         await UniTask.Yield();
     }
 
-    public override void Close()
+    public override void Destroy()
     {
         var entities = _id2Entity.Keys.ToList();
         foreach (var id in entities)

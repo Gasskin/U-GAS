@@ -9,6 +9,7 @@ public class IdleState : BaseState
 
     public override void Tick(float dt)
     {
+        StateMachine.CheckTurn.CheckAndTurn(StateMachine.Context.MoveDir);
     }
 
     public override void FixedTick(float dt)
@@ -25,7 +26,7 @@ public class IdleState : BaseState
         {
             case FallState fall:
             {
-                return !StateMachine.IsGrounded;
+                return !StateMachine.CheckCollision.IsGrounded;
             }
         }
         throw new ArgumentOutOfRangeException($"{GetType().Name} can not change to {to.GetType().Name}");
