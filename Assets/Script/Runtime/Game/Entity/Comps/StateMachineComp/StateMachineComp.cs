@@ -3,6 +3,17 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
+/// <summary>
+/// BattleInput.FixedTick -> ReadInput -> Set Context
+/// State.FixedTick -> AddVelocity
+/// Velocity.FixedTick -> ApplyAndClear
+/// 
+/// BattleInput.CallBack (BeforeUpdated) -> SaveInput
+/// 
+/// State.Tick -> ReadInput
+/// 
+/// Context.LateTick -> ClearButtonInput
+/// </summary>
 public partial class StateMachineComp : EntityComp
 {
     public override int Priority => STATE_MACHINE;
@@ -68,12 +79,10 @@ public partial class StateMachineComp : EntityComp
 
         if (!changeAny && _curState != null)
         {
-            for (int i = 0; i < _curState.ToState.Count; i++)
+            var state  = _curState.GetCanEnterTo();
+            if (state != null) 
             {
-                if (_curState.CanEnterTo(_curState.ToState[i]))
-                {
-                    ChangeState(_curState.ToState[i]);
-                }
+                ChangeState(state);
             }
         }
         _curState?.Tick(dt);
@@ -90,6 +99,10 @@ public partial class StateMachineComp : EntityComp
         Context.LateTick(dt);
     }
 
+    public BaseState GetState(Type type)
+    {
+        return _stateDic.GetValueOrDefault(type, null);
+    }
 
     private void ChangeState(BaseState state)
     {

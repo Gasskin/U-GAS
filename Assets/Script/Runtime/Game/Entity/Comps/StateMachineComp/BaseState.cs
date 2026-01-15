@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public abstract class BaseState
 {
@@ -6,10 +7,19 @@ public abstract class BaseState
 
     protected StateMachineSetting Settings => StateMachine.Settings;
 
+    protected abstract List<Type> CheckToStates { get; }
     
     public void Initialize(StateMachineComp comp)
     {
         StateMachine = comp;
+        foreach (var s in CheckToStates)
+        {
+            var get = StateMachine.GetState(s);
+            if (get != null) 
+            {
+                _toState.Add(get);
+            }
+        }
     }
 
     public abstract void OnEnter();
@@ -17,8 +27,21 @@ public abstract class BaseState
     public abstract void FixedTick(float dt);
     public abstract void OnExit();
 
-    public abstract bool CanEnterTo(BaseState to);
+    protected abstract bool CanEnterTo(BaseState to);
     public abstract bool CanEnter();
 
-    public List<BaseState> ToState = new();
+    private List<BaseState> _toState = new();
+
+    public BaseState GetCanEnterTo()
+    {
+        for (int i = 0; i < _toState.Count; i++)
+        {
+            var to = _toState[i];
+            if (CanEnterTo(to))
+            {
+                return to;
+            }
+        }
+        return null;
+    }
 }

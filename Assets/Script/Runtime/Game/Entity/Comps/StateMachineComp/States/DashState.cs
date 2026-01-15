@@ -1,5 +1,12 @@
-﻿public class DashState : BaseState
+﻿using System;
+using System.Collections.Generic;
+
+public class DashState : BaseState
 {
+    protected override List<Type> CheckToStates { get; } = new()
+    {
+    };
+    
     public override void OnEnter()
     {
     }
@@ -16,7 +23,7 @@
     {
     }
 
-    public override bool CanEnterTo(BaseState to)
+    protected override bool CanEnterTo(BaseState to)
     {
         return false;
     }

@@ -1,8 +1,14 @@
-﻿using cfg;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class JumpState : BaseState
 {
+    protected override List<Type> CheckToStates { get; } = new()
+    {
+        typeof(FallState),
+    };
+    
     private Vector2 _velocity = Vector2.zero;
     
     public override void OnEnter()
@@ -12,7 +18,7 @@ public class JumpState : BaseState
 
     public override void Tick(float dt)
     {
-        StateMachine.Jump.ReadInput();
+        // StateMachine.Jump.ReadInput();
         StateMachine.Turn.CheckAndTurn();
     }
 
@@ -28,7 +34,7 @@ public class JumpState : BaseState
     {
     }
 
-    public override bool CanEnterTo(BaseState to)
+    protected override bool CanEnterTo(BaseState to)
     {
         switch (to)
         {

@@ -28,6 +28,10 @@ public class StateMachineJump
 
     public float GetVelocityY()
     {
+        _isPressed = _stateMachine.Context.Jump.IsPressedThisFrame;
+        _isReleased = _stateMachine.Context.Jump.IsReleasedThisFrame;
+        _isHolding = _stateMachine.Context.Jump.IsHolding;
+        
         var velocity = _stateMachine.Velocity.Velocity;
         _isUp = velocity.y > 0;
 

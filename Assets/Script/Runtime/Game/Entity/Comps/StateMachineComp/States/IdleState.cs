@@ -1,8 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class IdleState : BaseState
 {
+    protected override List<Type> CheckToStates { get; } = new()
+    {
+        typeof(JumpState),
+    };
+
     public override void OnEnter()
     {
         StateMachine.Animator.Play(StateMachineComp.StateName_Idle);
@@ -23,7 +29,7 @@ public class IdleState : BaseState
     {
     }
 
-    public override bool CanEnterTo(BaseState to)
+    protected override bool CanEnterTo(BaseState to)
     {
         switch (to)
         {

@@ -1,14 +1,26 @@
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
+public struct SavedInput
+{
+    public Vector2 Vector2;
+    public bool Started;
+    public bool Canceled;
+}
 
 public class BattleInputComp : EntityComp
 {
     public override int Priority => BATTLE_INPUT;
 
     private StateMachineComp _stateMachine;
-    
-    
+
+    public override bool NeedFixedTick => true;
+
+    private List<SavedInput> _savedPlayerMove = new(32);
+    private List<SavedInput> _savedPlayerJump = new(32);
+
     public override async UniTask Initialize()
     {
         Entity.HasComp(STATE_MACHINE, out _stateMachine);
@@ -31,20 +43,43 @@ public class BattleInputComp : EntityComp
         input.OnPlayerJump -= OnPlayerJump;
     }
 
+    public override void FixedTick(float dt)
+    {
+        for (int i = 0; i < _savedPlayerMove.Count; i++)
+        {
+            _stateMachine.Context.MoveDir = _savedPlayerMove[i].Vector2;
+        }
+        _savedPlayerMove.Clear();
+        
+        for (int i = 0; i < _savedPlayerJump.Count; i++)
+        {
+            var save = _savedPlayerJump[i];
+            if (save.Started)
+            {
+                _stateMachine.Context.Jump.Start();
+            }
+            else if (save.Canceled)
+            {
+                _stateMachine.Context.Jump.Cancel();
+            }
+        }
+        _savedPlayerJump.Clear();
+    }
+
     private void OnPlayerMove(InputAction.CallbackContext ctx)
     {
-        _stateMachine.Context.MoveDir = ctx.ReadValue<Vector2>();
+        _savedPlayerMove.Add(new SavedInput()
+        {
+            Vector2 = ctx.ReadValue<Vector2>()
+        });
     }
     
     private void OnPlayerJump(InputAction.CallbackContext ctx)
     {
-        if (ctx.started)
+        _savedPlayerJump.Add(new SavedInput()
         {
-            _stateMachine.Context.Jump.Start();
-        }
-        else if (ctx.canceled)
-        {
-            _stateMachine.Context.Jump.Cancel();
-        }
+            Started = ctx.started,
+            Canceled = ctx.canceled
+        });
     }
 }

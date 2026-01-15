@@ -1,9 +1,17 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class FallState : BaseState
 {
-    private Vector2 _velocity;
+    protected override List<Type> CheckToStates { get; } = new()
+    {
+        typeof(IdleState),
+    };
     
+    private Vector2 _velocity;
+
+
     public override void OnEnter()
     {
         StateMachine.Animator.Play(StateMachineComp.StateName_Fall);
@@ -25,7 +33,7 @@ public class FallState : BaseState
     {
     }
 
-    public override bool CanEnterTo(BaseState to)
+    protected override bool CanEnterTo(BaseState to)
     {
         switch (to)
         {
