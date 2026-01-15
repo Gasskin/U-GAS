@@ -31,7 +31,7 @@ public class IdleState : BaseState
             // {
             //     return !StateMachine.Collision.IsGrounded;
             // }
-            case JumpState jump:
+            case JumpState:
             {
                 return StateMachine.Context.Jump.IsPressedThisFrame;
             }

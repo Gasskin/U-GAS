@@ -45,6 +45,8 @@ public class ProcedureSystem : BaseSystem
         idle.ToState.Add(fall);
         idle.ToState.Add(jump);
         
+        jump.ToState.Add(fall);
+        
         fall.ToState.Add(idle);
 
         e.AddComp(new StateMachineComp(run, runJump, runFall, jump, idle, fall, dash, dashFall));

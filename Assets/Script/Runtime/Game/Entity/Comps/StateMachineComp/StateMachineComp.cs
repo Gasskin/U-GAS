@@ -81,9 +81,8 @@ public partial class StateMachineComp : EntityComp
 
     public override void FixedTick(float dt)
     {
-        Velocity.FixedTick();
-        
         _curState?.FixedTick(dt);
+        Velocity.FixedTick();
     }
 
     public override void LateTick(float dt)

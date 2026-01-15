@@ -30,6 +30,11 @@ public class JumpState : BaseState
 
     public override bool CanEnterTo(BaseState to)
     {
+        switch (to)
+        {
+            case FallState:
+                return StateMachine.Velocity.Velocity.y < 0;
+        }
         return false;
     }
     

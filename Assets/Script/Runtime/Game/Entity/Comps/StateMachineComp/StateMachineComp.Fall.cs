@@ -4,9 +4,16 @@ public class StateMachineFall
 {
     private StateMachineComp _stateMachine;
 
+    private bool _isJumpHolding;
+
     public void Initialize(StateMachineComp stateMachine)
     {
         _stateMachine = stateMachine;
+    }
+
+    public void ReadInput()
+    {
+        _isJumpHolding = _stateMachine.Context.Jump.IsHolding;
     }
 
     public float GetGravity(Vector2 currentVelocity)
@@ -16,7 +23,7 @@ public class StateMachineFall
         {
             gravityMultiplier = _stateMachine.Settings.HangJumpGravityMultiplayer;
         }
-        else if (_stateMachine.Context.Jump.IsHolding)
+        else if (_isJumpHolding)
         {
             gravityMultiplier = _stateMachine.Settings.HoldJumpGravityMultiplayer;
         }

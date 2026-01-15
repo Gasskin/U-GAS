@@ -21,14 +21,8 @@ public class StateMachineJump
 
     public void ReadInput()
     {
-        if (_stateMachine.Context.Jump.IsPressedThisFrame)
-        {
-            _isPressed = true;
-        }
-        if (_stateMachine.Context.Jump.IsReleasedThisFrame)
-        {
-            _isReleased = true;
-        }
+        _isPressed = _stateMachine.Context.Jump.IsPressedThisFrame;
+        _isReleased = _stateMachine.Context.Jump.IsReleasedThisFrame;
         _isHolding = _stateMachine.Context.Jump.IsHolding;
     }
 
