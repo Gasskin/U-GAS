@@ -1,55 +1,90 @@
+using System;
 using UnityEngine;
 
 public class StateMachineJump
 {
-    private bool _isPressed;
-    private bool _isReleased;
-    private bool _isHolding;
+    public event Action OnMultiJump;
+    
+    // 最新速度是下降，并且计算速度前是上升
+    public bool CanFall => _stateMachine.Velocity.Velocity.y < 0 && _isUp && !_hasPressed;
+    public bool CanMultiJump => _jumpCount > 0;
 
-    // 上升中
+    
+    
+    private StateMachineComp _stateMachine;
+
+    // 计算速度前是上升状态
     private bool _isUp;
 
-    private int _canJump;
+    private bool _isHolding;
+    private bool _hasPressed;
+    private bool _hasReleased;
 
-    private StateMachineComp _stateMachine;
+    private int _jumpCount;
 
     public void Initialize(StateMachineComp stateMachine)
     {
         _stateMachine = stateMachine;
-        _canJump = _stateMachine.Settings.CanJumpCount;
+
+        _jumpCount = _stateMachine.Settings.CanJumpCount;
+        _stateMachine.Collision.OnGroundTouched += (() =>
+        {
+            _jumpCount = _stateMachine.Settings.CanJumpCount;
+        });
     }
 
     public void ReadInput()
     {
-        _isPressed = _stateMachine.Context.Jump.IsPressedThisFrame;
-        _isReleased = _stateMachine.Context.Jump.IsReleasedThisFrame;
+        if (_stateMachine.Context.Jump.IsPressedThisFrame)
+        {
+             _hasPressed = true;
+        }
+        if (_stateMachine.Context.Jump.IsReleasedThisFrame)
+        {
+            _hasReleased = true;
+        }
         _isHolding = _stateMachine.Context.Jump.IsHolding;
     }
 
     public float GetVelocityY()
     {
-        _isPressed = _stateMachine.Context.Jump.IsPressedThisFrame;
-        _isReleased = _stateMachine.Context.Jump.IsReleasedThisFrame;
-        _isHolding = _stateMachine.Context.Jump.IsHolding;
-        
         var velocity = _stateMachine.Velocity.Velocity;
-        _isUp = velocity.y > 0;
 
-        var jump = _isPressed && _canJump > 0;
+        if (velocity.y > 0)
+        {
+            _isUp = true;
+        }
+
+        var jump = _hasPressed && _jumpCount > 0;
+        var multiJump = jump && _jumpCount != _stateMachine.Settings.CanJumpCount;
 
         if (jump)
         {
+            _jumpCount--;
             velocity.y = _stateMachine.Settings.MaxJumpVelocity;
-
-            _canJump--;
         }
 
-        if (_isReleased)
+        if (multiJump)
+        {
+            OnMultiJump?.Invoke();
+        }
+
+        // 如果松开跳跃键，设置为最小跳跃速度
+        if (_hasReleased)
         {
             velocity.y = Mathf.Min(velocity.y, _stateMachine.Settings.MinJumpVelocity);
         }
-        
+
+        _hasPressed = false;
+        _hasReleased = false;
+
         return velocity.y;
+    }
+    
+
+    public void Exit()
+    {
+        _isUp = false;
     }
 }
 

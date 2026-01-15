@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Unity.IO.LowLevel.Unsafe;
+using UnityEngine;
 
 public class Entity : IPoolObject
 {

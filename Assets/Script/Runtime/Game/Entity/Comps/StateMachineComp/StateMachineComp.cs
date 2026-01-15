@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using Animancer;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
-/// BattleInput.FixedTick -> ReadInput -> Set Context
 /// State.FixedTick -> AddVelocity
 /// Velocity.FixedTick -> ApplyAndClear
 /// 
 /// BattleInput.CallBack (BeforeUpdated) -> SaveInput
-/// 
+/// State.Tick -> Check Enter
 /// State.Tick -> ReadInput
 /// 
-/// Context.LateTick -> ClearButtonInput
+/// Context.LateTick -> ClearInput
 /// </summary>
 public partial class StateMachineComp : EntityComp
 {
@@ -46,7 +46,8 @@ public partial class StateMachineComp : EntityComp
     {
         Entity.HasComp(VIEW,out ViewComp view);
 
-        Animator  = view.View.GetComponentInChildren<Animator>();
+        // Animator  = view.View.GetComponentInChildren<Animator>();
+        Animancer  = view.View.GetComponentInChildren<AnimancerComponent>();
         Settings = view.View.GetComponent<StateMachineSetting>();
         
         Collision.Initialize(this);
@@ -110,8 +111,20 @@ public partial class StateMachineComp : EntityComp
         {
             return;
         }
+#if UNITY_EDITOR
+        if (_curState != null)
+        {
+            Debug.Log($"{_curState.GetType().Name} Exit");
+        }
+#endif
         _curState?.OnExit();
         _curState = state;
+#if UNITY_EDITOR
+        if (_curState != null)
+        {
+            Debug.Log($"{_curState.GetType().Name} Enter");
+        }
+#endif
         _curState?.OnEnter();
     }
 }

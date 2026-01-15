@@ -206,7 +206,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 0.0001
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 0
   m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: 344ade1054828ad46afb4fd0c44a4d04, type: 2}
   m_IncludeLayers:
@@ -231,11 +231,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dee164d9450b4bafbe691181e1416533, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Clips:
+  - {fileID: 7400000, guid: 700b8216991642d4195eddf1b58d75b0, type: 2}
+  - {fileID: 7400000, guid: 6bc08754c15cf5e409bfc05d0caf93af, type: 2}
+  - {fileID: 7400000, guid: 498724140f91bd14e96886e447e8a717, type: 2}
+  - {fileID: 7400000, guid: c2d4e729c11e27747a8b60c32b0254b4, type: 2}
   Sprite: {fileID: 1509574520324346947}
   Body: {fileID: 6586916354844717146}
   Foot: {fileID: 7899840795252765108}
   Rg: {fileID: 5711690936578414638}
-  FallGravity: -1.5
+  GroundGravity: -1.5
+  MaxFallSpeed: -30
+  MaxUpwardSpeed: 50
+  HoldJumpGravityMultiplayer: 1
+  FallGravityMultiplayer: 1.2
+  HangJumpGravityMultiplayer: 0.5
+  HangJumpVelocity: 1
+  CanJumpCount: 2
+  MaxJumpHeight: 3.5
+  MinJumpHeight: 1
+  JumpToHeightTime: 0.3
   GroundDetectionRayLength: 0.02
 --- !u!1 &8323629523910714289
 GameObject:
@@ -248,6 +263,7 @@ GameObject:
   - component: {fileID: 8757417599708413343}
   - component: {fileID: 1509574520324346947}
   - component: {fileID: 584137327893914135}
+  - component: {fileID: 3269727920007808711}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -347,3 +363,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3269727920007808711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8323629523910714289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad50f81b1d25c441943c37a89ba23f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Animator: {fileID: 584137327893914135}
+  _ActionOnDisable: 0

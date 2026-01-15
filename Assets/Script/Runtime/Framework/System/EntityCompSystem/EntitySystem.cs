@@ -32,7 +32,6 @@ public class EntitySystem : BaseSystem, ITickSystem, IFixedTickSystem, ILateTick
 
     public void Tick(float dt)
     {
-        Debug.Log("Tick");
         for (int i = 0; i < _tickEntities.Count; i++)
         {
             _tickEntities[i]?.Tick(dt);
@@ -49,7 +48,6 @@ public class EntitySystem : BaseSystem, ITickSystem, IFixedTickSystem, ILateTick
 
     public void FixedTick(float dt)
     {
-        Debug.Log("Fixed");
         for (int i = 0; i < _fixedTickEntities.Count; i++)
         {
             _fixedTickEntities[i]?.FixedTick(dt);

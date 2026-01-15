@@ -2,8 +2,13 @@
 
 public class StateMachineCollision
 {
+    public event System.Action OnGroundTouched; 
+    public event System.Action OnGroundLeft; 
+    
     public bool IsGrounded { get; private set; }
-
+    private bool _isGrounded;
+    
+    
     private StateMachineComp _stateMachine;
     
     public void Initialize(StateMachineComp machine)
@@ -14,6 +19,9 @@ public class StateMachineCollision
     public void TickCheck(float dt)
     {
         CheckIsGrounded();
+        
+        
+        CheckStateChange();
     }
 
     private void CheckIsGrounded()
@@ -24,6 +32,21 @@ public class StateMachineCollision
         var boxCastSize = new Vector2(bounds.size.x, _stateMachine.Settings.GroundDetectionRayLength);
 
         IsGrounded = Physics2D.BoxCast(boxCastOrigin, boxCastSize, 0f, Vector2.down, _stateMachine.Settings.GroundDetectionRayLength, 1 << LayerMask.NameToLayer("Ground")).collider != null;
+    }
+
+    private void CheckStateChange()
+    {
+        // 回到地面
+        if (IsGrounded && !_isGrounded)
+        {
+            OnGroundTouched?.Invoke();
+        }
+        else if (!IsGrounded && _isGrounded)
+        {
+            OnGroundLeft?.Invoke();
+        }
+        
+        _isGrounded = IsGrounded;
     }
 }
 

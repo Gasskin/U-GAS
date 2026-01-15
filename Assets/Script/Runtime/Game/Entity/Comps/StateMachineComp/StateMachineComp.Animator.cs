@@ -1,11 +1,19 @@
-﻿using UnityEngine;
+﻿using Animancer;
+using UnityEngine;
 
 public partial class StateMachineComp
 {
     public const string StateName_Idle = "idle";
     public const string StateName_Fall = "fall";
     public const string StateName_Jump = "jump";
-    
-    
-    public Animator Animator { get;private set; }
+    public const string StateName_MultiJump = "multi_jump";
+
+
+    // public Animator Animator { get; private set; }
+    public AnimancerComponent Animancer { get; private set; }
+
+    public void Play(string clipName)
+    {
+        Animancer.Play(Settings.ClipDict[clipName]);
+    }
 }

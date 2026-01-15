@@ -9,7 +9,7 @@ public abstract class BaseState
 
     protected abstract List<Type> CheckToStates { get; }
     
-    public void Initialize(StateMachineComp comp)
+    public virtual void Initialize(StateMachineComp comp)
     {
         StateMachine = comp;
         foreach (var s in CheckToStates)

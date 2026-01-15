@@ -1,8 +1,15 @@
-﻿using Sirenix.OdinInspector;
+﻿using System;
+using System.Collections.Generic;
+using Sirenix.OdinInspector;
+using UnityEditor;
 using UnityEngine;
 
 public class StateMachineSetting : MonoBehaviour
 {
+    [FoldoutGroup("动画组")]
+    public List<AnimationClip> Clips = new();
+    public Dictionary<string, AnimationClip> ClipDict = new();
+    
     [FoldoutGroup("组件索引")]
     public SpriteRenderer Sprite;
 
@@ -48,12 +55,15 @@ public class StateMachineSetting : MonoBehaviour
     [LabelText("连续跳跃次数")]
     public int CanJumpCount = 2;
 
+    [FoldoutGroup("Jump")]
     [LabelText("最大跳跃高度")]
     public float MaxJumpHeight = 3.5f;
 
+    [FoldoutGroup("Jump")]
     [LabelText("最小跳跃高度")]
     public float MinJumpHeight = 1f;
 
+    [FoldoutGroup("Jump")]
     [LabelText("达到目标高度所需时间")]
     public float JumpToHeightTime = 0.3f;
 
@@ -74,9 +84,19 @@ public class StateMachineSetting : MonoBehaviour
     // v0 = g * t
     public float MaxJumpVelocity => Gravity * JumpToHeightTime;
 
-    // v1² - v0² = 2 * a * t
+    // v1² - v0² = 2 * a * s
     // 末速度为0，加速度为-g
-    // - v0² = - 2 * g * t
-    // v0 = sqrt(2 * g * t)
-    public float MinJumpVelocity => Mathf.Sqrt(2f * Gravity * JumpToHeightTime);
+    // - v0² = - 2 * g * h
+    // v0 = sqrt(2 * g * h)
+    public float MinJumpVelocity => Mathf.Sqrt(2f * Gravity * MinJumpHeight);
+
+
+    private void Start()
+    {
+        ClipDict.Clear();
+        foreach (var animationClip in Clips)
+        {
+            ClipDict.Add(animationClip.name, animationClip);
+        }
+    }
 }

@@ -1,6 +1,4 @@
-﻿using UnityEngine.InputSystem;
-
-public class ButtonState
+﻿public class ButtonState
 {
     public bool IsHolding { get; private set; }
     

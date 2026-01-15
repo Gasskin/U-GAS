@@ -113,7 +113,7 @@ public class SystemDriver : MonoBehaviour
     {
         for (int i = 0; i < _fixedTickSystems.Count; i++)
         {
-            _fixedTickSystems[i].FixedTick(Time.deltaTime);
+            _fixedTickSystems[i].FixedTick(Time.fixedDeltaTime);
         }
     }
 }
