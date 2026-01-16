@@ -10,7 +10,7 @@ namespace cfg.Gas
 
         protected override void OnStart()
         {
-            var design = SystemDriver.DesignSystem.Tables.TbGameEffect.GetOrDefault(Id);
+            var design = SystemDriver.ConfigSystem.Tables.TbGameEffect.GetOrDefault(Id);
             if (design != null) 
             {
                 Debug.LogError(design.Backup);

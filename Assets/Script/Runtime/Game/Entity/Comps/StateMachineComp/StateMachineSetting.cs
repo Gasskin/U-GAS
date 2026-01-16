@@ -8,8 +8,9 @@ public class StateMachineSetting : MonoBehaviour
 {
     [FoldoutGroup("动画组")]
     public List<AnimationClip> Clips = new();
+
     public Dictionary<string, AnimationClip> ClipDict = new();
-    
+
     [FoldoutGroup("组件索引")]
     public SpriteRenderer Sprite;
 
@@ -69,8 +70,11 @@ public class StateMachineSetting : MonoBehaviour
 
     [FoldoutGroup("碰撞检测")]
     [LabelText("地面射线检测距离")]
-    public float GroundDetectionRayLength;
+    public float GroundDetectionRayLength = 0.02f;
 
+    [FoldoutGroup("碰撞检测")]
+    [LabelText("墙面面射线检测距离")]
+    public float WallDetectionRayLength = 0.02f;
 
     // v1 = v0 - g * t
     // 末速度为0

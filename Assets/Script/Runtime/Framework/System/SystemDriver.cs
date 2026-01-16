@@ -33,7 +33,7 @@ public class SystemDriver : MonoBehaviour
     public EYooAssetsMode YooAssetsMode;
 
     public static YooSystem YooSystem => Get<YooSystem>();
-    public static DesignSystem DesignSystem => Get<DesignSystem>();
+    public static ConfigSystem ConfigSystem => Get<ConfigSystem>();
     public static TimeSystem TimeSystem => Get<TimeSystem>();
     public static EntitySystem EntitySystem => Get<EntitySystem>();
     public static ProcedureSystem ProcedureSystem => Get<ProcedureSystem>();
@@ -43,7 +43,7 @@ public class SystemDriver : MonoBehaviour
     {
         // Framework System
         new YooSystem(),
-        new DesignSystem(),
+        new ConfigSystem(),
         new EntitySystem(),
         new ProcedureSystem(),
         // Game System

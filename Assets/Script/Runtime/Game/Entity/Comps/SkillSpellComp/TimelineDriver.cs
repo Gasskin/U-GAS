@@ -68,7 +68,7 @@ public class TimelineDriver
 
     public void Reset(int skillId)
     {
-        var tables = SystemDriver.DesignSystem.Tables;
+        var tables = SystemDriver.ConfigSystem.Tables;
         var skill = tables.TbSkill.GetOrDefault(_skillId);
         if (skill != null)
         {

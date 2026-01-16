@@ -11,7 +11,5 @@ namespace cfg
         {
             TbSkillTimeline = new Gas.TbSkillTimeline(loader("gas_tbskilltimeline"));
         }
-
-
     }
 }

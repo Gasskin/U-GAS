@@ -24,10 +24,10 @@ public class StateMachineTurn
     {
         IsFacingRight = !IsFacingRight;
 		
-        Vector3 scale = _stateMachine.Settings.Sprite.transform.localScale;
+        Vector3 scale = _stateMachine.Settings.transform.localScale;
         scale.x = IsFacingRight ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
 		
-        _stateMachine.Settings.Sprite.transform.localScale = scale;
+        _stateMachine.Settings.transform.localScale = scale;
     }
 }
 

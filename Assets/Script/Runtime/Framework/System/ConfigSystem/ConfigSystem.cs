@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 using Luban;
 using UnityEngine;
 
-public class DesignSystem : BaseSystem
+public class ConfigSystem : BaseSystem
 {
     public Tables Tables { get; private set; }
 

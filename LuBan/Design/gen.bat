@@ -1,6 +1,6 @@
 set LUBAN_DLL=..\Tools\Luban\Luban.dll
 set CONF_ROOT=.
-set CLIENT_ROOT=..\..\Assets\Design
+set CLIENT_ROOT=..\..\Assets\Config
 
 dotnet %LUBAN_DLL% ^
     -t client ^
