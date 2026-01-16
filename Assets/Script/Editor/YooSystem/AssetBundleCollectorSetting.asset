@@ -52,7 +52,7 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/Design/Data
+      - CollectPath: Assets/Config/Data
         CollectorGUID: 7e36aaeadd64b6548add0c3b5e27ff55
         CollectorType: 0
         AddressRuleName: AddressByFileName

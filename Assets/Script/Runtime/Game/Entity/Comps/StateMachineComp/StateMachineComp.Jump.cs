@@ -46,11 +46,9 @@ public class StateMachineJump
         _isHolding = _stateMachine.Context.Jump.IsHolding;
     }
 
-    public float GetVelocityY()
+    public Vector2 CalculateVelocity(Vector2 inVelocity)
     {
-        var velocity = _stateMachine.Velocity.Velocity;
-
-        if (velocity.y > 0)
+        if (inVelocity.y > 0)
         {
             _isUp = true;
         }
@@ -61,7 +59,7 @@ public class StateMachineJump
         if (jump)
         {
             _jumpCount--;
-            velocity.y = _stateMachine.Settings.MaxJumpVelocity;
+            inVelocity.y = _stateMachine.Settings.MaxJumpVelocity;
         }
 
         if (multiJump)
@@ -72,13 +70,13 @@ public class StateMachineJump
         // 如果松开跳跃键，设置为最小跳跃速度
         if (_hasReleased)
         {
-            velocity.y = Mathf.Min(velocity.y, _stateMachine.Settings.MinJumpVelocity);
+            inVelocity.y = Mathf.Min(inVelocity.y, _stateMachine.Settings.MinJumpVelocity);
         }
 
         _hasPressed = false;
         _hasReleased = false;
 
-        return velocity.y;
+        return inVelocity;
     }
     
 

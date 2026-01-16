@@ -14,7 +14,7 @@ public class StateMachineTurn
     public void CheckAndTurn()
     {
         var moveDirection = _stateMachine.Context.MoveDir;
-        if ((moveDirection.x < 0 && IsFacingRight) || (moveDirection.x > 0 && !IsFacingRight))
+        if ((moveDirection < 0 && IsFacingRight) || (moveDirection > 0 && !IsFacingRight))
         {
             Turn();
         }

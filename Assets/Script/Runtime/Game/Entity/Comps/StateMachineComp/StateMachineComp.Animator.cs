@@ -7,6 +7,7 @@ public partial class StateMachineComp
     public const string StateName_Fall = "fall";
     public const string StateName_Jump = "jump";
     public const string StateName_MultiJump = "multi_jump";
+    public const string StateName_Run = "run";
 
 
     // public Animator Animator { get; private set; }

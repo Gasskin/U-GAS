@@ -14,10 +14,10 @@ public class StateMachineFall
     {
     }
 
-    public float GetVelocityY(Vector2 currentVelocity)
+    public Vector2 CalculateVelocity(Vector2 inVelocity)
     {
         var gravityMultiplier = _stateMachine.Settings.FallGravityMultiplayer;
-        if (Mathf.Abs(currentVelocity.y) <= _stateMachine.Settings.HangJumpVelocity)
+        if (Mathf.Abs(inVelocity.y) <= _stateMachine.Settings.HangJumpVelocity)
         {
             gravityMultiplier = _stateMachine.Settings.HangJumpGravityMultiplayer;
         }
@@ -25,11 +25,11 @@ public class StateMachineFall
         {
             gravityMultiplier = _stateMachine.Settings.HoldJumpGravityMultiplayer;
         }
-        currentVelocity.y -= _stateMachine.Settings.Gravity * gravityMultiplier * Time.fixedDeltaTime;
+        inVelocity.y -= _stateMachine.Settings.Gravity * gravityMultiplier * Time.fixedDeltaTime;
 
-        currentVelocity.y = Mathf.Clamp(currentVelocity.y, _stateMachine.Settings.MaxFallSpeed, _stateMachine.Settings.MaxUpwardSpeed);
+        inVelocity.y = Mathf.Clamp(inVelocity.y, _stateMachine.Settings.MaxFallSpeed, _stateMachine.Settings.MaxUpwardSpeed);
 
-        return currentVelocity.y;
+        return inVelocity;
     }
 }
 

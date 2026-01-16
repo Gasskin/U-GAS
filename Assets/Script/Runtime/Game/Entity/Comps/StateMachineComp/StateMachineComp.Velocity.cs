@@ -3,6 +3,8 @@ using UnityEngine;
 public class StateMachineVelocity
 {
     public Vector2 Velocity => _rg.linearVelocity;
+    
+    public bool NoHorizontalVelocity => Mathf.Abs(_rg.linearVelocity.x) <= 0.01f;
 
     private Vector2 _velocity;
 

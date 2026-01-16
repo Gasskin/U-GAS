@@ -7,6 +7,7 @@ public class IdleState : BaseState
     protected override List<Type> CheckToStates { get; } = new()
     {
         typeof(JumpState),
+        typeof(RunState),
     };
 
     public override void OnEnter()
@@ -34,9 +35,9 @@ public class IdleState : BaseState
         switch (to)
         {
             case JumpState:
-            {
                 return StateMachine.Context.Jump.IsPressedThisFrame;
-            }
+            case RunState:
+                return StateMachine.Context.MoveDir != 0 && !StateMachine.Collision.IsTouchWall;
         }
         return false;
     }

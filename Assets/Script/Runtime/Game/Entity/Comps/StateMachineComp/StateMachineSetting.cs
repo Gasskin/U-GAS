@@ -23,6 +23,7 @@ public class StateMachineSetting : MonoBehaviour
     [FoldoutGroup("组件索引")]
     public Rigidbody2D Rg;
 
+#region Fall
     [FoldoutGroup("Fall")]
     [LabelText("地面重力")]
     public float GroundGravity = -1.5f;
@@ -50,8 +51,9 @@ public class StateMachineSetting : MonoBehaviour
     [FoldoutGroup("Fall")]
     [LabelText("重力缩放 - 悬挂时速度要求")]
     public float HangJumpVelocity = 1f;
+#endregion
 
-
+#region Jump
     [FoldoutGroup("Jump")]
     [LabelText("连续跳跃次数")]
     public int CanJumpCount = 2;
@@ -67,7 +69,41 @@ public class StateMachineSetting : MonoBehaviour
     [FoldoutGroup("Jump")]
     [LabelText("达到目标高度所需时间")]
     public float JumpToHeightTime = 0.3f;
+#endregion
 
+#region Air
+    [FoldoutGroup("Air")]
+    [LabelText("空中速度")]
+    public float AirSpeed = 100f;
+    [FoldoutGroup("Air")]
+    [LabelText("普通跳跃空中加速度")]
+    public float JumpAirAcceleration = 100f;
+    [FoldoutGroup("Air")]
+    [LabelText("普通跳跃空中减速度")]
+    public float JumpAirDeceleration = 5f;
+    [FoldoutGroup("Air")]
+    [LabelText("奔跑跳跃空中加速度")]
+    public float RunJumpAirAcceleration = 150f;
+    [FoldoutGroup("Air")]
+    [LabelText("奔跑跳跃空中减速度")]
+    public float RunJumpAirDeceleration = 23f;
+#endregion
+
+#region Run
+    [FoldoutGroup("Run")]
+    [LabelText("跑步速度")]
+    public float RunSpeed = 15f;
+
+    [FoldoutGroup("Run")]
+    [LabelText("跑步加速度")]
+    public float RunAcceleration = 150f;
+
+    [FoldoutGroup("Run")]
+    [LabelText("跑步减速度")]
+    public float RunDeceleration = 150f;
+#endregion
+
+    
     [FoldoutGroup("碰撞检测")]
     [LabelText("地面射线检测距离")]
     public float GroundDetectionRayLength = 0.02f;

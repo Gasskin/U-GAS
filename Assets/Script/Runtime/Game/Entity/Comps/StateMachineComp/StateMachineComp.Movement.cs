@@ -1,26 +1,24 @@
+using System;
 using UnityEngine;
 
 public class StateMachineMovement
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="inVelocity">初速度</param>
-    /// <param name="moveDirection">移动方向</param>
-    /// <param name="speed">速度</param>
-    /// <param name="acceleration">加速度</param>
-    /// <param name="deceleration">减速度</param>
-    /// <returns></returns>
-    public float GetVelocityX(float inVelocityX, Vector2 moveDirection, float speed, 
-        float acceleration, float deceleration)
-    {
-        var targetVelocity = moveDirection.x != 0 ? moveDirection.x * speed : 0;
-        
-        var smooth = moveDirection.x != 0
-            ? acceleration
-            : deceleration;
+    private StateMachineComp _stateMachine;
 
-        return Mathf.Lerp(inVelocityX, targetVelocity, smooth * Time.fixedDeltaTime);
+
+    public void Initialize(StateMachineComp stateMachine)
+    {
+        _stateMachine = stateMachine;
+    }
+
+    public Vector2 CalculateVelocity(Vector2 inVelocity, int moveDir, float speed, float acceleration, float deceleration)
+    {
+        var velocity = moveDir * _stateMachine.Settings.RunSpeed;
+        var smooth = moveDir != 0 ? _stateMachine.Settings.RunAcceleration : _stateMachine.Settings.RunDeceleration;
+
+        inVelocity.x = Mathf.MoveTowards(inVelocity.x, velocity, smooth * Time.fixedDeltaTime);
+
+        return inVelocity;
     }
 }
 

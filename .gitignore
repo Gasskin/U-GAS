@@ -64,3 +64,5 @@ crashlytics-build.properties
 Assembly-CSharp.csproj.DotSettings
 UserSettings
 .idea
+Bundles/StandaloneWindows64/DefaultPackage/Simulate
+Bundles/StandaloneWindows64/RawPackage/Simulate

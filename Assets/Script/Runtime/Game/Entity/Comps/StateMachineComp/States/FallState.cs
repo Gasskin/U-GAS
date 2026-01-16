@@ -8,9 +8,8 @@ public class FallState : BaseState
     {
         typeof(IdleState),
         typeof(JumpState),
+        typeof(RunState),
     };
-
-    private Vector2 _velocity;
 
 
     public override void OnEnter()
@@ -26,9 +25,11 @@ public class FallState : BaseState
 
     public override void FixedTick(float dt)
     {
-        _velocity.y = StateMachine.Fall.GetVelocityY(StateMachine.Velocity.Velocity);
-
-        StateMachine.Velocity.AddVelocity(_velocity);
+        var velocity = StateMachine.Fall.CalculateVelocity(StateMachine.Velocity.Velocity);
+        velocity = StateMachine.Movement.CalculateVelocity(velocity, StateMachine.Context.MoveDir,
+            StateMachine.Settings.AirSpeed, StateMachine.Settings.JumpAirAcceleration,
+            StateMachine.Settings.JumpAirDeceleration);
+        StateMachine.Velocity.AddVelocity(velocity);
     }
 
     public override void OnExit()
@@ -41,17 +42,14 @@ public class FallState : BaseState
         {
             case IdleState:
                 return StateMachine.Collision.IsGrounded &&
-                       StateMachine.Context.MoveDir == Vector2.zero &&
-                       Mathf.Abs(StateMachine.Velocity.Velocity.x) < 0.1f;
+                       StateMachine.Context.MoveDir == 0 &&
+                       StateMachine.Velocity.NoHorizontalVelocity;
             case JumpState:
-                if (StateMachine.Context.Jump.IsPressedThisFrame)
-                {
-                    if (StateMachine.Jump.CanMultiJump)
-                    {
-                        return true;
-                    }
-                }
-                return false;
+                return StateMachine.Context.Jump.IsPressedThisFrame &&
+                       StateMachine.Jump.CanMultiJump;
+            case RunState:
+                return StateMachine.Collision.IsGrounded &&
+                       StateMachine.Context.MoveDir != 0;
         }
         return false;
     }

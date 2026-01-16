@@ -27,7 +27,7 @@ public class ConfigSystem : BaseSystem
 
     private static ByteBuf LoadByteBuf(string file)
     {
-        var handle = SystemDriver.YooSystem.LoadRawSync($"Assets/Design/Data/{file}.bytes");
+        var handle = SystemDriver.YooSystem.LoadRawSync($"Assets/Config/Data/{file}.bytes");
         var bytes = handle.GetRawFileData();
         var buf = new ByteBuf(bytes);
         handle.Dispose();
@@ -36,7 +36,7 @@ public class ConfigSystem : BaseSystem
 
     private static byte[] LoadBytes(string file)
     {
-        var handle = SystemDriver.YooSystem.LoadRawSync($"Assets/Design/Data/{file}.bytes");
+        var handle = SystemDriver.YooSystem.LoadRawSync($"Assets/Config/Data/{file}.bytes");
         var bytes = handle.GetRawFileData();
         handle.Dispose();
         return bytes;

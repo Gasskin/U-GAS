@@ -55,6 +55,7 @@ public partial class StateMachineComp : EntityComp
         Velocity.Initialize(this);
         Jump.Initialize(this);
         Fall.Initialize(this);
+        Movement.Initialize(this);
 
         for (int i = 0; i < _states.Count; i++)
         {
@@ -111,20 +112,20 @@ public partial class StateMachineComp : EntityComp
         {
             return;
         }
-#if UNITY_EDITOR
-        if (_curState != null)
-        {
-            Debug.Log($"{_curState.GetType().Name} Exit");
-        }
-#endif
+// #if UNITY_EDITOR
+//         if (_curState != null)
+//         {
+//             Debug.Log($"{_curState.GetType().Name} Exit");
+//         }
+// #endif
         _curState?.OnExit();
         _curState = state;
-#if UNITY_EDITOR
-        if (_curState != null)
-        {
-            Debug.Log($"{_curState.GetType().Name} Enter");
-        }
-#endif
+// #if UNITY_EDITOR
+//         if (_curState != null)
+//         {
+//             Debug.Log($"{_curState.GetType().Name} Enter");
+//         }
+// #endif
         _curState?.OnEnter();
     }
 }

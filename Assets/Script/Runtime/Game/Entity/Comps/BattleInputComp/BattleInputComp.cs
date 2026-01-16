@@ -16,10 +16,6 @@ public class BattleInputComp : EntityComp
 
     private StateMachineComp _stateMachine;
 
-    public override bool NeedFixedTick => true;
-
-    private List<SavedInput> _savedPlayerMove = new(32);
-    private List<SavedInput> _savedPlayerJump = new(32);
 
     public override async UniTask Initialize()
     {
@@ -28,14 +24,14 @@ public class BattleInputComp : EntityComp
         var input = SystemDriver.InputSystem;
         input.OnPlayerMove += OnPlayerMove;
         input.OnPlayerJump += OnPlayerJump;
-        
+
         await UniTask.Yield();
     }
 
     public override void Destroy()
     {
         var input = SystemDriver.InputSystem;
-        if (input == null) 
+        if (input == null)
         {
             return;
         }
@@ -43,43 +39,26 @@ public class BattleInputComp : EntityComp
         input.OnPlayerJump -= OnPlayerJump;
     }
 
-    public override void FixedTick(float dt)
-    {
-        for (int i = 0; i < _savedPlayerMove.Count; i++)
-        {
-            _stateMachine.Context.MoveDir = _savedPlayerMove[i].Vector2;
-        }
-        _savedPlayerMove.Clear();
-        
-        for (int i = 0; i < _savedPlayerJump.Count; i++)
-        {
-            var save = _savedPlayerJump[i];
-            if (save.Started)
-            {
-                _stateMachine.Context.Jump.Start();
-            }
-            else if (save.Canceled)
-            {
-                _stateMachine.Context.Jump.Cancel();
-            }
-        }
-        _savedPlayerJump.Clear();
-    }
-
     private void OnPlayerMove(InputAction.CallbackContext ctx)
     {
-        _savedPlayerMove.Add(new SavedInput()
+        var dir = 0;
+        var input = ctx.ReadValue<Vector2>();
+        if (!Mathf.Approximately(input.x, 0f))
         {
-            Vector2 = ctx.ReadValue<Vector2>()
-        });
+            dir = (int)Mathf.Sign(input.x);
+        }
+        _stateMachine.Context.MoveDir = dir;
     }
-    
+
     private void OnPlayerJump(InputAction.CallbackContext ctx)
     {
-        _savedPlayerJump.Add(new SavedInput()
+        if (ctx.started)
         {
-            Started = ctx.started,
-            Canceled = ctx.canceled
-        });
+            _stateMachine.Context.Jump.Start();
+        }
+        else if (ctx.canceled)
+        {
+            _stateMachine.Context.Jump.Cancel();
+        }
     }
 }

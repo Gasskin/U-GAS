@@ -236,11 +236,12 @@ MonoBehaviour:
   - {fileID: 7400000, guid: 6bc08754c15cf5e409bfc05d0caf93af, type: 2}
   - {fileID: 7400000, guid: 498724140f91bd14e96886e447e8a717, type: 2}
   - {fileID: 7400000, guid: c2d4e729c11e27747a8b60c32b0254b4, type: 2}
+  - {fileID: 7400000, guid: 2c2c0b2792f7fb14d8632701f8f03f44, type: 2}
   Sprite: {fileID: 1509574520324346947}
   Body: {fileID: 6586916354844717146}
   Foot: {fileID: 7899840795252765108}
   Rg: {fileID: 5711690936578414638}
-  GroundGravity: -1.5
+  GroundGravity: -5
   MaxFallSpeed: -30
   MaxUpwardSpeed: 50
   HoldJumpGravityMultiplayer: 1
@@ -251,7 +252,16 @@ MonoBehaviour:
   MaxJumpHeight: 3.5
   MinJumpHeight: 1
   JumpToHeightTime: 0.3
+  AirSpeed: 8
+  JumpAirAcceleration: 100
+  JumpAirDeceleration: 10
+  RunJumpAirAcceleration: 150
+  RunJumpAirDeceleration: 5
+  RunSpeed: 10
+  RunAcceleration: 100
+  RunDeceleration: 100
   GroundDetectionRayLength: 0.02
+  WallDetectionRayLength: 0.02
 --- !u!1 &8323629523910714289
 GameObject:
   m_ObjectHideFlags: 0

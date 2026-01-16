@@ -9,8 +9,6 @@ public class JumpState : BaseState
         typeof(FallState),
     };
 
-    private Vector2 _velocity = Vector2.zero;
-
     public override void Initialize(StateMachineComp comp)
     {
         base.Initialize(comp);
@@ -25,16 +23,21 @@ public class JumpState : BaseState
 
     public override void Tick(float dt)
     {
-        StateMachine.Jump.ReadInput();
         StateMachine.Turn.CheckAndTurn();
+        StateMachine.Jump.ReadInput();
     }
 
     public override void FixedTick(float dt)
     {
-        _velocity.y = StateMachine.Jump.GetVelocityY();
-        _velocity.y = StateMachine.Fall.GetVelocityY(_velocity);
+        var velocity = StateMachine.Jump.CalculateVelocity(StateMachine.Velocity.Velocity);
+        
+        velocity = StateMachine.Movement.CalculateVelocity(velocity, StateMachine.Context.MoveDir,
+            StateMachine.Settings.AirSpeed, StateMachine.Settings.JumpAirAcceleration,
+            StateMachine.Settings.JumpAirDeceleration);
+        
+        velocity = StateMachine.Fall.CalculateVelocity(velocity);
 
-        StateMachine.Velocity.AddVelocity(_velocity);
+        StateMachine.Velocity.AddVelocity(velocity);
     }
 
     public override void OnExit()
@@ -57,6 +60,4 @@ public class JumpState : BaseState
     {
         return false;
     }
-
-
 }

@@ -38,7 +38,7 @@ public class SkillTimelineExport
             tbSkillTimeline.Add(ToSkillTimeline(id, asset));
         }
         var bin = MemoryPackSerializer.Serialize(tbSkillTimeline);
-        var export = "Assets/Design/Data/gas_tbskilltimeline.bytes";
+        var export = "Assets/Config/Data/gas_tbskilltimeline.bytes";
         if (File.Exists(export))
         {
             File.Delete(export);
