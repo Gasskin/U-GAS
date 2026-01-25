@@ -73,7 +73,7 @@ public class SkillTimelineDriver
         }
     }
 
-    public void TryStart(SkillTimelineContext context)
+    public void Start(SkillTimelineContext context)
     {
         var tables = SystemDriver.ConfigSystem.Tables;
         var skill = tables.TbSkill.GetOrDefault(context.SkillId);

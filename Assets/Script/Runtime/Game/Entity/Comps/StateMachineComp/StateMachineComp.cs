@@ -39,6 +39,9 @@ public partial class StateMachineComp : EntityComp
         foreach (var state in _states)
         {
             _stateDic.Add(state.GetType(), state);
+            if (state is SkillSpellState s)
+            {
+            }
         }
     }
 
@@ -49,14 +52,15 @@ public partial class StateMachineComp : EntityComp
         // Animator  = view.View.GetComponentInChildren<Animator>();
         Animancer  = view.View.GetComponentInChildren<AnimancerComponent>();
         Settings = view.View.GetComponent<StateMachineSetting>();
-        
+
+        SkillSpell = new(this);
         // Collision.Initialize(this);
-        Turn.Initialize(this);
+        Turn = new(this);
         // Dash.Initialize(this);
-        Velocity.Initialize(this);
+        Velocity= new(this);
         // Jump.Initialize(this);
         // Fall.Initialize(this);
-        Movement.Initialize(this);
+        Movement= new(this);
 
         for (int i = 0; i < _states.Count; i++)
         {
@@ -108,6 +112,7 @@ public partial class StateMachineComp : EntityComp
         return _stateDic.GetValueOrDefault(type, null);
     }
 
+    
     public bool IsState<T>(out T state) where T : BaseState
     {
         state = null;

@@ -26,11 +26,10 @@ public class BattleInputComp : EntityComp
         input.OnPlayerMove += OnPlayerMove;
         input.OnPlayerJump += OnPlayerJump;
         input.OnPlayerDash += OnPlayerDash;
+        input.OnPlayerAttack += OnPlayerAttack;
 
         await UniTask.Yield();
     }
-
-
 
     public override void Destroy()
     {
@@ -42,6 +41,7 @@ public class BattleInputComp : EntityComp
         input.OnPlayerMove -= OnPlayerMove;
         input.OnPlayerJump -= OnPlayerJump;
         input.OnPlayerDash -= OnPlayerDash;
+        input.OnPlayerAttack -= OnPlayerAttack;
     }
 
     private void OnPlayerMove(InputAction.CallbackContext ctx)
@@ -82,5 +82,11 @@ public class BattleInputComp : EntityComp
         {
             _stateMachine.Context.Dash.Cancel();
         }
+    }
+    
+    
+    private void OnPlayerAttack(InputAction.CallbackContext ctx)
+    {
+        _stateMachine.SkillSpell.TrySpellSkill(1001);
     }
 }

@@ -1,6 +1,5 @@
 using cfg.Gas;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 public class SkillSpellComp : EntityComp
 {
@@ -43,7 +42,7 @@ public class SkillSpellComp : EntityComp
 
     private void StartTimelineDriver(int skillId)
     {
-        _skillTimelineDriver.TryStart(new SkillTimelineContext()
+        _skillTimelineDriver.Start(new SkillTimelineContext()
         {
             EntityId = Entity.Id,
             SkillId = skillId
@@ -52,26 +51,16 @@ public class SkillSpellComp : EntityComp
 
     private void OnTimelineStart()
     {
-        if (Entity.HasComp(Priority_StateMachine, out StateMachineComp stateMachine))
-        {
-            stateMachine.SkillSpell.IsSpell = true;
-            stateMachine.ChangeState<SkillSpellState>();
-        }
+   
     }
 
     private void OnTimelineInterrupt()
     {
-        if (Entity.HasComp(Priority_StateMachine, out StateMachineComp stateMachineComp))
-        {
-            stateMachineComp.SkillSpell.IsSpell = false;
-        }
+       
     }
 
     private void OnTimelineEnd()
     {
-        if (Entity.HasComp(Priority_StateMachine, out StateMachineComp stateMachineComp))
-        {
-            stateMachineComp.SkillSpell.IsSpell = false;
-        }
+      
     }
 }

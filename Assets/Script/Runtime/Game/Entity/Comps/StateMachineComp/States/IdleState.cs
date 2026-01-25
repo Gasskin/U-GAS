@@ -6,7 +6,6 @@ public class IdleState : BaseState
 {
     protected override List<Type> CheckToStates { get; } = new()
     {
-        typeof(SkillSpellComp),
         typeof(RunState),
     };
 
@@ -33,8 +32,6 @@ public class IdleState : BaseState
     {
         switch (to)
         {
-            case SkillSpellState:
-                return StateMachine.SkillSpell.IsSpell;
             case RunState:
                 return StateMachine.Context.MoveDir.x != 0;
         }
