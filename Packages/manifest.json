@@ -4,6 +4,7 @@
     "com.tuyoogame.yooasset": "file:com.tuyoogame.yooasset",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
+    "com.unity.2d.tilemap.extras": "4.1.0",
     "com.unity.cinemachine": "3.1.5",
     "com.unity.ide.rider": "file:com.unity.ide.rider",
     "com.unity.inputsystem": "file:com.unity.inputsystem",

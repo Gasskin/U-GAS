@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class RunState : BaseState
 {
     protected override List<Type> CheckToStates { get; } = new()
     {
-        typeof(RunJumpState),
+        typeof(JumpState),
         typeof(IdleState),
     };
 
     public override void OnEnter()
     {
-        StateMachine.Play(StateMachineComp.StateName_Run);
+        StateMachine.PlayAnima(StateMachineComp.StateName_Run);
     }
 
-    public override void Tick(float dt)
+    public override void Tick(float dt) 
     {
         StateMachine.Turn.CheckAndTurn();
     }
@@ -22,12 +23,9 @@ public class RunState : BaseState
     public override void FixedTick(float dt)
     {
         var velocity = StateMachine.Movement.CalculateVelocity(StateMachine.Velocity.Velocity,
-            StateMachine.Context.MoveDir,
             StateMachine.Settings.RunSpeed, StateMachine.Settings.RunAcceleration,
-            StateMachine.Settings.RunAcceleration);
+            StateMachine.Settings.RunDeceleration);
         
-        velocity.y = StateMachine.Settings.GroundGravity;
-
         StateMachine.Velocity.AddVelocity(velocity);
     }
 
@@ -40,23 +38,8 @@ public class RunState : BaseState
     {
         switch (to)
         {
-            case RunJumpState:
-                if (StateMachine.Context.Jump.IsPressedThisFrame)
-                {
-                    return true;
-                }
-                break;
             case IdleState:
-                if (StateMachine.Collision.IsGrounded && StateMachine.Context.MoveDir == 0 &&
-                    StateMachine.Velocity.NoHorizontalVelocity)
-                {
-                    return true;
-                }
-                if (StateMachine.Collision.IsTouchWall)
-                {
-                    return true;
-                }
-                break;
+                return StateMachine.Context.MoveDir == Vector2Int.zero && StateMachine.Velocity.NoVelocity;
         }
         return false;
     }

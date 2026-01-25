@@ -1,50 +1,46 @@
+using System;
 using System.Collections.Generic;
 using cfg.Gas;
 using Cysharp.Threading.Tasks;
+using UI;
 
-public class ProcedureSystem : BaseSystem
+public class ProcedureSystem : BaseSystem, ITickSystem
 {
+    private BaseProcedure _nowProcedure;
+
+    private Dictionary<Type, BaseProcedure> _procedures = new();
+    
     public override async UniTask Initialize()
     {
-        Test().Forget();
+        Register(new BattleProcedure());
 
         await UniTask.Yield();
+    }
+    
+    public void Tick(float dt)
+    {
+        _nowProcedure?.Tick(dt);
     }
 
     public override void Destroy()
     {
+        _nowProcedure?.Exit();
     }
 
-    private async UniTaskVoid Test()
+    public void ChangeProcedure<T>() where T : BaseProcedure, new()
     {
-        await UniTask.Delay(1000);
-        
-        var e = SystemDriver.EntitySystem.CreateEntity();
-        // var gas = e.AddComp(new GasComp(new Dictionary<EAttributeId, float>()
-        // {
-        //     { EAttributeId.HpBase, 100 },
-        //     { EAttributeId.HpMult, 2 },
-        //     { EAttributeId.HpAdd, 50 }
-        // }));
-        // gas.GameTagController.AddTag(EGameTag.Basic);
-        // gas.GameTagController.AddTag(EGameTag.Buff);
-        // gas.GameTagController.AddTag(EGameTag.Recover);
-        // gas.GameTagController.AddTag(EGameTag.Skill);
+        var type = typeof(T);
+        _nowProcedure?.Exit();
+        _nowProcedure = null;
+        if (_procedures.TryGetValue(type, out var procedure))
+        {
+            _nowProcedure = procedure;
+            _nowProcedure?.Enter();
+        }
+    } 
 
-        e.AddComp(new ViewComp("Assets/Bundles/Prefabs/Unit/Hero.prefab"));
-
-        var run = new RunState();
-        var runJump = new RunJumpState();
-        var runFall = new RunFallState();
-        var jump = new JumpState();
-        var idle = new IdleState();
-        var fall = new FallState();
-        var dash = new DashState();
-        var dashFall = new DashFallState();
-
-        e.AddComp(new StateMachineComp(run, runJump, runFall, jump, idle, fall, dash, dashFall));
-        e.AddComp(new BattleInputComp());
-
-        e.Initialize().Forget();
+    private void Register(BaseProcedure procedure)
+    {
+        _procedures.Add(procedure.GetType(), procedure);
     }
 }

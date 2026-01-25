@@ -6,13 +6,13 @@ public class IdleState : BaseState
 {
     protected override List<Type> CheckToStates { get; } = new()
     {
-        typeof(JumpState),
+        typeof(SkillSpellComp),
         typeof(RunState),
     };
 
     public override void OnEnter()
     {
-        StateMachine.Play(StateMachineComp.StateName_Idle);
+        StateMachine.PlayAnima(StateMachineComp.StateName_Idle);
     }
 
     public override void Tick(float dt)
@@ -22,8 +22,7 @@ public class IdleState : BaseState
 
     public override void FixedTick(float dt)
     {
-        var velocity = new Vector2(0f, StateMachine.Settings.GroundGravity);
-        StateMachine.Velocity.AddVelocity(velocity);
+        StateMachine.Velocity.AddVelocity(new Vector2(0, -2f));
     }
 
     public override void OnExit()
@@ -34,10 +33,10 @@ public class IdleState : BaseState
     {
         switch (to)
         {
-            case JumpState:
-                return StateMachine.Context.Jump.IsPressedThisFrame;
+            case SkillSpellState:
+                return StateMachine.SkillSpell.IsSpell;
             case RunState:
-                return StateMachine.Context.MoveDir != 0 && !StateMachine.Collision.IsTouchWall;
+                return StateMachine.Context.MoveDir.x != 0;
         }
         return false;
     }
@@ -45,6 +44,6 @@ public class IdleState : BaseState
     
     public override bool CanEnter()
     {
-        return false;;
+        return false;
     }
 }

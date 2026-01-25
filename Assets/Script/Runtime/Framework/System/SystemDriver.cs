@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -13,17 +14,27 @@ public class SystemDriver : MonoBehaviour
 #region static
     public static SystemDriver Instance { get;private set; }
 
+    private static Dictionary<Type, BaseSystem> _baseSystemsDict = new();
+    
     private static T Get<T>() where T : BaseSystem
     {
         if (Instance == null)
         {
             return null;
         }
+        
+        var type = typeof(T);
+        if (_baseSystemsDict.TryGetValue(type, out var sys))
+        {
+            return sys as T;
+        }
+        
         for (int i = 0; i < Instance._baseSystems.Count; i++)
         {
-            if (Instance._baseSystems[i] is T { Initialized: true } sys)
+            if (Instance._baseSystems[i] is T { Initialized: true } t)
             {
-                return sys;
+                _baseSystemsDict[type] = t;
+                return t;
             }
         }
         return null;
@@ -32,6 +43,9 @@ public class SystemDriver : MonoBehaviour
 
     public EYooAssetsMode YooAssetsMode;
 
+    public Transform UIRoot;
+
+    // framework
     public static YooSystem YooSystem => Get<YooSystem>();
     public static ConfigSystem ConfigSystem => Get<ConfigSystem>();
     public static TimeSystem TimeSystem => Get<TimeSystem>();
@@ -39,6 +53,9 @@ public class SystemDriver : MonoBehaviour
     public static ProcedureSystem ProcedureSystem => Get<ProcedureSystem>();
     public static InputSystem InputSystem => Get<InputSystem>();
 
+    // game
+    public static PlayerDataSystem PlayerDataSystem => Get<PlayerDataSystem>();
+    
     private readonly List<BaseSystem> _baseSystems = new()
     {
         // Framework System
@@ -49,6 +66,7 @@ public class SystemDriver : MonoBehaviour
         // Game System
         new TimeSystem(),
         new InputSystem(),
+        new PlayerDataSystem(),
     };
 
     private List<ITickSystem> _tickSystems = new();
@@ -81,6 +99,8 @@ public class SystemDriver : MonoBehaviour
                 _lateTickSystems.Add(lateTick);
             }
         }
+        
+        ProcedureSystem.ChangeProcedure<BattleProcedure>();
     }
 
     private void OnDestroy()

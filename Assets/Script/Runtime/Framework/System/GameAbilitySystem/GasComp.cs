@@ -6,20 +6,24 @@ using UnityEngine;
 
 public class GasComp : EntityComp
 {
+    public int Level { get; private set; }
+
     public GameTagController GameTagController { get; private set; }
 
     public GameEffectController GameEffectController { get; private set; }
     public GameAttributeController GameAttributeController { get; private set; }
 
-    public override int Priority => GAS;
+    public override int Priority => Priority_Gas;
     public override bool NeedTick => true;
 
-    public GasComp(Dictionary<EAttributeId, float> inAttr)
+    public GasComp(int level, Dictionary<EAttributeId, float> inAttr)
     {
+        Level = level;
+        
         GameTagController = new();
         GameEffectController = new();
         GameAttributeController = new();
-        
+
         GameTagController.Init(this);
         GameEffectController.Init(this);
         GameAttributeController.Init(this, inAttr);

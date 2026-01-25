@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -12,21 +13,24 @@ public struct SavedInput
 
 public class BattleInputComp : EntityComp
 {
-    public override int Priority => BATTLE_INPUT;
+    public override int Priority => Priority_BattleInput;
 
     private StateMachineComp _stateMachine;
 
 
     public override async UniTask Initialize()
     {
-        Entity.HasComp(STATE_MACHINE, out _stateMachine);
+        Entity.HasComp(Priority_StateMachine, out _stateMachine);
 
         var input = SystemDriver.InputSystem;
         input.OnPlayerMove += OnPlayerMove;
         input.OnPlayerJump += OnPlayerJump;
+        input.OnPlayerDash += OnPlayerDash;
 
         await UniTask.Yield();
     }
+
+
 
     public override void Destroy()
     {
@@ -37,17 +41,23 @@ public class BattleInputComp : EntityComp
         }
         input.OnPlayerMove -= OnPlayerMove;
         input.OnPlayerJump -= OnPlayerJump;
+        input.OnPlayerDash -= OnPlayerDash;
     }
 
     private void OnPlayerMove(InputAction.CallbackContext ctx)
     {
-        var dir = 0;
+        var dirX = 0;
+        var dirY = 0;
         var input = ctx.ReadValue<Vector2>();
         if (!Mathf.Approximately(input.x, 0f))
         {
-            dir = (int)Mathf.Sign(input.x);
+            dirX = (int)Mathf.Sign(input.x);
         }
-        _stateMachine.Context.MoveDir = dir;
+        if (!Mathf.Approximately(input.y, 0f))
+        {
+            dirY = (int)Mathf.Sign(input.y);
+        }
+        _stateMachine.Context.MoveDir = new Vector2Int(dirX, dirY);
     }
 
     private void OnPlayerJump(InputAction.CallbackContext ctx)
@@ -59,6 +69,18 @@ public class BattleInputComp : EntityComp
         else if (ctx.canceled)
         {
             _stateMachine.Context.Jump.Cancel();
+        }
+    }
+    
+    private void OnPlayerDash(InputAction.CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            _stateMachine.Context.Dash.Start();
+        }
+        else if (ctx.canceled)
+        {
+            _stateMachine.Context.Dash.Cancel();
         }
     }
 }

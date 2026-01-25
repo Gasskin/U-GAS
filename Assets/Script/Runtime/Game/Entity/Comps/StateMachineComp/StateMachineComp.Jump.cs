@@ -7,7 +7,7 @@ public class StateMachineJump
     
     // 最新速度是下降，并且计算速度前是上升
     public bool CanFall => _stateMachine.Velocity.Velocity.y < 0 && _isUp && !_hasPressed;
-    public bool CanMultiJump => _jumpCount > 0;
+    public bool CanJump => _jumpCount > 0;
 
     
     
@@ -26,11 +26,11 @@ public class StateMachineJump
     {
         _stateMachine = stateMachine;
 
-        _jumpCount = _stateMachine.Settings.CanJumpCount;
-        _stateMachine.Collision.OnGroundTouched += (() =>
-        {
-            _jumpCount = _stateMachine.Settings.CanJumpCount;
-        });
+        // _jumpCount = _stateMachine.Settings.CanJumpCount;
+        // _stateMachine.Collision.OnGroundTouched += (() =>
+        // {
+        //     _jumpCount = _stateMachine.Settings.CanJumpCount;
+        // });
     }
 
     public void ReadInput()
@@ -48,33 +48,33 @@ public class StateMachineJump
 
     public Vector2 CalculateVelocity(Vector2 inVelocity)
     {
-        if (inVelocity.y > 0)
-        {
-            _isUp = true;
-        }
-
-        var jump = _hasPressed && _jumpCount > 0;
-        var multiJump = jump && _jumpCount != _stateMachine.Settings.CanJumpCount;
-
-        if (jump)
-        {
-            _jumpCount--;
-            inVelocity.y = _stateMachine.Settings.MaxJumpVelocity;
-        }
-
-        if (multiJump)
-        {
-            OnMultiJump?.Invoke();
-        }
-
-        // 如果松开跳跃键，设置为最小跳跃速度
-        if (_hasReleased)
-        {
-            inVelocity.y = Mathf.Min(inVelocity.y, _stateMachine.Settings.MinJumpVelocity);
-        }
-
-        _hasPressed = false;
-        _hasReleased = false;
+        // if (inVelocity.y > 0)
+        // {
+        //     _isUp = true;
+        // }
+        //
+        // var jump = _hasPressed && _jumpCount > 0;
+        // var multiJump = jump && _jumpCount != _stateMachine.Settings.CanJumpCount;
+        //
+        // if (jump)
+        // {
+        //     _jumpCount--;
+        //     inVelocity.y = _stateMachine.Settings.MaxJumpVelocity;
+        // }
+        //
+        // if (multiJump)
+        // {
+        //     OnMultiJump?.Invoke();
+        // }
+        //
+        // // 如果松开跳跃键，设置为最小跳跃速度
+        // if (_hasReleased)
+        // {
+        //     inVelocity.y = Mathf.Min(inVelocity.y, _stateMachine.Settings.MinJumpVelocity);
+        // }
+        //
+        // _hasPressed = false;
+        // _hasReleased = false;
 
         return inVelocity;
     }

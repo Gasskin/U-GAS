@@ -35,6 +35,7 @@ public class GameAttributeController
         _owner.ApplyGameEffectTo(5, _owner);
         _owner.ApplyGameEffectTo(6, _owner);
         _owner.ApplyGameEffectTo(7, _owner);
+        _owner.ApplyGameEffectTo(8, _owner);
 
         // 重置血量
         _attributes[EAttributeId.HpNow].InitValue(_attributes[EAttributeId.HpMax].CurrentValue);

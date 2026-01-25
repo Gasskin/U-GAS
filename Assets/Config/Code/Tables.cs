@@ -15,11 +15,15 @@ public partial class Tables
 {
     public Gas.TbGameEffect TbGameEffect {get; }
     public Gas.TbSkill TbSkill {get; }
+    public TbLevelUp TbLevelUp {get; }
+    public TbHero TbHero {get; }
 
     public Tables(System.Func<string, ByteBuf> loader)
     {
         TbGameEffect = new Gas.TbGameEffect(loader("gas_tbgameeffect"));
         TbSkill = new Gas.TbSkill(loader("gas_tbskill"));
+        TbLevelUp = new TbLevelUp(loader("tblevelup"));
+        TbHero = new TbHero(loader("tbhero"));
         ResolveRef();
     }
     
@@ -27,6 +31,8 @@ public partial class Tables
     {
         TbGameEffect.ResolveRef(this);
         TbSkill.ResolveRef(this);
+        TbLevelUp.ResolveRef(this);
+        TbHero.ResolveRef(this);
     }
 }
 

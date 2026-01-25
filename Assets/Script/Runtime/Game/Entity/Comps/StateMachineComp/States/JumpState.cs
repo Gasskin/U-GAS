@@ -7,18 +7,19 @@ public class JumpState : BaseState
     protected override List<Type> CheckToStates { get; } = new()
     {
         typeof(FallState),
+        typeof(DashState),
     };
 
     public override void Initialize(StateMachineComp comp)
     {
         base.Initialize(comp);
-        StateMachine.Jump.OnMultiJump += () => { StateMachine.Play(StateMachineComp.StateName_MultiJump); };
+        StateMachine.Jump.OnMultiJump += () => { StateMachine.PlayAnima(StateMachineComp.StateName_MultiJump); };
     }
 
 
     public override void OnEnter()
     {
-        StateMachine.Play(StateMachineComp.StateName_Jump);
+        StateMachine.PlayAnima(StateMachineComp.StateName_Jump);
     }
 
     public override void Tick(float dt)
@@ -29,15 +30,15 @@ public class JumpState : BaseState
 
     public override void FixedTick(float dt)
     {
-        var velocity = StateMachine.Jump.CalculateVelocity(StateMachine.Velocity.Velocity);
-        
-        velocity = StateMachine.Movement.CalculateVelocity(velocity, StateMachine.Context.MoveDir,
-            StateMachine.Settings.AirSpeed, StateMachine.Settings.JumpAirAcceleration,
-            StateMachine.Settings.JumpAirDeceleration);
-        
-        velocity = StateMachine.Fall.CalculateVelocity(velocity);
-
-        StateMachine.Velocity.AddVelocity(velocity);
+        // var velocity = StateMachine.Jump.CalculateVelocity(StateMachine.Velocity.Velocity);
+        //
+        // velocity = StateMachine.Movement.CalculateVelocity(velocity, StateMachine.Context.MoveDir.x,
+        //     StateMachine.Settings.AirSpeed, StateMachine.Settings.AirAcceleration,
+        //     StateMachine.Settings.AirDeceleration);
+        //
+        // velocity = StateMachine.Fall.CalculateVelocity(velocity);
+        //
+        // StateMachine.Velocity.AddVelocity(velocity);
     }
 
     public override void OnExit()
@@ -51,6 +52,9 @@ public class JumpState : BaseState
         {
             case FallState:
                 return StateMachine.Jump.CanFall;
+            case DashState:
+                return StateMachine.Dash.CanDash &&
+                       StateMachine.Context.Dash.IsPressedThisFrame;
         }
         return false;
     }

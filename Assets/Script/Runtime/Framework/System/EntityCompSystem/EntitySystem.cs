@@ -73,6 +73,11 @@ public class EntitySystem : BaseSystem, ITickSystem, IFixedTickSystem, ILateTick
         return e;
     }
 
+    public bool HasEntity(ulong id, out Entity entity)
+    {
+        return _id2Entity.TryGetValue(id,out entity);
+    }
+
     public void DestroyEntity(Entity e)
     {
         DestroyEntity(e.Id);

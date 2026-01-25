@@ -16,7 +16,7 @@ using UnityEngine;
 /// </summary>
 public partial class StateMachineComp : EntityComp
 {
-    public override int Priority => STATE_MACHINE;
+    public override int Priority => Priority_StateMachine;
     public override bool NeedTick => true;
 
     public override bool NeedFixedTick => true;
@@ -44,17 +44,18 @@ public partial class StateMachineComp : EntityComp
 
     public override async UniTask Initialize()
     {
-        Entity.HasComp(VIEW,out ViewComp view);
+        Entity.HasComp(Priority_View,out GameObjectComp view);
 
         // Animator  = view.View.GetComponentInChildren<Animator>();
         Animancer  = view.View.GetComponentInChildren<AnimancerComponent>();
         Settings = view.View.GetComponent<StateMachineSetting>();
         
-        Collision.Initialize(this);
+        // Collision.Initialize(this);
         Turn.Initialize(this);
+        // Dash.Initialize(this);
         Velocity.Initialize(this);
-        Jump.Initialize(this);
-        Fall.Initialize(this);
+        // Jump.Initialize(this);
+        // Fall.Initialize(this);
         Movement.Initialize(this);
 
         for (int i = 0; i < _states.Count; i++)
@@ -67,7 +68,8 @@ public partial class StateMachineComp : EntityComp
 
     public override void Tick(float dt)
     {
-        Collision.TickCheck(dt);
+        // Collision.Tick(dt);
+        // Dash.Tick(dt);
 
         var changeAny = false;
         for (int i = 0; i < _states.Count; i++)
@@ -104,6 +106,25 @@ public partial class StateMachineComp : EntityComp
     public BaseState GetState(Type type)
     {
         return _stateDic.GetValueOrDefault(type, null);
+    }
+
+    public bool IsState<T>(out T state) where T : BaseState
+    {
+        state = null;
+        if (_curState is T t)
+        {
+            state = t;
+            return true;
+        }
+        return false;
+    }
+
+    public void ChangeState<T>() where T : BaseState
+    {
+        if (_stateDic.TryGetValue(typeof(T), out var state))
+        {
+            ChangeState(state);
+        }
     }
 
     private void ChangeState(BaseState state)

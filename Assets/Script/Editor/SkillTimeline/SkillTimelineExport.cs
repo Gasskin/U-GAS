@@ -38,13 +38,13 @@ public class SkillTimelineExport
             tbSkillTimeline.Add(ToSkillTimeline(id, asset));
         }
         var bin = MemoryPackSerializer.Serialize(tbSkillTimeline);
-        var export = "Assets/Config/Data/gas_tbskilltimeline.bytes";
+        var export = "Assets/Config/CustomData/gas_tbskilltimeline.bytes";
         if (File.Exists(export))
         {
             File.Delete(export);
         }
         File.WriteAllBytes(export, bin);
-        
+
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }
@@ -59,11 +59,35 @@ public class SkillTimelineExport
             var timelineClips = track.GetClips();
             foreach (var timelineClip in timelineClips)
             {
-                if (timelineClip.asset is SkillTimelineClipAsset clip)
+                if (timelineClip.asset is SkillTimelineClipAsset skillClipAsset)
                 {
-                    clip.SkillClip.StartFrame = Mathf.RoundToInt((float)(timelineClip.start * TimelineDriver.c_TimelineFrame));
-                    clip.SkillClip.EndFrame = Mathf.RoundToInt((float)(timelineClip.end * TimelineDriver.c_TimelineFrame));
-                    result.AddClip(clip.SkillClip);
+                    if (skillClipAsset.SkillClip == null)
+                    {
+                        Debug.LogError($"timeline: {id}, has null skill timeline clip");
+                        continue;
+                    }
+                    skillClipAsset.SkillClip.StartFrame =
+                        Mathf.RoundToInt((float)(timelineClip.start * SkillTimelineDriver.TimelineFrame));
+                    skillClipAsset.SkillClip.EndFrame =
+                        Mathf.RoundToInt((float)(timelineClip.end * SkillTimelineDriver.TimelineFrame));
+                    result.AddClip(skillClipAsset.SkillClip);
+                }
+                else if (timelineClip.asset is AnimationPlayableAsset animaClipAsset)
+                {
+                    if (animaClipAsset.clip == null)
+                    {
+                        Debug.LogError($"timeline: {id}, has null animation clip");
+                        continue;
+                    }
+                    var anima = new SkillTimelineAnimaClip()
+                    {
+                        AnimationName = animaClipAsset.clip.name
+                    };
+                    anima.StartFrame =
+                        Mathf.RoundToInt((float)(timelineClip.start * SkillTimelineDriver.TimelineFrame));
+                    anima.EndFrame =
+                        Mathf.RoundToInt((float)(timelineClip.end * SkillTimelineDriver.TimelineFrame));
+                    result.AddClip(anima);
                 }
             }
         }

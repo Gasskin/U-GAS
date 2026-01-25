@@ -20,25 +20,25 @@ public class Entity : IPoolObject
     // 在FixedUpdate Entities列表中的序号
     public int FixedTickIndex;
 
-    private bool needTick;
-    private bool needLateTick;
-    private bool needFixedTick;
+    private bool _needTick;
+    private bool _needLateTick;
+    private bool _needFixedTick;
 
     public bool IsValid => Id > 0;
 
     public bool IsInitialized { get; private set; } = false;
 
-    private EntityComp[] comps = new EntityComp[32];
-    private readonly LinkedList<EntityComp> updateComps = new();
-    private readonly LinkedList<EntityComp> lateUpdateComps = new();
-    private readonly LinkedList<EntityComp> fixedUpdateComps = new();
+    private EntityComp[] _comps = new EntityComp[32];
+    private readonly LinkedList<EntityComp> _updateComps = new();
+    private readonly LinkedList<EntityComp> _lateUpdateComps = new();
+    private readonly LinkedList<EntityComp> _fixedUpdateComps = new();
 
-    private EntitySystem system;
+    private EntitySystem _system;
 
     public void Init(ulong id, EntitySystem inSystem)
     {
         Id = id;
-        system = inSystem;
+        _system = inSystem;
     }
 
     public void Destroy()
@@ -49,19 +49,19 @@ public class Entity : IPoolObject
         TickIndex = -1;
         LateTickIndex = -1;
         FixedTickIndex = -1;
-        needTick = false;
-        needLateTick = false;
-        needFixedTick = false;
-        system = null;
+        _needTick = false;
+        _needLateTick = false;
+        _needFixedTick = false;
+        _system = null;
 
-        for (int i = comps.Length - 1; i >= 0; i--)
+        for (int i = _comps.Length - 1; i >= 0; i--)
         {
-            comps[i]?.Destroy();
+            _comps[i]?.Destroy();
         }
-        comps = null;
-        updateComps.Clear();
-        lateUpdateComps.Clear();
-        fixedUpdateComps.Clear();
+        _comps = null;
+        _updateComps.Clear();
+        _lateUpdateComps.Clear();
+        _fixedUpdateComps.Clear();
     }
 
     public void OnRelease()
@@ -74,7 +74,7 @@ public class Entity : IPoolObject
         {
             return;
         }
-        var first = updateComps.First;
+        var first = _updateComps.First;
         while (first != null)
         {
             first.Value.Tick(dt);
@@ -88,7 +88,7 @@ public class Entity : IPoolObject
         {
             return;
         }
-        var first = lateUpdateComps.First;
+        var first = _lateUpdateComps.First;
         while (first != null)
         {
             first.Value.LateTick(dt);
@@ -102,7 +102,7 @@ public class Entity : IPoolObject
         {
             return;
         }
-        var first = fixedUpdateComps.First;
+        var first = _fixedUpdateComps.First;
         while (first != null)
         {
             first.Value.FixedTick(dt);
@@ -118,48 +118,48 @@ public class Entity : IPoolObject
             throw new ArgumentOutOfRangeException($"组件权重异常：{typeof(T).Name}");
         }
         comp.Entity = this;
-        if (comps.Length <= p)
+        if (_comps.Length <= p)
         {
-            var capacity = comps.Length;
+            var capacity = _comps.Length;
             while (capacity <= p)
             {
                 capacity *= 2;
             }
             var newComps = new EntityComp[capacity];
-            for (int i = 0; i < comps.Length; i++)
+            for (int i = 0; i < _comps.Length; i++)
             {
-                newComps[i] = comps[i];
+                newComps[i] = _comps[i];
             }
-            comps = newComps;
+            _comps = newComps;
         }
-        comps[p] = comp;
+        _comps[p] = comp;
 
         if (comp.NeedTick)
         {
-            if (!needTick)
+            if (!_needTick)
             {
-                needTick = true;
-                system.RegisterUpdate(this);
+                _needTick = true;
+                _system.RegisterUpdate(this);
             }
-            Insert(updateComps);
+            Insert(_updateComps);
         }
         if (comp.NeedLateTick)
         {
-            if (!needLateTick)
+            if (!_needLateTick)
             {
-                needLateTick = true;
-                system.RegisterLateUpdate(this);
+                _needLateTick = true;
+                _system.RegisterLateUpdate(this);
             }
-            Insert(lateUpdateComps);
+            Insert(_lateUpdateComps);
         }
         if (comp.NeedFixedTick)
         {
-            if (!needFixedTick)
+            if (!_needFixedTick)
             {
-                needFixedTick = true;
-                system.RegisterFixedUpdate(this);
+                _needFixedTick = true;
+                _system.RegisterFixedUpdate(this);
             }
-            Insert(fixedUpdateComps);
+            Insert(_fixedUpdateComps);
         }
 
         return comp;
@@ -178,23 +178,24 @@ public class Entity : IPoolObject
                     if (first.Value.Priority > comp.Priority)
                     {
                         link.AddBefore(first, comp);
-                        break;
+                        return;
                     }
                     first = first.Next;
                 }
+                link.AddLast(comp);
             }
         }
     }
 
     public async UniTask Initialize()
     {
-        for (int i = 0; i < comps.Length; i++)
+        for (int i = 0; i < _comps.Length; i++)
         {
-            if (comps[i] == null)
+            if (_comps[i] == null)
             {
                 continue;
             }
-            await comps[i].Initialize();
+            await _comps[i].Initialize();
         }
         IsInitialized = true;
     }
@@ -202,9 +203,9 @@ public class Entity : IPoolObject
     public bool HasComp<T>(int priority, out T comp) where T : EntityComp
     {
         comp = null;
-        if (comps != null && comps.Length > priority)
+        if (_comps != null && _comps.Length > priority)
         {
-            comp = (T)comps[priority];
+            comp = (T)_comps[priority];
             return true;
         }
         return false;

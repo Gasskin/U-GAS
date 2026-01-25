@@ -1,50 +1,77 @@
+using cfg.Gas;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class SkillSpellComp : EntityComp
 {
-    public override int Priority => SKILL_SPELL;
+    public override int Priority => Priority_SkillSpell;
     public override bool NeedTick => true;
 
-    private TimelineDriver _timelineDriver;
+    private SkillTimelineDriver _skillTimelineDriver;
 
     public override async UniTask Initialize()
     {
-        _timelineDriver = new(OnTimelineEnd);
+        _skillTimelineDriver = new(OnTimelineStart, OnTimelineInterrupt, OnTimelineEnd);
         await UniTask.Yield();
     }
 
     public override void Tick(float dt)
     {
-        if (!_timelineDriver.IsValid)
+        if (!_skillTimelineDriver.IsValid)
         {
             return;
         }
-        _timelineDriver.Tick(dt);
+        _skillTimelineDriver.Tick(dt);
     }
 
-    public void SpellSkill(int id)
+    public void SpellSkill(int skillId)
     {
         // todo 检查消耗等等
 
-        StartTimelineDriver(id);
+        StartTimelineDriver(skillId);
     }
 
     public void InterruptSkill()
     {
-        if (!_timelineDriver.IsValid)
+        if (!_skillTimelineDriver.IsValid)
         {
             return;
         }
-        _timelineDriver.Interrupt();
+        _skillTimelineDriver.Interrupt();
     }
 
-    private void StartTimelineDriver(int id)
+
+    private void StartTimelineDriver(int skillId)
     {
-        _timelineDriver.Reset(id);
+        _skillTimelineDriver.TryStart(new SkillTimelineContext()
+        {
+            EntityId = Entity.Id,
+            SkillId = skillId
+        });
+    }
+
+    private void OnTimelineStart()
+    {
+        if (Entity.HasComp(Priority_StateMachine, out StateMachineComp stateMachine))
+        {
+            stateMachine.SkillSpell.IsSpell = true;
+            stateMachine.ChangeState<SkillSpellState>();
+        }
+    }
+
+    private void OnTimelineInterrupt()
+    {
+        if (Entity.HasComp(Priority_StateMachine, out StateMachineComp stateMachineComp))
+        {
+            stateMachineComp.SkillSpell.IsSpell = false;
+        }
     }
 
     private void OnTimelineEnd()
     {
+        if (Entity.HasComp(Priority_StateMachine, out StateMachineComp stateMachineComp))
+        {
+            stateMachineComp.SkillSpell.IsSpell = false;
+        }
     }
 }

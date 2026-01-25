@@ -96,13 +96,36 @@ public class YooSystem : BaseSystem
         return handle;
     }
 
-    public async UniTask<GameObject> InitializeGameObjectAsync(Transform parent, string path)
+    public async UniTask<AssetHandle> LoadAssetAsync<T>(string path) where T : Object
     {
-            var handle = _defaultPackage.LoadAssetAsync<GameObject>(path);
+        var handle = _defaultPackage.LoadAssetAsync<T>(path);
+        await handle.ToUniTask();
+        if (handle.Status == EOperationStatus.Succeed && handle.AssetObject is T)
+        {
+            return handle;
+        }
+        handle.Dispose();
+        return null;
+    }
+    
+    public AssetHandle LoadAssetSync<T>(string path) where T : Object
+    {
+        var handle = _defaultPackage.LoadAssetSync<T>(path);
+        if (handle.Status == EOperationStatus.Succeed && handle.AssetObject is T)
+        {
+            return handle;
+        }
+        handle.Dispose();
+        return null;
+    }
+
+    public async UniTask<UnityEngine.GameObject> InitializeGameObjectAsync(Transform parent, string path)
+    {
+        var handle = _defaultPackage.LoadAssetAsync<UnityEngine.GameObject>(path);
         await handle.ToUniTask();
         if (handle.Status == EOperationStatus.Succeed)
         {
-            var go = (GameObject)Object.Instantiate(handle.AssetObject, parent);
+            var go = (UnityEngine.GameObject)Object.Instantiate(handle.AssetObject, parent);
             var handler = go.AddComponent<YooGameObjectHandler>();
             handler.Handle = handle;
             return go;
@@ -110,12 +133,12 @@ public class YooSystem : BaseSystem
         return null;
     }
 
-    public GameObject InitializeGameObjectSync(Transform parent, string path)
+    public UnityEngine.GameObject InitializeGameObjectSync(Transform parent, string path)
     {
-        var handle = _defaultPackage.LoadAssetSync<GameObject>(path);
+        var handle = _defaultPackage.LoadAssetSync<UnityEngine.GameObject>(path);
         if (handle.Status == EOperationStatus.Succeed)
         {
-            var go = (GameObject)Object.Instantiate(handle.AssetObject, parent, false);
+            var go = (UnityEngine.GameObject)Object.Instantiate(handle.AssetObject, parent, false);
             var handler = go.AddComponent<YooGameObjectHandler>();
             handler.Handle = handle;
             return go;

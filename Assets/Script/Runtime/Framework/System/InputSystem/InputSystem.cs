@@ -12,8 +12,8 @@ public enum EInputMapping
 
 public partial class InputSystem : BaseSystem
 {
-    private PlayerInput _playerInput;
-    private GameObject _input;
+    // private PlayerInput _playerInput;
+    // private GameObject _input;
     
     private InputSystem_Actions _actions;
 
@@ -30,12 +30,7 @@ public partial class InputSystem : BaseSystem
 
     public override void Destroy()
     {
-        if (_input != null)
-        {
-            Object.Destroy(_input);
-        }
-        _actions.Player.Enable();
-        _actions.UI.Enable();
+        _actions.Disable();
     }
 
     public void SwitchMapping(EInputMapping mapping)

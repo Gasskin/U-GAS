@@ -35,153 +35,173 @@ namespace cfg.Gas
         /// </summary>
         HpNow = 105,
         /// <summary>
+        /// 基础法力
+        /// </summary>
+        MpBase = 201,
+        /// <summary>
+        /// 法力加成
+        /// </summary>
+        MpMult = 202,
+        /// <summary>
+        /// 额外法力
+        /// </summary>
+        MpAdd = 203,
+        /// <summary>
+        /// 最大法力
+        /// </summary>
+        MpNow = 204,
+        /// <summary>
+        /// 当前法力
+        /// </summary>
+        MpMax = 205,
+        /// <summary>
         /// 基础攻击
         /// </summary>
-        AtkBase = 201,
+        AtkBase = 301,
         /// <summary>
         /// 攻击加成
         /// </summary>
-        AtkMult = 202,
+        AtkMult = 302,
         /// <summary>
         /// 额外攻击
         /// </summary>
-        AtkAdd = 203,
+        AtkAdd = 303,
         /// <summary>
         /// 当前攻击
         /// </summary>
-        AtkNow = 204,
+        AtkNow = 304,
         /// <summary>
         /// 基础火焰攻击
         /// </summary>
-        FireAtkBase = 205,
+        FireAtkBase = 305,
         /// <summary>
         /// 火焰攻击加成
         /// </summary>
-        FireAtkMult = 206,
+        FireAtkMult = 306,
         /// <summary>
         /// 额外火焰攻击
         /// </summary>
-        FireAtkAdd = 207,
+        FireAtkAdd = 307,
         /// <summary>
         /// 当前火焰攻击
         /// </summary>
-        FireAtkNow = 208,
+        FireAtkNow = 308,
         /// <summary>
         /// 基础冰霜攻击
         /// </summary>
-        IceAtkBase = 209,
+        IceAtkBase = 309,
         /// <summary>
         /// 冰霜攻击加成
         /// </summary>
-        IceAtkMult = 210,
+        IceAtkMult = 310,
         /// <summary>
         /// 额外冰霜攻击
         /// </summary>
-        IceAtkAdd = 211,
+        IceAtkAdd = 311,
         /// <summary>
         /// 当前冰霜攻击
         /// </summary>
-        IceAtkNow = 212,
+        IceAtkNow = 312,
         /// <summary>
         /// 基础闪电攻击
         /// </summary>
-        LightAtkBase = 213,
+        LightAtkBase = 313,
         /// <summary>
         /// 闪电攻击加成
         /// </summary>
-        LightAtkMult = 214,
+        LightAtkMult = 314,
         /// <summary>
         /// 额外闪电攻击
         /// </summary>
-        LightAtkAdd = 215,
+        LightAtkAdd = 315,
         /// <summary>
         /// 当前闪电攻击
         /// </summary>
-        LightAtkNow = 216,
+        LightAtkNow = 316,
         /// <summary>
         /// 基础混乱攻击
         /// </summary>
-        ChaosAtkBase = 217,
+        ChaosAtkBase = 317,
         /// <summary>
         /// 混乱攻击加成
         /// </summary>
-        ChaosAtkMult = 218,
+        ChaosAtkMult = 318,
         /// <summary>
         /// 额外混乱攻击
         /// </summary>
-        ChaosAtkAdd = 219,
+        ChaosAtkAdd = 319,
         /// <summary>
         /// 当前混乱攻击
         /// </summary>
-        ChaosAtkNow = 220,
+        ChaosAtkNow = 320,
         /// <summary>
         /// 基础护甲
         /// </summary>
-        ArmorBase = 301,
+        ArmorBase = 401,
         /// <summary>
         /// 护甲加成
         /// </summary>
-        ArmorMult = 302,
+        ArmorMult = 402,
         /// <summary>
         /// 额外护甲
         /// </summary>
-        ArmorAdd = 303,
+        ArmorAdd = 403,
         /// <summary>
         /// 当前护甲
         /// </summary>
-        ArmorNow = 304,
+        ArmorNow = 404,
         /// <summary>
         /// 火焰抗性
         /// </summary>
-        FireArmorNow = 401,
+        FireArmorNow = 501,
         /// <summary>
         /// 最大火焰抗性
         /// </summary>
-        FireArmorMax = 402,
+        FireArmorMax = 502,
         /// <summary>
         /// 冰霜抗性
         /// </summary>
-        IceArmorNow = 403,
+        IceArmorNow = 503,
         /// <summary>
         /// 最大冰霜抗性
         /// </summary>
-        IceArmorMax = 404,
+        IceArmorMax = 504,
         /// <summary>
         /// 闪电抗性
         /// </summary>
-        LightArmorNow = 405,
+        LightArmorNow = 505,
         /// <summary>
         /// 最大闪电抗性
         /// </summary>
-        LightArmorMax = 406,
+        LightArmorMax = 506,
         /// <summary>
         /// 混乱抗性
         /// </summary>
-        ChaosArmorNow = 407,
+        ChaosArmorNow = 507,
         /// <summary>
         /// 最大混乱抗性
         /// </summary>
-        ChaosArmorMax = 408,
+        ChaosArmorMax = 508,
         /// <summary>
         /// 基础护盾
         /// </summary>
-        ShieldBase = 501,
+        ShieldBase = 601,
         /// <summary>
         /// 护盾加成
         /// </summary>
-        ShieldMult = 502,
+        ShieldMult = 602,
         /// <summary>
         /// 额外护盾
         /// </summary>
-        ShieldAdd = 503,
+        ShieldAdd = 603,
         /// <summary>
         /// 最大护盾
         /// </summary>
-        ShieldMax = 504,
+        ShieldMax = 604,
         /// <summary>
         /// 当前护盾
         /// </summary>
-        ShieldNow = 505,
+        ShieldNow = 605,
     }
 
 } 

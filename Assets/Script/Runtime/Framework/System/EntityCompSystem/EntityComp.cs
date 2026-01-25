@@ -4,11 +4,13 @@ public abstract class EntityComp
 {
 #region Priority
     // >0 是为了保险
-    public const int GAS = 1;
-    public const int VIEW = 2;
-    public const int SKILL_SPELL = 3;
-    public const int BATTLE_INPUT = 4;
-    public const int STATE_MACHINE = 5;
+    public const int Priority_Gas = 1;
+    public const int Priority_View = 2;
+    public const int Priority_SkillSpell = 3;
+    public const int Priority_BattleInput = 4;
+    public const int Priority_StateMachine = 5;
+    public const int Priority_Cell = 6;
+    public const int Priority_Camp = 7;
 #endregion
 
     public abstract int Priority { get; }

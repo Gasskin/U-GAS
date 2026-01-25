@@ -11,11 +11,11 @@ namespace cfg.Gas
         public int EndFrame = int.MinValue;
         public List<SkillTimelineClip> Clips = new();
 
-        public void Reset()
+        public void Reset(SkillTimelineContext context)
         {
             for (int i = 0; i < Clips.Count; i++)
             {
-                Clips[i].Reset();
+                Clips[i].Reset(context);
             }
         }
 
@@ -31,7 +31,7 @@ namespace cfg.Gas
             }
             for (int i = 0; i < Clips.Count; i++)
             {
-                Clips[i].Tick(dt,frame);
+                Clips[i].Tick(dt, frame);
             }
             return false;
         }
@@ -43,8 +43,8 @@ namespace cfg.Gas
                 Clips[i].OnInterrupt();
             }
         }
-        
-        
+
+
 #if UNITY_EDITOR
         public void AddClip(SkillTimelineClip clip)
         {
@@ -59,6 +59,5 @@ namespace cfg.Gas
             }
         }
 #endif
-
     }
 }
