@@ -81,7 +81,6 @@ GameObject:
   - component: {fileID: 7964159304973324910}
   - component: {fileID: 5445460917657371390}
   - component: {fileID: 3342770164438994304}
-  - component: {fileID: 4544404334687172955}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -169,7 +168,7 @@ Animator:
   m_GameObject: {fileID: 3150140148731347493}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3eaae27d450bcc24fb98ebbadb6e9096, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -195,25 +194,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Animator: {fileID: 5445460917657371390}
   _ActionOnDisable: 0
---- !u!320 &4544404334687172955
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3150140148731347493}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: d44bebb7f1eb4ae43af0511729676d44, type: 2}
-  m_InitialState: 1
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: -6503096710711880879, guid: d44bebb7f1eb4ae43af0511729676d44, type: 2}
-    value: {fileID: 5445460917657371390}
-  m_ExposedReferences:
-    m_References: []
 --- !u!1 &3242954940588827865
 GameObject:
   m_ObjectHideFlags: 0

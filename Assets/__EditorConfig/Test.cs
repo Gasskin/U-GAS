@@ -7,7 +7,7 @@ public class Test : MonoBehaviour
     public void TestButton()
     {
         SystemDriver.EntitySystem.HasEntity(1,out var entity);
-        entity.HasComp(EntityComp.Priority_SkillSpell, out SkillSpellComp skill);
-        skill.SpellSkill(1001);
+        // entity.HasComp(EntityComp.Priority_SkillSpell, out SkillSpellComp skill);
+        // skill.SpellSkill(1001);
     }
 }

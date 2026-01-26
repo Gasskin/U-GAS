@@ -19,6 +19,7 @@ public partial class StateMachineComp
         var clip = Settings.GetClip(clipName);
         if (clip != null)
         {
+            Animancer.Stop();
             Animancer.Play(clip);
         }
     }

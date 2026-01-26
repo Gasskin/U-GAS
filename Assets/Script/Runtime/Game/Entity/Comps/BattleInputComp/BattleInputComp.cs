@@ -71,7 +71,7 @@ public class BattleInputComp : EntityComp
             _stateMachine.Context.Jump.Cancel();
         }
     }
-    
+
     private void OnPlayerDash(InputAction.CallbackContext ctx)
     {
         if (ctx.started)
@@ -83,10 +83,18 @@ public class BattleInputComp : EntityComp
             _stateMachine.Context.Dash.Cancel();
         }
     }
-    
-    
+
+
     private void OnPlayerAttack(InputAction.CallbackContext ctx)
     {
-        _stateMachine.SkillSpell.TrySpellSkill(1001);
+        if (ctx.started)
+        {
+            _stateMachine.SkillSpell.TrySpellSkill(1001);
+            _stateMachine.Context.Attack.Start();
+        }
+        else if (ctx.canceled)
+        {
+            _stateMachine.Context.Attack.Cancel();
+        }
     }
 }

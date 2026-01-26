@@ -18,6 +18,7 @@ public sealed partial class Skill : Luban.BeanBase
     {
         Id = _buf.ReadInt();
         {int n0 = _buf.ReadSize(); SkillTimelinesId = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); SkillTimelinesId.Add(_e0);}}
+        Priority = (Gas.ESkillStagePriority)_buf.ReadInt();
     }
 
     public static Skill DeserializeSkill(ByteBuf _buf)
@@ -27,6 +28,10 @@ public sealed partial class Skill : Luban.BeanBase
 
     public readonly int Id;
     public readonly System.Collections.Generic.List<int> SkillTimelinesId;
+    /// <summary>
+    /// 优先级
+    /// </summary>
+    public readonly Gas.ESkillStagePriority Priority;
    
     public const int __ID__ = -1845743940;
     public override int GetTypeId() => __ID__;
@@ -40,6 +45,7 @@ public sealed partial class Skill : Luban.BeanBase
         return "{ "
         + "id:" + Id + ","
         + "skillTimelinesId:" + Luban.StringUtil.CollectionToString(SkillTimelinesId) + ","
+        + "Priority:" + Priority + ","
         + "}";
     }
 }

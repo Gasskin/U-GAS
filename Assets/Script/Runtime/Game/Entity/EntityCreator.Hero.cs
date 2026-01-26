@@ -24,7 +24,7 @@ public class EntityHero
         e.AddComp(new GameObjectComp(heroConfig.PrefabPath, null));
         e.AddComp(new CampComp(ECamp.Player));
         e.AddComp(new BattleInputComp());
-        e.AddComp(new SkillSpellComp());
+        // e.AddComp(new SkillSpellComp());
 
         var idle = new IdleState();
         var run = new RunState();

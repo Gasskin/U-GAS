@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using cfg.Gas;
+using UnityEngine;
 
 public class SkillTimelineDriver
 {
@@ -77,20 +78,24 @@ public class SkillTimelineDriver
     {
         var tables = SystemDriver.ConfigSystem.Tables;
         var skill = tables.TbSkill.GetOrDefault(context.SkillId);
-        if (skill != null)
+        if (skill == null)
         {
-            _skillTimelines.Clear();
-            foreach (var id in skill.SkillTimelinesId)
-            {
-                var timeline = tables.TbSkillTimeline.GetOrDefault(id);
-                if (timeline == null)
-                {
-                    continue;
-                }
-                timeline.Reset(context);
-                _skillTimelines.Add(timeline);
-            }
+            Debug.LogError($"不存在技能配置：{context.SkillId}");
+            return;
         }
+        
+        _skillTimelines.Clear();
+        foreach (var id in skill.SkillTimelinesId)
+        {
+            var timeline = tables.TbSkillTimeline.GetOrDefault(id);
+            if (timeline == null)
+            {
+                continue;
+            }
+            timeline.Reset(context);
+            _skillTimelines.Add(timeline);
+        }
+        
         _context = context;
         _frameTimeTick = _frameTime;
         _nowFrame = 0;

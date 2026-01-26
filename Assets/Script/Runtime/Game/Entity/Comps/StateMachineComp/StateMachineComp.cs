@@ -49,17 +49,12 @@ public partial class StateMachineComp : EntityComp
     {
         Entity.HasComp(Priority_View,out GameObjectComp view);
 
-        // Animator  = view.View.GetComponentInChildren<Animator>();
         Animancer  = view.View.GetComponentInChildren<AnimancerComponent>();
         Settings = view.View.GetComponent<StateMachineSetting>();
 
         SkillSpell = new(this);
-        // Collision.Initialize(this);
         Turn = new(this);
-        // Dash.Initialize(this);
         Velocity= new(this);
-        // Jump.Initialize(this);
-        // Fall.Initialize(this);
         Movement= new(this);
 
         for (int i = 0; i < _states.Count; i++)
@@ -132,9 +127,9 @@ public partial class StateMachineComp : EntityComp
         }
     }
 
-    private void ChangeState(BaseState state)
+    private void ChangeState(BaseState state, bool force = false)
     {
-        if (state == _curState)
+        if (state == _curState && !force)
         {
             return;
         }

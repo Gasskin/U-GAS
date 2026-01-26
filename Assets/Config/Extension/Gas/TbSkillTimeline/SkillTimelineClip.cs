@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using MemoryPack;
 using UnityEngine;
@@ -10,10 +11,10 @@ namespace cfg.Gas
         public int SkillId;
     }
     
+    
     [MemoryPackable]
-    [MemoryPackUnion(1, typeof(TestClip))]
-    [MemoryPackUnion(2, typeof(SkillTimelineAnimaClip))]
-    [MemoryPackUnion(3, typeof(AddGameEffectTo))]
+    [MemoryPackUnion(1, typeof(SkillTimelineAnimaClip))]
+    [MemoryPackUnion(2, typeof(ChangeSkillStagePriority))]
     public abstract partial class SkillTimelineClip
     {
         [HideInInspector]

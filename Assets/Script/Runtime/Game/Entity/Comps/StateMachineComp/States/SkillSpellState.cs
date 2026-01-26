@@ -15,7 +15,7 @@ public class SkillSpellState : BaseState
     public override void Initialize(StateMachineComp comp)
     {
         base.Initialize(comp);
-        _driver = new(null, null, null);
+        _driver = new(OnTimelineStart, null, null);
     }
 
     public override void OnEnter()
@@ -41,6 +41,11 @@ public class SkillSpellState : BaseState
 
     public override void OnExit()
     {
+        StateMachine.SkillSpell.ChangeSkillStagePriority(ESkillStagePriority.None);
+        if (_driver.IsValid)
+        {
+            _driver.Interrupt();
+        }
     }
 
     protected override bool CanEnterTo(BaseState to)
@@ -67,5 +72,14 @@ public class SkillSpellState : BaseState
     public void PlayAnima(string anima)
     {
         StateMachine.PlayAnima(anima);
+    }
+
+    private void OnTimelineStart()
+    {
+        if (SystemDriver.ConfigSystem.Tables.TbSkill.DataMap.TryGetValue(StateMachine.SkillSpell.SkillId,
+                out var skill))
+        {
+            StateMachine.SkillSpell.ChangeSkillStagePriority(skill.Priority);
+        }
     }
 }
