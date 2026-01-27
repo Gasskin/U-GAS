@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Script.Runtime.Framework.System.GameTag;
+using Script.Runtime.Game;
 
 namespace cfg.Gas
 {

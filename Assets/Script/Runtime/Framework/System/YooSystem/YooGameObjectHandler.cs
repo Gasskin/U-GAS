@@ -1,13 +1,15 @@
-using System;
 using UnityEngine;
 using YooAsset;
 
-public class YooGameObjectHandler : MonoBehaviour
+namespace Script.Runtime.Framework.System
 {
-    public AssetHandle Handle;
-
-    private void OnDestroy()
+    public class YooGameObjectHandler : MonoBehaviour
     {
-        Handle.Dispose();
+        public AssetHandle Handle;
+
+        private void OnDestroy()
+        {
+            Handle.Dispose();
+        }
     }
 }

@@ -1,36 +1,40 @@
 using Cysharp.Threading.Tasks;
+using Script.Runtime.Framework.System;
 using UnityEngine;
 
-public class GameObjectComp : EntityComp
+namespace Script.Runtime.Game
 {
-    public override int Priority => Priority_View;
-
-    private string _assetPath;
-
-    private Transform _parent;
-
-    public GameObject View { get; private set; }
-
-    public GameObjectComp(string path, Transform parent)
+    public class GameObjectComp : EntityComp
     {
-        _assetPath = path;
-        _parent = parent;
-    }
+        public override int Priority => Priority_View;
 
-    public override async UniTask Initialize()
-    {
-        View = await SystemDriver.YooSystem.InitializeGameObjectAsync(_parent, _assetPath);
-        if (!IsValid)
+        private string _assetPath;
+
+        private Transform _parent;
+
+        public GameObject View { get; private set; }
+
+        public GameObjectComp(string path, Transform parent)
         {
-            Object.Destroy(View);
+            _assetPath = path;
+            _parent = parent;
         }
-    }
 
-    public override void Destroy()
-    {
-        if (View != null) 
+        public override async UniTask Initialize()
         {
-            Object.Destroy(View);
+            View = await SystemDriver.YooSystem.InitializeGameObjectAsync(_parent, _assetPath);
+            if (!IsValid)
+            {
+                Object.Destroy(View);
+            }
+        }
+
+        public override void Destroy()
+        {
+            if (View != null) 
+            {
+                Object.Destroy(View);
+            }
         }
     }
 }

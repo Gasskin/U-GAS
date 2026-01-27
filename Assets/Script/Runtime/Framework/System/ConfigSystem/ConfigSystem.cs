@@ -1,52 +1,52 @@
-using System;
-using System.IO;
 using cfg;
 using Cysharp.Threading.Tasks;
 using Luban;
-using UnityEngine;
 
-public class ConfigSystem : BaseSystem
+namespace Script.Runtime.Framework.System
 {
-    public Tables Tables { get; private set; }
-
-    public override async UniTask Initialize()
+    public class ConfigSystem : BaseSystem
     {
-        Tables = new cfg.Tables(LoadByteBuf);
+        public Tables Tables { get; private set; }
 
-        Tables.ResolveCustomTables(LoadCustomBytes);
-
-        foreach (var ge in Tables.TbGameEffect.DataList)
+        public override async UniTask Initialize()
         {
-            ge.AfterTableInitialize();
+            Tables = new cfg.Tables(LoadByteBuf);
+
+            Tables.ResolveCustomTables(LoadCustomBytes);
+
+            foreach (var ge in Tables.TbGameEffect.DataList)
+            {
+                ge.AfterTableInitialize();
+            }
+            await UniTask.Yield();
         }
-        await UniTask.Yield();
-    }
 
-    public override void Destroy()
-    {
-    }
+        public override void Destroy()
+        {
+        }
 
-    private static ByteBuf LoadByteBuf(string file)
-    {
-        var handle = SystemDriver.YooSystem.LoadRawSync($"Assets/Config/Data/{file}.bytes");
-        var bytes = handle.GetRawFileData();
-        var buf = new ByteBuf(bytes);
-        handle.Dispose();
-        return buf;
-    }
+        private static ByteBuf LoadByteBuf(string file)
+        {
+            var handle = SystemDriver.YooSystem.LoadRawSync($"Assets/Config/Data/{file}.bytes");
+            var bytes = handle.GetRawFileData();
+            var buf = new ByteBuf(bytes);
+            handle.Dispose();
+            return buf;
+        }
 
-    private static byte[] LoadCustomBytes(string file)
-    {
-        var handle = SystemDriver.YooSystem.LoadRawSync($"Assets/Config/CustomData/{file}.bytes");
-        var bytes = handle.GetRawFileData();
-        handle.Dispose();
-        return bytes;
-    }
+        private static byte[] LoadCustomBytes(string file)
+        {
+            var handle = SystemDriver.YooSystem.LoadRawSync($"Assets/Config/CustomData/{file}.bytes");
+            var bytes = handle.GetRawFileData();
+            handle.Dispose();
+            return bytes;
+        }
 
 #if UNITY_EDITOR
-    public void HotReload()
-    {
-        Tables.ResolveCustomTables(LoadCustomBytes);
-    }
+        public void HotReload()
+        {
+            Tables.ResolveCustomTables(LoadCustomBytes);
+        }
 #endif
+    }
 }

@@ -1,4 +1,6 @@
-﻿namespace cfg.Gas
+﻿using Script.Runtime.Framework.System;
+
+namespace cfg.Gas
 {
     public interface ICheckCondition
     {

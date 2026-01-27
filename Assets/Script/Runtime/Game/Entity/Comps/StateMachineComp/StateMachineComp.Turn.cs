@@ -1,37 +1,40 @@
 using UnityEngine;
 
-public partial class StateMachineComp
+namespace Script.Runtime.Game
 {
-    public class StateMachineTurn
+    public partial class StateMachineComp
     {
-        public bool IsFacingRight { get; private set; } = true;
-    
-        private StateMachineComp _stateMachine;
-    
-        public StateMachineTurn(StateMachineComp machine)
+        public class StateMachineTurn
         {
-            _stateMachine = machine;
-        }
+            public bool IsFacingRight { get; private set; } = true;
     
-        public void CheckAndTurn()
-        {
-            var moveDirection = _stateMachine.Context.MoveDir;
-            if ((moveDirection.x < 0 && IsFacingRight) || (moveDirection.x > 0 && !IsFacingRight))
+            private StateMachineComp _stateMachine;
+    
+            public StateMachineTurn(StateMachineComp machine)
             {
-                Turn();
-            }   
+                _stateMachine = machine;
+            }
+    
+            public void CheckAndTurn()
+            {
+                var moveDirection = _stateMachine.Context.MoveDir;
+                if ((moveDirection.x < 0 && IsFacingRight) || (moveDirection.x > 0 && !IsFacingRight))
+                {
+                    Turn();
+                }   
+            }
+    
+            private void Turn()
+            {
+                IsFacingRight = !IsFacingRight;
+		
+                Vector3 scale = _stateMachine.Settings.Sprite.transform.localScale;
+                scale.x = IsFacingRight ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
+		
+                _stateMachine.Settings.Sprite.transform.localScale = scale;
+            }
         }
     
-        private void Turn()
-        {
-            IsFacingRight = !IsFacingRight;
-		
-            Vector3 scale = _stateMachine.Settings.Sprite.transform.localScale;
-            scale.x = IsFacingRight ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
-		
-            _stateMachine.Settings.Sprite.transform.localScale = scale;
-        }
+        public StateMachineTurn Turn;
     }
-    
-    public StateMachineTurn Turn;
 }

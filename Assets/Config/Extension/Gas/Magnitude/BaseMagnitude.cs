@@ -1,3 +1,5 @@
+using Script.Runtime.Framework.System.GameEffect;
+
 namespace cfg.Gas
 {
     public abstract partial class BaseMagnitude

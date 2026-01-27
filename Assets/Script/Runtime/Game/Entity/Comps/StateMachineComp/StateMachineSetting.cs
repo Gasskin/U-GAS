@@ -2,37 +2,40 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class StateMachineSetting : MonoBehaviour
+namespace Script.Runtime.Game
 {
-    [Title("动画组")]
-    public List<AnimationClip> Clips = new();
-
-    private Dictionary<string, AnimationClip> _clipDict = new();
-
-    [Title("组件索引")]
-    public SpriteRenderer Sprite;
-
-    public Rigidbody2D Rg;
-
-    [Title("跑步")]
-    public float RunSpeed = 8f;
-    public float RunAcceleration = 100f;
-    public float RunDeceleration = 80f;
-
-    public AnimationClip GetClip(string clipName)
+    public class StateMachineSetting : MonoBehaviour
     {
-        if (_clipDict.TryGetValue(clipName, out AnimationClip clip))
+        [Title("动画组")]
+        public List<AnimationClip> Clips = new();
+
+        private Dictionary<string, AnimationClip> _clipDict = new();
+
+        [Title("组件索引")]
+        public SpriteRenderer Sprite;
+
+        public Rigidbody2D Rg;
+
+        [Title("跑步")]
+        public float RunSpeed = 8f;
+        public float RunAcceleration = 100f;
+        public float RunDeceleration = 80f;
+
+        public AnimationClip GetClip(string clipName)
         {
-            return clip;
-        }
-        for (int i = 0; i < Clips.Count; i++)
-        {
-            if (Clips[i].name == clipName)
+            if (_clipDict.TryGetValue(clipName, out AnimationClip clip))
             {
-                _clipDict.Add(clipName, Clips[i]);
-                return Clips[i];
+                return clip;
             }
+            for (int i = 0; i < Clips.Count; i++)
+            {
+                if (Clips[i].name == clipName)
+                {
+                    _clipDict.Add(clipName, Clips[i]);
+                    return Clips[i];
+                }
+            }
+            return null;
         }
-        return null;
     }
 }

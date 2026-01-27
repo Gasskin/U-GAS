@@ -1,9 +1,11 @@
 using cfg.Gas;
+using Script.Runtime.Framework.System;
+using Script.Runtime.Framework.System.GameAttribute;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace Script.Runtime.Game
 {
     public class UIBattle : MonoBehaviour
     {

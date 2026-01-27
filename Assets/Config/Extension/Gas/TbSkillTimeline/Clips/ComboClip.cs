@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MemoryPack;
+using Script.Runtime.Framework.System;
 
 namespace cfg.Gas
 {

@@ -1,6 +1,8 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 using MemoryPack;
+using Script.Runtime.Framework.System;
+using Script.Runtime.Game;
 using YooAsset;
 
 namespace cfg.Gas

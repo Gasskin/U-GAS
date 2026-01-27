@@ -1,23 +1,26 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class TimeSystem : BaseSystem , ITickSystem
+namespace Script.Runtime.Framework.System
 {
-    public float Now { get; private set; }
+    public class TimeSystem : BaseSystem , ITickSystem
+    {
+        public float Now { get; private set; }
     
-    public override async UniTask Initialize()
-    {
-        Now = Time.realtimeSinceStartup;
-        await UniTask.Yield();
-    }
+        public override async UniTask Initialize()
+        {
+            Now = Time.realtimeSinceStartup;
+            await UniTask.Yield();
+        }
 
-    public override void Destroy()
-    {
+        public override void Destroy()
+        {
         
-    }
+        }
 
-    public void Tick(float dt)
-    {
-        Now += dt;
+        public void Tick(float dt)
+        {
+            Now += dt;
+        }
     }
 }

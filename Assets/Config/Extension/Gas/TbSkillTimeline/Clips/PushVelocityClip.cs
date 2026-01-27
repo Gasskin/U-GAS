@@ -1,5 +1,7 @@
 ﻿using System;
 using MemoryPack;
+using Script.Runtime.Framework.System;
+using Script.Runtime.Game;
 using UnityEngine;
 
 namespace cfg.Gas

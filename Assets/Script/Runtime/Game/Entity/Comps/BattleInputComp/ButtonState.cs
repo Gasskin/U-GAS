@@ -1,32 +1,35 @@
-﻿public class ButtonState
+﻿namespace Script.Runtime.Game
 {
-    public bool IsHolding { get; private set; }
+    public class ButtonState
+    {
+        public bool IsHolding { get; private set; }
     
-    public bool IsPressedThisFrame { get; private set; }
+        public bool IsPressedThisFrame { get; private set; }
     
-    public bool IsReleasedThisFrame { get; private set; }
+        public bool IsReleasedThisFrame { get; private set; }
 
-    public void Start()
-    {
-        if (!IsHolding)
+        public void Start()
         {
-            IsHolding = true;
-            IsPressedThisFrame = true;
+            if (!IsHolding)
+            {
+                IsHolding = true;
+                IsPressedThisFrame = true;
+            }
         }
-    }
 
-    public void Cancel()
-    {
-        if (IsHolding)
+        public void Cancel()
         {
-            IsHolding = false;
-            IsReleasedThisFrame = true;
+            if (IsHolding)
+            {
+                IsHolding = false;
+                IsReleasedThisFrame = true;
+            }
         }
-    }
 
-    public void ResetFrameState()
-    {
-        IsPressedThisFrame = false;
-        IsReleasedThisFrame = false;
+        public void ResetFrameState()
+        {
+            IsPressedThisFrame = false;
+            IsReleasedThisFrame = false;
+        }
     }
 }

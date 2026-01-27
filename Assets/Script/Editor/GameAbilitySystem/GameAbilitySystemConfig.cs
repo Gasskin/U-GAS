@@ -8,197 +8,199 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public class TagNode
+namespace Script.Editor
 {
-    public string Backup;
-    public string ParentFullPath;
-    public string TagName;
-    public TagNode Parent;
-    public int Index;
-    public List<TagNode> ChildTag;
-}
-
-[CreateAssetMenu(fileName = "GameAbilitySystemConfig", menuName = "Battle/Gas/GameAbilitySystemConfig")]
-public class GameAbilitySystemConfig : ScriptableObject
-{
-    public Object GameTagRoot;
-    public Object GameTagGenCodeRoot;
-
-    private readonly Dictionary<string, TagNode> _tagDic = new();
-    private readonly List<TagNode> _tagTree = new();
-    private int _tagIdx;
-
-    [Button]
-    public void GenGameTag()
+    public class TagNode
     {
-        var path = AssetDatabase.GetAssetPath(GameTagRoot);
-        var folder1 = Directory.GetDirectories(path, "*", SearchOption.AllDirectories);
-        var folder2 = folder1.Select((s => s.Replace($"{path}\\", ""))).ToList();
+        public string Backup;
+        public string ParentFullPath;
+        public string TagName;
+        public TagNode Parent;
+        public int Index;
+        public List<TagNode> ChildTag;
+    }
 
-        _tagDic.Clear();
-        _tagTree.Clear();
-        _tagIdx = 1;
+    [CreateAssetMenu(fileName = "GameAbilitySystemConfig", menuName = "Battle/Gas/GameAbilitySystemConfig")]
+    public class GameAbilitySystemConfig : ScriptableObject
+    {
+        public Object GameTagRoot;
+        public Object GameTagGenCodeRoot;
 
-        CreateTagTree(folder2);
-        foreach (var tagNode in _tagTree)
+        private readonly Dictionary<string, TagNode> _tagDic = new();
+        private readonly List<TagNode> _tagTree = new();
+        private int _tagIdx;
+
+        [Button]
+        public void GenGameTag()
         {
-            SetTagIndex(tagNode);
-        }
+            var path = AssetDatabase.GetAssetPath(GameTagRoot);
+            var folder1 = Directory.GetDirectories(path, "*", SearchOption.AllDirectories);
+            var folder2 = folder1.Select((s => s.Replace($"{path}\\", ""))).ToList();
 
-        GenTagEnum();
-        GenTagRegister();
+            _tagDic.Clear();
+            _tagTree.Clear();
+            _tagIdx = 1;
+
+            CreateTagTree(folder2);
+            foreach (var tagNode in _tagTree)
+            {
+                SetTagIndex(tagNode);
+            }
+
+            GenTagEnum();
+            GenTagRegister();
         
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
-    }
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+        }
 
-    private void CreateTagTree(List<string> allPath)
-    {
-        // 创建所有节点
-        foreach (var f in allPath)
+        private void CreateTagTree(List<string> allPath)
         {
-            var tagName = f;
-            var parentFullPath = "";
-            var idx = tagName.LastIndexOf("\\", StringComparison.Ordinal);
-            if (idx != -1)
+            // 创建所有节点
+            foreach (var f in allPath)
             {
-                tagName = tagName.Substring(idx + 1);
-                parentFullPath = f.Replace($"\\{tagName}", "");
+                var tagName = f;
+                var parentFullPath = "";
+                var idx = tagName.LastIndexOf("\\", StringComparison.Ordinal);
+                if (idx != -1)
+                {
+                    tagName = tagName.Substring(idx + 1);
+                    parentFullPath = f.Replace($"\\{tagName}", "");
+                }
+                var split = tagName.Split("@");
+                var backup = split.Length > 1 ? split[1] : "空";
+                var tag = new TagNode()
+                {
+                    ParentFullPath = parentFullPath,
+                    TagName = split[0],
+                    Backup = backup,
+                    ChildTag = new List<TagNode>()
+                };
+                _tagDic.Add(f, tag);
+                // 说明是根节点
+                if (string.IsNullOrEmpty(parentFullPath))
+                {
+                    _tagTree.Add(tag);
+                }
             }
-            var split = tagName.Split("@");
-            var backup = split.Length > 1 ? split[1] : "空";
-            var tag = new TagNode()
+            // 添加父子关系
+            foreach (var tag in _tagDic.Values)
             {
-                ParentFullPath = parentFullPath,
-                TagName = split[0],
-                Backup = backup,
-                ChildTag = new List<TagNode>()
-            };
-            _tagDic.Add(f, tag);
-            // 说明是根节点
-            if (string.IsNullOrEmpty(parentFullPath))
-            {
-                _tagTree.Add(tag);
+                if (!string.IsNullOrEmpty(tag.ParentFullPath))
+                {
+                    var parent = _tagDic[tag.ParentFullPath];
+                    tag.Parent = parent;
+                    parent.ChildTag.Add(tag);
+                }
             }
         }
-        // 添加父子关系
-        foreach (var tag in _tagDic.Values)
-        {
-            if (!string.IsNullOrEmpty(tag.ParentFullPath))
-            {
-                var parent = _tagDic[tag.ParentFullPath];
-                tag.Parent = parent;
-                parent.ChildTag.Add(tag);
-            }
-        }
-    }
 
-    private void SetTagIndex(TagNode tagNode)
-    {
-        tagNode.Index = _tagIdx++;
-        foreach (var tag in tagNode.ChildTag)
+        private void SetTagIndex(TagNode tagNode)
         {
-            SetTagIndex(tag);
-        }
-    }
-
-    private void GenTagEnum()
-    {
-        var path = AssetDatabase.GetAssetPath(GameTagGenCodeRoot) + "/EGameTag.cs";
-        if (File.Exists(path))
-        {
-            File.Delete(path);
-        }
-        
-        var sb = new StringBuilder();
-        sb.AppendLine("using Sirenix.OdinInspector;");
-        // sb.AppendLine("namespace Meow.Runtime.HotUpdate");
-        // sb.AppendLine("{");
-        sb.AppendLine("\tpublic enum EGameTag");
-        sb.AppendLine("\t{");
-        sb.AppendLine($"\t\tNone = 0,");
-        foreach (var tagNode in _tagTree)
-        {
-            AddTag(tagNode);
-        }
-        sb.AppendLine("\t}");
-        // sb.AppendLine("}");
-        File.WriteAllText(path, sb.ToString());
-        return;
-
-        void AddTag(TagNode tagNode)
-        {
-            if (!string.IsNullOrEmpty(tagNode.Backup))
-            {
-                var backup = GetTagFullBackup(tagNode, tagNode.Backup);
-                sb.AppendLine($"\t\t/// <summary>");
-                sb.AppendLine($"\t\t/// \"{backup}\"");
-                sb.AppendLine($"\t\t/// </summary>");
-                sb.AppendLine($"\t\t[LabelText(\"{backup}\")]");
-            }
-            var fullName = GetTagFullName(tagNode, tagNode.TagName);
-            sb.AppendLine($"\t\t{fullName} = {tagNode.Index},");
+            tagNode.Index = _tagIdx++;
             foreach (var tag in tagNode.ChildTag)
             {
-                AddTag(tag);
+                SetTagIndex(tag);
             }
         }
-    }
 
-    private string GetTagFullName(TagNode tagNode, string tagName)
-    {
-        if (tagNode.Parent == null)
+        private void GenTagEnum()
         {
-            return tagName;
-        }
-        return GetTagFullName(tagNode.Parent, $"{tagNode.Parent.TagName}_{tagName}");
-    }
+            var path = AssetDatabase.GetAssetPath(GameTagGenCodeRoot) + "/EGameTag.cs";
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+        
+            var sb = new StringBuilder();
+            sb.AppendLine("using Sirenix.OdinInspector;");
+            // sb.AppendLine("namespace Meow.Runtime.HotUpdate");
+            // sb.AppendLine("{");
+            sb.AppendLine("\tpublic enum EGameTag");
+            sb.AppendLine("\t{");
+            sb.AppendLine($"\t\tNone = 0,");
+            foreach (var tagNode in _tagTree)
+            {
+                AddTag(tagNode);
+            }
+            sb.AppendLine("\t}");
+            // sb.AppendLine("}");
+            File.WriteAllText(path, sb.ToString());
+            return;
 
-    private string GetTagFullBackup(TagNode tagNode, string backup)
-    {
-        if (tagNode.Parent == null)
+            void AddTag(TagNode tagNode)
+            {
+                if (!string.IsNullOrEmpty(tagNode.Backup))
+                {
+                    var backup = GetTagFullBackup(tagNode, tagNode.Backup);
+                    sb.AppendLine($"\t\t/// <summary>");
+                    sb.AppendLine($"\t\t/// \"{backup}\"");
+                    sb.AppendLine($"\t\t/// </summary>");
+                    sb.AppendLine($"\t\t[LabelText(\"{backup}\")]");
+                }
+                var fullName = GetTagFullName(tagNode, tagNode.TagName);
+                sb.AppendLine($"\t\t{fullName} = {tagNode.Index},");
+                foreach (var tag in tagNode.ChildTag)
+                {
+                    AddTag(tag);
+                }
+            }
+        }
+
+        private string GetTagFullName(TagNode tagNode, string tagName)
         {
-            return backup;
+            if (tagNode.Parent == null)
+            {
+                return tagName;
+            }
+            return GetTagFullName(tagNode.Parent, $"{tagNode.Parent.TagName}_{tagName}");
         }
-        return GetTagFullBackup(tagNode.Parent, $"{tagNode.Parent.Backup}/{backup}");
-    }
 
-    private void GenTagRegister()
-    {
-        var path = AssetDatabase.GetAssetPath(GameTagGenCodeRoot) + "/GameTagRegister.cs";
-        if (File.Exists(path))
+        private string GetTagFullBackup(TagNode tagNode, string backup)
         {
-            File.Delete(path);
+            if (tagNode.Parent == null)
+            {
+                return backup;
+            }
+            return GetTagFullBackup(tagNode.Parent, $"{tagNode.Parent.Backup}/{backup}");
         }
 
-        var sb = new StringBuilder();
-        sb.AppendLine("using System;");
-        sb.AppendLine("using System.Collections.Generic;");
-        sb.AppendLine("// ReSharper disable InconsistentNaming");
-        // sb.AppendLine("namespace Meow.Runtime.HotUpdate");
-        // sb.AppendLine("{");
-        sb.AppendLine("\tpublic static class GameTagRegister");
-        sb.AppendLine("\t{");
-        sb.AppendLine($"\t\tpublic static readonly int s_Size = {_tagIdx};");
-        sb.AppendLine("\t\tpublic static readonly int[] s_Tree =");
-        sb.AppendLine("\t\t{");
-        sb.AppendLine("\t\t\t0,\t// 0 Null");
-        foreach (var tagNode in _tagTree)
+        private void GenTagRegister()
         {
-            AddTree(tagNode);
-        }
-        sb.AppendLine("\t\t};");
-        sb.AppendLine("\t\tpublic static readonly Dictionary<string, EGameTag> s_StringToEnum = new()");
-        sb.AppendLine("\t\t{");
-        foreach (var tagNode in _tagDic.Values)
-        {
-            var fullName = GetTagFullName(tagNode, tagNode.TagName);
-            sb.AppendLine($"\t\t\t{{ \"{fullName}\", EGameTag.{fullName} }},");
-        }
-        sb.AppendLine("\t\t};");
+            var path = AssetDatabase.GetAssetPath(GameTagGenCodeRoot) + "/GameTagRegister.cs";
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+
+            var sb = new StringBuilder();
+            sb.AppendLine("using System;");
+            sb.AppendLine("using System.Collections.Generic;");
+            sb.AppendLine("// ReSharper disable InconsistentNaming");
+            // sb.AppendLine("namespace Meow.Runtime.HotUpdate");
+            // sb.AppendLine("{");
+            sb.AppendLine("\tpublic static class GameTagRegister");
+            sb.AppendLine("\t{");
+            sb.AppendLine($"\t\tpublic static readonly int s_Size = {_tagIdx};");
+            sb.AppendLine("\t\tpublic static readonly int[] s_Tree =");
+            sb.AppendLine("\t\t{");
+            sb.AppendLine("\t\t\t0,\t// 0 Null");
+            foreach (var tagNode in _tagTree)
+            {
+                AddTree(tagNode);
+            }
+            sb.AppendLine("\t\t};");
+            sb.AppendLine("\t\tpublic static readonly Dictionary<string, EGameTag> s_StringToEnum = new()");
+            sb.AppendLine("\t\t{");
+            foreach (var tagNode in _tagDic.Values)
+            {
+                var fullName = GetTagFullName(tagNode, tagNode.TagName);
+                sb.AppendLine($"\t\t\t{{ \"{fullName}\", EGameTag.{fullName} }},");
+            }
+            sb.AppendLine("\t\t};");
 
 
-        var code = @"
+            var code = @"
 #if UNITY_EDITOR
         static GameTagRegister()
         {
@@ -233,19 +235,20 @@ public class GameAbilitySystemConfig : ScriptableObject
             }
         }
 #endif";
-        sb.AppendLine(code);
-        sb.AppendLine("\t}");
-        // sb.AppendLine("}");
+            sb.AppendLine(code);
+            sb.AppendLine("\t}");
+            // sb.AppendLine("}");
 
-        File.WriteAllText(path, sb.ToString());
+            File.WriteAllText(path, sb.ToString());
 
-        void AddTree(TagNode tagNode)
-        {
-            var parentIndex = tagNode.Parent?.Index ?? 0;
-            sb.AppendLine($"\t\t\t{parentIndex},\t// {tagNode.Index} {GetTagFullName(tagNode, tagNode.TagName)}");
-            foreach (var tag in tagNode.ChildTag)
+            void AddTree(TagNode tagNode)
             {
-                AddTree(tag);
+                var parentIndex = tagNode.Parent?.Index ?? 0;
+                sb.AppendLine($"\t\t\t{parentIndex},\t// {tagNode.Index} {GetTagFullName(tagNode, tagNode.TagName)}");
+                foreach (var tag in tagNode.ChildTag)
+                {
+                    AddTree(tag);
+                }
             }
         }
     }

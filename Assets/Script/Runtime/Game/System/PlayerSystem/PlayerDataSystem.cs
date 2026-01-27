@@ -1,43 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using cfg.Gas;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
+using Script.Runtime.Framework.System;
 
-public class PlayerDataSystem : BaseSystem
+namespace Script.Runtime.Game
 {
-    private Entity _player;
-
-    private int _level;
-
-    public override async UniTask Initialize()
+    public class PlayerDataSystem : BaseSystem
     {
-        await UniTask.Yield();
-    }
+        private Entity _player;
 
-    public override void Destroy()
-    {
-        if (_player != null)
+        private int _level;
+
+        public override async UniTask Initialize()
         {
-            SystemDriver.EntitySystem?.DestroyEntity(_player);
+            await UniTask.Yield();
         }
-    }
 
-    public async UniTask CreatePlayer()
-    {
-        // if (!SystemDriver.EntityRootSystem.TryGetHeroFirstCell(out var index, out var cell))
-        // {
-        //     return;
-        // }
-
-        _level = 10;
-
-        var e = EntityHero.Create(new EntityHero()
+        public override void Destroy()
         {
-            Level = _level,
-            HeroId = 1001,
-        });
-        await e.Initialize();
+            if (_player != null)
+            {
+                SystemDriver.EntitySystem?.DestroyEntity(_player);
+            }
+        }
 
-        await UniTask.Yield();
+        public async UniTask CreatePlayer()
+        {
+            // if (!SystemDriver.EntityRootSystem.TryGetHeroFirstCell(out var index, out var cell))
+            // {
+            //     return;
+            // }
+
+            _level = 10;
+
+            var e = EntityHero.Create(new EntityHero()
+            {
+                Level = _level,
+                HeroId = 1001,
+            });
+            await e.Initialize();
+
+            await UniTask.Yield();
+        }
     }
 }

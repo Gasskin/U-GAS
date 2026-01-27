@@ -1,6 +1,9 @@
 ﻿using UnityEngine.Playables;
 
-public class SkillTimelineBehaviour: PlayableBehaviour
+namespace Script.Editor
 {
+    public class SkillTimelineBehaviour: PlayableBehaviour
+    {
         
+    }
 }

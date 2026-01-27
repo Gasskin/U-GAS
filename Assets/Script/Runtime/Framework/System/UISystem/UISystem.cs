@@ -1,4 +1,7 @@
-﻿public class UISystem
+﻿namespace Script.Runtime.Framework.System
 {
+    public class UISystem
+    {
         
+    }
 }

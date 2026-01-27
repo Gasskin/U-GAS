@@ -1,4 +1,6 @@
 ﻿using System;
+using Script.Runtime.Framework.System;
+using Script.Runtime.Framework.System.GameTag;
 
 namespace cfg.Gas
 {

@@ -1,14 +1,17 @@
 ﻿using UnityEngine.Timeline;
 
-[TrackColor(1f, 1f, 0f)] 
-[TrackClipType(typeof(SkillTimelineClipAsset))]
-public class SkillTimelineTrack : TrackAsset
+namespace Script.Editor
 {
-    protected override void OnCreateClip(TimelineClip clip)
+    [TrackColor(1f, 1f, 0f)] 
+    [TrackClipType(typeof(SkillTimelineClipAsset))]
+    public class SkillTimelineTrack : TrackAsset
     {
-        base.OnCreateClip(clip);
+        protected override void OnCreateClip(TimelineClip clip)
+        {
+            base.OnCreateClip(clip);
 
-        clip.start = 0f;
-        clip.duration = 1 / 60f * 15f;
+            clip.start = 0f;
+            clip.duration = 1 / 60f * 15f;
+        }
     }
 }
