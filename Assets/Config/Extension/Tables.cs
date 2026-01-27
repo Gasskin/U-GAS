@@ -7,9 +7,10 @@ namespace cfg
     {
         public Gas.TbSkillTimeline TbSkillTimeline {get; private set; }
 
-        public void ResolveTbSkillTimelineAsset(Func<string, byte[]> loader)
+        public void ResolveCustomTables(Func<string, byte[]> loader)
         {
             TbSkillTimeline = new Gas.TbSkillTimeline(loader("gas_tbskilltimeline"));
         }
+
     }
 }

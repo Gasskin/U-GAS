@@ -3,19 +3,19 @@ using MemoryPack;
 
 namespace cfg.Gas
 {
+    /// <summary>
+    /// 后摇
+    /// </summary>
     [Serializable]
     [MemoryPackable]
-    public partial class ChangeSkillStagePriority : SkillTimelineClip
+    public partial class SkillRecover : SkillTimelineClip
     {
-        public ESkillStagePriority ChangeTo;
-        
-
         protected override void OnStart()
         {
             if (SystemDriver.EntitySystem.HasEntity(Context.EntityId, out var entity) &&
                 entity.HasComp(EntityComp.Priority_StateMachine, out StateMachineComp stateMachine))
             {
-                stateMachine.SkillSpell.ChangeSkillStagePriority(ChangeTo);
+                stateMachine.SkillSpell.ChangeSkillStagePriority(ESkillStagePriority.None);
             }
         }
     }

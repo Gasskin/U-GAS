@@ -9,7 +9,7 @@ public class StateMachineContext
     public ButtonState Jump { get; set; } = new();
     public ButtonState Dash { get; set; } = new();
     
-    public ButtonState Attack { get; set; } = new();
+    // public ButtonState Attack { get; set; } = new();
 
     public void LateTick(float dt)
     {

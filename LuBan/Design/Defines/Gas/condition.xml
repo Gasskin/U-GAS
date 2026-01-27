@@ -1,0 +1,11 @@
+<module name="Gas">
+    <!-- 基类 -->
+    <bean name="BaseCondition">
+    </bean>
+
+    <bean name="ConditionHasTag" parent="BaseCondition">
+        <var name="all_tag" type="(list#sep=,),string"/>
+        <var name="no_tag" type="(list#sep=,),string"/>
+        <var name="any_tag" type="(list#sep=,),string"/>
+    </bean>
+</module>

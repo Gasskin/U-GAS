@@ -13,9 +13,6 @@ namespace cfg.Gas
 { 
     public enum ESkillStagePriority
     {
-        /// <summary>
-        /// 技能优先级
-        /// </summary>
         None = 0,
         /// <summary>
         /// 普通

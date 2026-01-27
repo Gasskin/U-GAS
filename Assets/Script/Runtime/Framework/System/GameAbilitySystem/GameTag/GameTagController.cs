@@ -2,6 +2,18 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class TagTimer : IPoolObject
+{
+    public EGameTag Tag;
+    public float Duration;
+
+    public void OnRelease()
+    {
+        Tag = EGameTag.None;
+        Duration = 0f;
+    }
+}
+
 public class GameTagController
 {
 #region static
@@ -10,9 +22,9 @@ public class GameTagController
         var tag = GameTagRegister.s_StringToEnum.GetValueOrDefault(gameTag, EGameTag.None);
         if (tag == EGameTag.None)
         {
-            throw new ArgumentOutOfRangeException($"不存在的GameTag：{gameTag}");
+            Debug.LogError($"不存在的GameTag：{gameTag}");
         }
-        return EGameTag.None;
+        return tag;
     }
 #endregion
 
@@ -23,15 +35,42 @@ public class GameTagController
 
     private GasComp _owner;
 
+    private LinkedList<TagTimer> _tagTimers = new();
 
     public void Init(GasComp owner)
     {
         _owner = owner;
     }
 
+    public void Tick(float dt)
+    {
+        var node = _tagTimers.First;
+        while (node != null)
+        {
+            var next = node.Next;
+            node.Value.Duration -= dt;
+            if (node.Value.Duration <= 0)
+            {
+                RemoveTag(node.Value.Tag);
+                Pool<TagTimer>.Release(node.Value);
+                _tagTimers.Remove(node);
+            }
+            node = next;
+        }
+    }
+
     public void AddTag(EGameTag eTag)
     {
         TravelAdd((int)eTag, 1);
+    }
+
+    public void AddTagTimer(EGameTag tag, float duration)
+    {
+        var timer = Pool<TagTimer>.Get();
+        timer.Tag = tag;
+        timer.Duration = duration;
+        AddTag(tag);
+        _tagTimers.AddLast(timer);
     }
 
     public void AddTagsWithDirty(List<EGameTag> grantedTags)

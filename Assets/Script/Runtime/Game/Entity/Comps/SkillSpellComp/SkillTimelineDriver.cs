@@ -47,7 +47,6 @@ public class SkillTimelineDriver
                     break;
                 }
             }
-            _frameTimeTick = _frameTime;
         }
         else
         {
@@ -74,6 +73,14 @@ public class SkillTimelineDriver
         }
     }
 
+    public void FixedTick(float dt)
+    {
+        for (int i = 0; i < _skillTimelines.Count; i++)
+        {
+            _skillTimelines[i].FixedTick(dt, _nowFrame);
+        }
+    }
+
     public void Start(SkillTimelineContext context)
     {
         var tables = SystemDriver.ConfigSystem.Tables;
@@ -83,7 +90,7 @@ public class SkillTimelineDriver
             Debug.LogError($"不存在技能配置：{context.SkillId}");
             return;
         }
-        
+
         _skillTimelines.Clear();
         foreach (var id in skill.SkillTimelinesId)
         {
@@ -95,7 +102,7 @@ public class SkillTimelineDriver
             timeline.Reset(context);
             _skillTimelines.Add(timeline);
         }
-        
+
         _context = context;
         _frameTimeTick = _frameTime;
         _nowFrame = 0;

@@ -17,8 +17,9 @@ public sealed partial class Skill : Luban.BeanBase
     public Skill(ByteBuf _buf) 
     {
         Id = _buf.ReadInt();
-        {int n0 = _buf.ReadSize(); SkillTimelinesId = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); SkillTimelinesId.Add(_e0);}}
         Priority = (Gas.ESkillStagePriority)_buf.ReadInt();
+        {int n0 = _buf.ReadSize(); SkillTimelinesId = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); SkillTimelinesId.Add(_e0);}}
+        {int n0 = _buf.ReadSize(); Transform = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); Transform.Add(_e0);}}
     }
 
     public static Skill DeserializeSkill(ByteBuf _buf)
@@ -27,25 +28,28 @@ public sealed partial class Skill : Luban.BeanBase
     }
 
     public readonly int Id;
-    public readonly System.Collections.Generic.List<int> SkillTimelinesId;
-    /// <summary>
-    /// 优先级
-    /// </summary>
     public readonly Gas.ESkillStagePriority Priority;
+    public readonly System.Collections.Generic.List<int> SkillTimelinesId;
+    public readonly System.Collections.Generic.List<int> Transform;
+    public System.Collections.Generic.List<Gas.SkillTransform> Transform_Ref;
    
     public const int __ID__ = -1845743940;
     public override int GetTypeId() => __ID__;
 
     public  void ResolveRef(Tables tables)
     {
+        Transform_Ref = new System.Collections.Generic.List<Gas.SkillTransform>();
+        foreach (var _v in Transform) { Transform_Ref.Add(tables.TbSkillTransform.GetOrDefault(_v)); }
+
     }
 
     public override string ToString()
     {
         return "{ "
         + "id:" + Id + ","
+        + "priority:" + Priority + ","
         + "skillTimelinesId:" + Luban.StringUtil.CollectionToString(SkillTimelinesId) + ","
-        + "Priority:" + Priority + ","
+        + "transform:" + Luban.StringUtil.CollectionToString(Transform) + ","
         + "}";
     }
 }

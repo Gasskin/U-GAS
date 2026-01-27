@@ -36,11 +36,27 @@ namespace cfg.Gas
             return false;
         }
 
+        public void FixedTick(float dt, int frame)
+        {
+            if (frame < StartFrame)
+            {
+                return ;
+            }
+            if (frame > EndFrame)
+            {
+                return ;
+            }
+            for (int i = 0; i < Clips.Count; i++)
+            {
+                Clips[i].FixedTick(dt, frame);
+            }
+        }
+
         public void Interrupt()
         {
             for (int i = 0; i < Clips.Count; i++)
             {
-                Clips[i].OnInterrupt();
+                Clips[i].Interrupt();
             }
         }
 

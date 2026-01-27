@@ -47,6 +47,11 @@ public class SkillTimelineExport
 
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
+
+        if (Application.isPlaying)
+        {
+            SystemDriver.ConfigSystem.HotReload();
+        }
     }
 
     private static SkillTimeline ToSkillTimeline(int id, TimelineAsset asset)
@@ -63,9 +68,10 @@ public class SkillTimelineExport
                 {
                     if (skillClipAsset.SkillClip == null)
                     {
-                        Debug.LogError($"timeline: {id}, has null skill timeline clip");
+                        Debug.LogError($"timeline: {id}, has null skill timeline clip", asset);
                         continue;
                     }
+                    timelineClip.displayName = skillClipAsset.SkillClip.GetType().Name.Replace("Clip","");
                     skillClipAsset.SkillClip.StartFrame =
                         Mathf.RoundToInt((float)(timelineClip.start * SkillTimelineDriver.TimelineFrame));
                     skillClipAsset.SkillClip.EndFrame =
@@ -76,7 +82,7 @@ public class SkillTimelineExport
                 {
                     if (animaClipAsset.clip == null)
                     {
-                        Debug.LogError($"timeline: {id}, has null animation clip");
+                        Debug.LogError($"timeline: {id}, has null animation clip", asset);
                         continue;
                     }
                     var anima = new SkillTimelineAnimaClip()

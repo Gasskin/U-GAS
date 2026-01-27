@@ -17,6 +17,7 @@ public partial class Tables
     public Gas.TbSkill TbSkill {get; }
     public TbLevelUp TbLevelUp {get; }
     public TbHero TbHero {get; }
+    public Gas.TbSkillTransform TbSkillTransform {get; }
 
     public Tables(System.Func<string, ByteBuf> loader)
     {
@@ -24,6 +25,7 @@ public partial class Tables
         TbSkill = new Gas.TbSkill(loader("gas_tbskill"));
         TbLevelUp = new TbLevelUp(loader("tblevelup"));
         TbHero = new TbHero(loader("tbhero"));
+        TbSkillTransform = new Gas.TbSkillTransform(loader("gas_tbskilltransform"));
         ResolveRef();
     }
     
@@ -33,6 +35,7 @@ public partial class Tables
         TbSkill.ResolveRef(this);
         TbLevelUp.ResolveRef(this);
         TbHero.ResolveRef(this);
+        TbSkillTransform.ResolveRef(this);
     }
 }
 

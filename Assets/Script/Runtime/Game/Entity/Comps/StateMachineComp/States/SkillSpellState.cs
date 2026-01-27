@@ -37,6 +37,10 @@ public class SkillSpellState : BaseState
 
     public override void FixedTick(float dt)
     {
+        if (_driver.IsValid)
+        {
+            _driver.FixedTick(dt);
+        }
     }
 
     public override void OnExit()

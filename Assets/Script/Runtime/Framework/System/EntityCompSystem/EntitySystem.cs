@@ -75,7 +75,18 @@ public class EntitySystem : BaseSystem, ITickSystem, IFixedTickSystem, ILateTick
 
     public bool HasEntity(ulong id, out Entity entity)
     {
-        return _id2Entity.TryGetValue(id,out entity);
+        return _id2Entity.TryGetValue(id, out entity);
+    }
+
+    public bool HasComp<T>(ulong id, int compIndex, out T component) where T : EntityComp
+    {
+        component = null;
+        if (HasEntity(id, out var entity) &&
+            entity.HasComp(compIndex,out component))
+        {
+            return true;
+        }
+        return false;
     }
 
     public void DestroyEntity(Entity e)

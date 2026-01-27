@@ -89,12 +89,12 @@ public class BattleInputComp : EntityComp
     {
         if (ctx.started)
         {
-            _stateMachine.SkillSpell.TrySpellSkill(1001);
-            _stateMachine.Context.Attack.Start();
+            Attack();
         }
-        else if (ctx.canceled)
-        {
-            _stateMachine.Context.Attack.Cancel();
-        }
+    }
+
+    public void Attack()
+    {
+        _stateMachine.SkillSpell.TrySpellSkill(101001);
     }
 }

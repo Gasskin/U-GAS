@@ -270,11 +270,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Clips:
-  - {fileID: 7400000, guid: 3f50908b2b5c94143a2713128ec355e9, type: 2}
-  - {fileID: 7400000, guid: c345806809aadeb4ab8d46cd4c1be8ae, type: 2}
   - {fileID: 7400000, guid: 0c96d18066ec84a4db8fdd24ce4cc86e, type: 2}
   - {fileID: 7400000, guid: 5173cc8d614e86a47ab9d0805f56fa53, type: 2}
   - {fileID: 7400000, guid: 916a5020eeccf424baabca925c45b137, type: 2}
+  - {fileID: 7400000, guid: 3f50908b2b5c94143a2713128ec355e9, type: 2}
+  - {fileID: 7400000, guid: 3de8db9be23a249409f1ac90f3808acd, type: 2}
+  - {fileID: 7400000, guid: c345806809aadeb4ab8d46cd4c1be8ae, type: 2}
+  - {fileID: 7400000, guid: 25191d0d0b24a5b4f8c8b7f7a1f9e68f, type: 2}
+  - {fileID: 7400000, guid: 384c150ae9037c34d9096218f2bddbb1, type: 2}
+  - {fileID: 7400000, guid: eb401bdee4eea0b4db7596cad05e139d, type: 2}
+  - {fileID: 7400000, guid: 05d0847ca12ed3645809475ea4c1a5ba, type: 2}
+  - {fileID: 7400000, guid: 0ee792f952cec644481f8a2a02f297d0, type: 2}
   Sprite: {fileID: 7964159304973324910}
   Rg: {fileID: 223178994799496011}
   RunSpeed: 8

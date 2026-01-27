@@ -14,7 +14,10 @@ namespace cfg.Gas
     
     [MemoryPackable]
     [MemoryPackUnion(1, typeof(SkillTimelineAnimaClip))]
-    [MemoryPackUnion(2, typeof(ChangeSkillStagePriority))]
+    [MemoryPackUnion(2, typeof(SkillRecover))]
+    [MemoryPackUnion(3, typeof(PushVelocityClip))]
+    [MemoryPackUnion(4, typeof(ComboClip))]
+    [MemoryPackUnion(5, typeof(AttackInputCacheClip))]
     public abstract partial class SkillTimelineClip
     {
         [HideInInspector]
@@ -54,6 +57,22 @@ namespace cfg.Gas
             }
         }
         
+        public  void FixedTick(float dt, int frame)
+        {
+            if (_isStart && !_isEnd) 
+            {
+                OnFixedTick(dt);
+            }
+        }
+        
+        public void Interrupt()
+        {
+            if (_isStart && !_isEnd)
+            {
+                OnInterrupt();
+            }
+        }
+        
         protected virtual void OnStart()
         {
         }
@@ -61,6 +80,11 @@ namespace cfg.Gas
         protected virtual void OnTick(float dt)
         {
         }
+ 
+        protected virtual void OnFixedTick(float dt)
+        {
+        }
+        
 
         protected virtual void OnEnd()
         {
@@ -69,5 +93,6 @@ namespace cfg.Gas
         public virtual void OnInterrupt()
         {
         }
+
     }
 }

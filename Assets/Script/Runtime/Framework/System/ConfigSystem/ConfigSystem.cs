@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using cfg;
 using Cysharp.Threading.Tasks;
@@ -12,7 +13,7 @@ public class ConfigSystem : BaseSystem
     {
         Tables = new cfg.Tables(LoadByteBuf);
 
-        Tables.ResolveTbSkillTimelineAsset(LoadCustomBytes);
+        Tables.ResolveCustomTables(LoadCustomBytes);
 
         foreach (var ge in Tables.TbGameEffect.DataList)
         {
@@ -41,4 +42,11 @@ public class ConfigSystem : BaseSystem
         handle.Dispose();
         return bytes;
     }
+
+#if UNITY_EDITOR
+    public void HotReload()
+    {
+        Tables.ResolveCustomTables(LoadCustomBytes);
+    }
+#endif
 }

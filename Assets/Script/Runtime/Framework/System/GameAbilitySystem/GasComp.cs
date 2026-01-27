@@ -36,9 +36,9 @@ public class GasComp : EntityComp
 
     public override void Tick(float dt)
     {
+        GameTagController?.Tick(dt);
         GameEffectController?.Tick(dt);
     }
-
 
 #region ApplyGameEffect
     public ulong ApplyGameEffectTo(int effectId, GasComp target)
