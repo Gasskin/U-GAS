@@ -30,9 +30,9 @@ namespace Script.Runtime.Framework.System
         public bool IsInitialized { get; private set; } = false;
 
         private EntityComp[] _comps = new EntityComp[32];
-        private readonly LinkedList<EntityComp> _updateComps = new();
-        private readonly LinkedList<EntityComp> _lateUpdateComps = new();
-        private readonly LinkedList<EntityComp> _fixedUpdateComps = new();
+        private List<EntityComp> _updateComps = new(32);
+        private List<EntityComp> _lateUpdateComps = new(32);
+        private List<EntityComp> _fixedUpdateComps = new(32);
 
         private EntitySystem _system;
 
@@ -75,11 +75,9 @@ namespace Script.Runtime.Framework.System
             {
                 return;
             }
-            var first = _updateComps.First;
-            while (first != null)
+            for (int i = 0; i < _updateComps.Count; i++)
             {
-                first.Value.Tick(dt);
-                first = first.Next;
+                _updateComps[i].OnTick(dt);
             }
         }
 
@@ -89,11 +87,9 @@ namespace Script.Runtime.Framework.System
             {
                 return;
             }
-            var first = _lateUpdateComps.First;
-            while (first != null)
+            for (int i = 0; i < _lateUpdateComps.Count; i++)
             {
-                first.Value.LateTick(dt);
-                first = first.Next;
+                _lateUpdateComps[i].OnTick(dt);
             }
         }
 
@@ -103,21 +99,20 @@ namespace Script.Runtime.Framework.System
             {
                 return;
             }
-            var first = _fixedUpdateComps.First;
-            while (first != null)
+            for (int i = 0; i < _fixedUpdateComps.Count; i++)
             {
-                first.Value.FixedTick(dt);
-                first = first.Next;
+                _fixedUpdateComps[i].OnTick(dt);
             }
         }
 
         public T AddComp<T>(T comp) where T : EntityComp
         {
-            var p = comp.Priority;
-            if (comp.Priority <= 0)
+            var p = SystemDriver.EntitySystem.GetPriority(comp);
+            if (p <= 0)
             {
                 throw new ArgumentOutOfRangeException($"组件权重异常：{typeof(T).Name}");
             }
+            comp.SetPriority(p);
             comp.Entity = this;
             if (_comps.Length <= p)
             {
@@ -142,7 +137,7 @@ namespace Script.Runtime.Framework.System
                     _needTick = true;
                     _system.RegisterUpdate(this);
                 }
-                Insert(_updateComps);
+                Insert(_updateComps, comp);
             }
             if (comp.NeedLateTick)
             {
@@ -151,7 +146,7 @@ namespace Script.Runtime.Framework.System
                     _needLateTick = true;
                     _system.RegisterLateUpdate(this);
                 }
-                Insert(_lateUpdateComps);
+                Insert(_lateUpdateComps, comp);
             }
             if (comp.NeedFixedTick)
             {
@@ -160,31 +155,30 @@ namespace Script.Runtime.Framework.System
                     _needFixedTick = true;
                     _system.RegisterFixedUpdate(this);
                 }
-                Insert(_fixedUpdateComps);
+                Insert(_fixedUpdateComps, comp);
             }
 
             return comp;
 
-            void Insert(LinkedList<EntityComp> link)
+            void Insert(List<EntityComp> insertTo, EntityComp insert)
             {
-                var first = link.First;
-                if (first == null)
+                if (insertTo.Count <= 0)
                 {
-                    link.AddFirst(comp);
+                    insertTo.Add(insert);
+                    return;
                 }
-                else
+
+                for (int i = 0; i < insertTo.Count; i++)
                 {
-                    while (first != null)
+                    var to = insertTo[i];
+                    if (to.Priority > insert.Priority)
                     {
-                        if (first.Value.Priority > comp.Priority)
-                        {
-                            link.AddBefore(first, comp);
-                            return;
-                        }
-                        first = first.Next;
+                        insertTo.Insert(i, insert);
+                        return;
                     }
-                    link.AddLast(comp);
                 }
+                
+                insertTo.Add(insert);
             }
         }
 

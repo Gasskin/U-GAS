@@ -46,7 +46,7 @@ namespace Script.Runtime.Framework.System
 
         public EYooAssetsMode YooAssetsMode;
 
-        public Transform UIRoot;
+        public UIRootMono UIRoot;
 
         // framework
         public static YooSystem YooSystem => Get<YooSystem>();

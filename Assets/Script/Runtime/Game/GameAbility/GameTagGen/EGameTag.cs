@@ -1,6 +1,6 @@
 using Sirenix.OdinInspector;
 
-namespace Script.Runtime.Game
+namespace Script.Runtime.Game.GameAbility
 {
     public enum EGameTag
     {

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using Animancer;
 using Cysharp.Threading.Tasks;
 using Script.Runtime.Framework.System;
+using Script.Runtime.Game.Entity.StateMachineComp.States;
 
-namespace Script.Runtime.Game
+namespace Script.Runtime.Game.Entity.StateMachineComp
 {
     /// <summary>
     /// State.FixedTick -> AddVelocity
@@ -16,9 +17,9 @@ namespace Script.Runtime.Game
     /// 
     /// Context.LateTick -> ClearInput
     /// </summary>
+    [EntityCompPriority(Priority_StateMachine)]
     public partial class StateMachineComp : EntityComp
     {
-        public override int Priority => Priority_StateMachine;
         public override bool NeedTick => true;
 
         public override bool NeedFixedTick => true;
@@ -67,7 +68,7 @@ namespace Script.Runtime.Game
             await UniTask.Yield();
         }
 
-        public override void Tick(float dt)
+        public override void OnTick(float dt)
         {
             // Collision.Tick(dt);
             // Dash.Tick(dt);
@@ -93,13 +94,13 @@ namespace Script.Runtime.Game
             _curState?.Tick(dt);
         }
 
-        public override void FixedTick(float dt)
+        public override void OnFixedTick(float dt)
         {
             _curState?.FixedTick(dt);
             Velocity.FixedTick();
         }
 
-        public override void LateTick(float dt)
+        public override void OnLateTick(float dt)
         {
             Context.LateTick(dt);
         }

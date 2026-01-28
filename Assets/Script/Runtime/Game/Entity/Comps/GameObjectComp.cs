@@ -2,11 +2,11 @@ using Cysharp.Threading.Tasks;
 using Script.Runtime.Framework.System;
 using UnityEngine;
 
-namespace Script.Runtime.Game
+namespace Script.Runtime.Game.Entity
 {
+    [EntityCompPriority(Priority_View)]
     public class GameObjectComp : EntityComp
     {
-        public override int Priority => Priority_View;
 
         private string _assetPath;
 

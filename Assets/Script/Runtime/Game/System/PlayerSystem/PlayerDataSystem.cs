@@ -1,11 +1,12 @@
 ﻿using Cysharp.Threading.Tasks;
 using Script.Runtime.Framework.System;
+using Script.Runtime.Game.Entity;
 
 namespace Script.Runtime.Game
 {
     public class PlayerDataSystem : BaseSystem
     {
-        private Entity _player;
+        private Framework.System.Entity _player;
 
         private int _level;
 

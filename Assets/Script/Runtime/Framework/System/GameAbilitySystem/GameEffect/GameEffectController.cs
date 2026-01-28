@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using cfg.Gas;
 using Script.Runtime.Framework.ObjectPool;
 using Script.Runtime.Game;
+using Script.Runtime.Game.GameAbility;
 using UnityEngine.Pool;
 
 namespace Script.Runtime.Framework.System.GameEffect

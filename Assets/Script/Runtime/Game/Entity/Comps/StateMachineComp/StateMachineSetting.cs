@@ -2,7 +2,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Script.Runtime.Game
+namespace Script.Runtime.Game.Entity.StateMachineComp
 {
     public class StateMachineSetting : MonoBehaviour
     {

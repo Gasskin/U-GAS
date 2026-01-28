@@ -2,6 +2,7 @@
 using MemoryPack;
 using Script.Runtime.Framework.System;
 using Script.Runtime.Game;
+using Script.Runtime.Game.Entity.StateMachineComp;
 
 namespace cfg.Gas
 {

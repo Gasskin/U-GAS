@@ -177,8 +177,8 @@ namespace Script.Editor
             sb.AppendLine("using System;");
             sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine("// ReSharper disable InconsistentNaming");
-            // sb.AppendLine("namespace Meow.Runtime.HotUpdate");
-            // sb.AppendLine("{");
+            sb.AppendLine("namespace Script.Runtime.Game.GameAbility");
+            sb.AppendLine("{");
             sb.AppendLine("\tpublic static class GameTagRegister");
             sb.AppendLine("\t{");
             sb.AppendLine($"\t\tpublic static readonly int s_Size = {_tagIdx};");
@@ -198,7 +198,6 @@ namespace Script.Editor
                 sb.AppendLine($"\t\t\t{{ \"{fullName}\", EGameTag.{fullName} }},");
             }
             sb.AppendLine("\t\t};");
-
 
             var code = @"
 #if UNITY_EDITOR
@@ -237,7 +236,7 @@ namespace Script.Editor
 #endif";
             sb.AppendLine(code);
             sb.AppendLine("\t}");
-            // sb.AppendLine("}");
+            sb.AppendLine("}");
 
             File.WriteAllText(path, sb.ToString());
 

@@ -1,8 +1,9 @@
 ﻿using cfg.Gas;
 using Script.Runtime.Framework.System;
+using Script.Runtime.Game.Entity.StateMachineComp.States;
 using UnityEngine;
 
-namespace Script.Runtime.Game
+namespace Script.Runtime.Game.Entity.StateMachineComp
 {
     public partial class StateMachineComp
     {

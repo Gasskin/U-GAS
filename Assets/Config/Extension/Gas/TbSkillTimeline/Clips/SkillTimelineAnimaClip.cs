@@ -3,6 +3,8 @@ using Cysharp.Threading.Tasks;
 using MemoryPack;
 using Script.Runtime.Framework.System;
 using Script.Runtime.Game;
+using Script.Runtime.Game.Entity.StateMachineComp;
+using Script.Runtime.Game.Entity.StateMachineComp.States;
 using YooAsset;
 
 namespace cfg.Gas

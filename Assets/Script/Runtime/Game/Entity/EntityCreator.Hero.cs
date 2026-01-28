@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using cfg.Gas;
 using Script.Runtime.Framework.System;
+using Script.Runtime.Game.Entity.StateMachineComp.States;
 
-namespace Script.Runtime.Game
+namespace Script.Runtime.Game.Entity
 {
     public class EntityHero
     {
@@ -10,7 +11,7 @@ namespace Script.Runtime.Game
         public Dictionary<EAttributeId, float> InitAttributes;
         public int HeroId;
 
-        public static Entity Create(EntityHero heroInfo)
+        public static Framework.System.Entity Create(EntityHero heroInfo)
         {
             if (!SystemDriver.ConfigSystem.Tables.TbHero.DataMap.TryGetValue(heroInfo.HeroId, out var heroConfig))
             {
@@ -24,13 +25,13 @@ namespace Script.Runtime.Game
             e.AddComp(new GasComp(heroInfo.Level, heroInfo.InitAttributes));
             e.AddComp(new GameObjectComp(heroConfig.PrefabPath, null));
             e.AddComp(new CampComp(ECamp.Player));
-            e.AddComp(new BattleInputComp());
+            e.AddComp(new BattleInputComp.BattleInputComp());
             // e.AddComp(new SkillSpellComp());
 
             var idle = new IdleState();
             var run = new RunState();
             var skillSpell = new SkillSpellState();
-            e.AddComp(new StateMachineComp(idle, run, skillSpell));
+            e.AddComp(new StateMachineComp.StateMachineComp(idle, run, skillSpell));
 
             return e;
         }

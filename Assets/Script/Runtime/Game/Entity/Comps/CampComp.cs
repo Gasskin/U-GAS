@@ -1,6 +1,6 @@
 ﻿using Script.Runtime.Framework.System;
 
-namespace Script.Runtime.Game
+namespace Script.Runtime.Game.Entity
 {
     public enum ECamp
     {
@@ -8,11 +8,9 @@ namespace Script.Runtime.Game
         Enemy,
     }
 
-
+    [EntityCompPriority(Priority_Camp)]
     public class CampComp : EntityComp
     {
-        public override int Priority => Priority_Camp;
-
         public ECamp Camp { get; private set; }
 
         public CampComp(ECamp camp)

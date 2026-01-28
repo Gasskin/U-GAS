@@ -3,7 +3,7 @@ using Script.Runtime.Framework.System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Script.Runtime.Game
+namespace Script.Runtime.Game.Entity.BattleInputComp
 {
     public struct SavedInput
     {
@@ -12,11 +12,11 @@ namespace Script.Runtime.Game
         public bool Canceled;
     }
 
+    [EntityCompPriority(Priority_BattleInput)]
     public class BattleInputComp : EntityComp
     {
-        public override int Priority => Priority_BattleInput;
 
-        private StateMachineComp _stateMachine;
+        private StateMachineComp.StateMachineComp _stateMachine;
 
 
         public override async UniTask Initialize()

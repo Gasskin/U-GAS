@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Script.Runtime.Framework.System.GameTag;
 using Script.Runtime.Game;
+using Script.Runtime.Game.GameAbility;
 
 namespace cfg.Gas
 {

@@ -15,11 +15,11 @@ namespace Script.Runtime.Framework.System
         public const int Priority_Camp = 7;
     #endregion
 
-        public abstract int Priority { get; }
+        public int Priority { get; private set; }
 
         public Entity Entity;
 
-        public bool IsValid => Entity is { Id: > 0 };
+        public bool IsValid => Entity.IsValid;
 
         public virtual bool NeedTick { get; } = false;
         public virtual bool NeedLateTick { get; } = false;
@@ -34,16 +34,21 @@ namespace Script.Runtime.Framework.System
         {
         }
 
-        public virtual void Tick(float dt)
+        public virtual void OnTick(float dt)
         {
         }
 
-        public virtual void LateTick(float dt)
+        public virtual void OnLateTick(float dt)
         {
         }
 
-        public virtual void FixedTick(float dt)
+        public virtual void OnFixedTick(float dt)
         {
+        }
+
+        public void SetPriority(int p)
+        {
+            Priority = p;
         }
     }
 }

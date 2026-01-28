@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Script.Runtime.Framework.ObjectPool;
 using Script.Runtime.Game;
+using Script.Runtime.Game.GameAbility;
 using UnityEngine;
 
 namespace Script.Runtime.Framework.System.GameTag

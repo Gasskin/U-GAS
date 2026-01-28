@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace Script.Runtime.Framework.System
 {
+    [EntityCompPriority(Priority_Gas)]
     public class GasComp : EntityComp
     {
         public int Level { get; private set; }
@@ -18,7 +19,6 @@ namespace Script.Runtime.Framework.System
         public GameEffectController GameEffectController { get; private set; }
         public GameAttributeController GameAttributeController { get; private set; }
 
-        public override int Priority => Priority_Gas;
         public override bool NeedTick => true;
 
         public GasComp(int level, Dictionary<EAttributeId, float> inAttr)
@@ -39,7 +39,7 @@ namespace Script.Runtime.Framework.System
             await UniTask.Yield();
         }
 
-        public override void Tick(float dt)
+        public override void OnTick(float dt)
         {
             GameTagController?.Tick(dt);
             GameEffectController?.Tick(dt);

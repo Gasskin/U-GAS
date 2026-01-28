@@ -1,4 +1,4 @@
-﻿namespace Script.Runtime.Game
+﻿namespace Script.Runtime.Game.Entity.BattleInputComp
 {
     public class ButtonState
     {

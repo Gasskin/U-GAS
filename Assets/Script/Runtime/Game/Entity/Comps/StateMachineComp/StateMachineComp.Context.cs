@@ -1,6 +1,7 @@
+using Script.Runtime.Game.Entity.BattleInputComp;
 using UnityEngine;
 
-namespace Script.Runtime.Game
+namespace Script.Runtime.Game.Entity.StateMachineComp
 {
     public class StateMachineContext
     {

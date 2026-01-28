@@ -4,6 +4,7 @@ using cfg.Gas;
 using MemoryPack;
 using Script.Runtime.Framework.System;
 using Script.Runtime.Game;
+using Script.Runtime.Game.Entity;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Timeline;

@@ -2,11 +2,11 @@ using cfg.Gas;
 using Cysharp.Threading.Tasks;
 using Script.Runtime.Framework.System;
 
-namespace Script.Runtime.Game
+namespace Script.Runtime.Game.Entity
 {
+    [EntityCompPriority(Priority_SkillSpell)]
     public class SkillSpellComp : EntityComp
     {
-        public override int Priority => Priority_SkillSpell;
         public override bool NeedTick => true;
 
         private SkillTimelineDriver _skillTimelineDriver;
@@ -17,7 +17,7 @@ namespace Script.Runtime.Game
             await UniTask.Yield();
         }
 
-        public override void Tick(float dt)
+        public override void OnTick(float dt)
         {
             if (!_skillTimelineDriver.IsValid)
             {

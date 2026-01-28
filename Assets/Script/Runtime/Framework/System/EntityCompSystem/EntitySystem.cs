@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Cysharp.Threading.Tasks;
 using Script.Runtime.Framework.ObjectPool;
+using UnityEngine;
 
 namespace Script.Runtime.Framework.System
 {
@@ -14,10 +16,33 @@ namespace Script.Runtime.Framework.System
         private List<Entity> _lateTickEntities = new();
         private List<Entity> _fixedTickEntities = new();
 
+        private Dictionary<Type, int> _comp2Priority = new();
+        private Dictionary<int, Type> _priority2Comp = new();
+
         private ulong _entityIdGenerator = 1;
 
         public override async UniTask Initialize()
         {
+            var types = typeof(EntitySystem).Assembly.GetTypes()
+                .Where(t => t.IsSubclassOf(typeof(EntityComp)) && !t.IsAbstract);
+
+            foreach (var type in types)
+            {
+                var attribute = type.GetCustomAttribute<EntityCompPriorityAttribute>();
+                if (attribute == null)
+                {
+                    Debug.LogError($"{type} has no EntityCompPriorityAttribute");
+                    continue;
+                }
+                if (_priority2Comp.TryGetValue(attribute.Priority, out var comp))
+                {
+                    Debug.LogError($"{type} and {comp}, priority conflict");
+                    continue;
+                }
+                _comp2Priority.Add(type, attribute.Priority);
+                _priority2Comp.Add(attribute.Priority, type);
+            }
+
             await UniTask.Yield();
         }
 
@@ -82,7 +107,7 @@ namespace Script.Runtime.Framework.System
         {
             component = null;
             if (HasEntity(id, out var entity) &&
-                entity.HasComp(compIndex,out component))
+                entity.HasComp(compIndex, out component))
             {
                 return true;
             }
@@ -151,6 +176,11 @@ namespace Script.Runtime.Framework.System
         {
             _fixedTickEntities.Add(entity);
             entity.FixedTickIndex = _fixedTickEntities.Count - 1;
+        }
+
+        public int GetPriority(EntityComp comp)
+        {
+            return _comp2Priority.GetValueOrDefault(comp.GetType(), -1);
         }
     }
 }

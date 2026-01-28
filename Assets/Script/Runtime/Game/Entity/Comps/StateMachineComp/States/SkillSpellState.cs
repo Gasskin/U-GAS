@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using cfg.Gas;
 using Script.Runtime.Framework.System;
 
-namespace Script.Runtime.Game
+namespace Script.Runtime.Game.Entity.StateMachineComp.States
 {
     public class SkillSpellState : BaseState
     {
