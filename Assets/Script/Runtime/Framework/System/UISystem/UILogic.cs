@@ -34,6 +34,7 @@ namespace Script.Runtime.Framework.System
 
         public void Open()
         {
+            Window.Logic = this;
             Window?.OnOpen();
         }
 
@@ -50,7 +51,7 @@ namespace Script.Runtime.Framework.System
             }
             IsActive = true;
             Window.gameObject.SetActive(true);
-            // todo Window?.OnShow()
+            Window?.OnShow();
         }
 
         public void Hide()
@@ -61,31 +62,15 @@ namespace Script.Runtime.Framework.System
             }
             IsActive = false;
             Window.gameObject.SetActive(false);
-            // todo Window?.OnHide()
+            Window?.OnHide();
         }
 
-        /*public void Pause()
-        {
-            if (IsPaused)
-            {
-                return;
-            }
-            // todo Window?.OnPause()
-        }
-
-        public void Resume()
-        {
-            if (!IsPaused)
-            {
-                return;
-            }
-            // todo Window?.OnResume()
-        }*/
 
         public void OnRelease()
         {
-            IsActive = true;
+            Window.Logic = null;
             Window = null;
+            IsActive = true;
             Uid = 0;
             Config = null;
         }

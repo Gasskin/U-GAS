@@ -1,29 +1,29 @@
-using System;
+﻿using System;
 using Script.Runtime.Framework.System;
 using UnityEngine.UI;
 
 namespace Script.Runtime.Game.UI
 {
-    public class BattleHudWindow : BaseWindow
+    public class TestPopupWindow: BaseWindow
     {
         public static UIConfig Config = new()
         {
             Layer = EUILayer.Normal,
-            Path = "Assets/Bundles/UI/BattleHudWindow.prefab",
+            FullScreen = false,
+            Path = "Assets/Bundles/UI/TestPopupWindow.prefab",
+            CanMultiSpawn = true,
         };
 
-        public Button Test;
+        public Button Close;
         
         public override void OnTick(float dt)
         {
+            
         }
 
         public override void OnOpen()
         {
-            Test.onClick.AddListener((() =>
-            {
-                SystemDriver.UISystem.OpenWindow(TestWindow.Config);
-            }));
+            Close.onClick.AddListener(CloseWindow);
         }
 
         public override void OnClose()
@@ -32,7 +32,6 @@ namespace Script.Runtime.Game.UI
 
         public override void OnShow()
         {
-            
         }
 
         public override void OnHide()
