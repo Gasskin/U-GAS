@@ -55,7 +55,8 @@ namespace Script.Runtime.Framework.System
                 var buildResult = EditorSimulateModeHelper.SimulateBuild(package.PackageName);
                 var packageRoot = buildResult.PackageRootDirectory;
                 var p = new EditorSimulateModeParameters();
-                p.EditorFileSystemParameters = FileSystemParameters.CreateDefaultEditorFileSystemParameters(packageRoot);
+                p.EditorFileSystemParameters =
+                    FileSystemParameters.CreateDefaultEditorFileSystemParameters(packageRoot);
                 createParameters = p;
             }
 
@@ -92,10 +93,12 @@ namespace Script.Runtime.Framework.System
         public RawFileHandle LoadRawSync(string path)
         {
             var handle = _rawPackage.LoadRawFileSync(path);
-            if (handle.Status != EOperationStatus.Succeed)
+            if (handle.Status == EOperationStatus.Succeed)
             {
+                return handle;
             }
-            return handle;
+            handle.Dispose();
+            return null;
         }
 
         public async UniTask<AssetHandle> LoadAssetAsync<T>(string path) where T : Object
@@ -109,7 +112,7 @@ namespace Script.Runtime.Framework.System
             handle.Dispose();
             return null;
         }
-    
+
         public AssetHandle LoadAssetSync<T>(string path) where T : Object
         {
             var handle = _defaultPackage.LoadAssetSync<T>(path);
@@ -132,6 +135,7 @@ namespace Script.Runtime.Framework.System
                 handler.Handle = handle;
                 return go;
             }
+            handle.Dispose();
             return null;
         }
 
@@ -145,6 +149,7 @@ namespace Script.Runtime.Framework.System
                 handler.Handle = handle;
                 return go;
             }
+            handle.Dispose();
             return null;
         }
     }

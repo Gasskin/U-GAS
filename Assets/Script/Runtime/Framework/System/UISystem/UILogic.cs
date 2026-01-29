@@ -17,12 +17,18 @@ namespace Script.Runtime.Framework.System
         }
     #endregion
 
+        public UIConfig Config;
         public BaseWindow Window;
         public ulong Uid;
-        public bool IsActive = false;
+        public bool IsActive { get; private set; } = true;
+        // public bool IsPaused { get; private set; } = false;
 
         public void Tick(float dt)
         {
+            if (!IsActive)
+            {
+                return;
+            }
             Window?.OnTick(dt);
         }
 
@@ -36,11 +42,52 @@ namespace Script.Runtime.Framework.System
             Window?.OnClose();
         }
 
+        public void Show()
+        {
+            if (IsActive)
+            {
+                return;
+            }
+            IsActive = true;
+            Window.gameObject.SetActive(true);
+            // todo Window?.OnShow()
+        }
+
+        public void Hide()
+        {
+            if (!IsActive)
+            {
+                return;
+            }
+            IsActive = false;
+            Window.gameObject.SetActive(false);
+            // todo Window?.OnHide()
+        }
+
+        /*public void Pause()
+        {
+            if (IsPaused)
+            {
+                return;
+            }
+            // todo Window?.OnPause()
+        }
+
+        public void Resume()
+        {
+            if (!IsPaused)
+            {
+                return;
+            }
+            // todo Window?.OnResume()
+        }*/
+
         public void OnRelease()
         {
+            IsActive = true;
             Window = null;
             Uid = 0;
-            IsActive = false;
+            Config = null;
         }
     }
 }

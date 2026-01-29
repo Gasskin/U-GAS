@@ -51,10 +51,12 @@ namespace Script.Runtime.Framework.System
         // framework
         public static YooSystem YooSystem => Get<YooSystem>();
         public static ConfigSystem ConfigSystem => Get<ConfigSystem>();
+        public static EventSystem EventSystem => Get<EventSystem>();
         public static TimeSystem TimeSystem => Get<TimeSystem>();
         public static EntitySystem EntitySystem => Get<EntitySystem>();
         public static ProcedureSystem ProcedureSystem => Get<ProcedureSystem>();
         public static InputSystem InputSystem => Get<InputSystem>();
+        public static UISystem UISystem => Get<UISystem>();
 
         // game
         public static PlayerDataSystem PlayerDataSystem => Get<PlayerDataSystem>();
@@ -64,6 +66,8 @@ namespace Script.Runtime.Framework.System
             // Framework System
             new YooSystem(),
             new ConfigSystem(),
+            new EventSystem(),
+            new UISystem(),
             new EntitySystem(),
             new ProcedureSystem(),
             // Game System

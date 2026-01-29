@@ -1,17 +1,15 @@
+using System;
 using Script.Runtime.Framework.System;
-using UnityEngine.UI;
 
 namespace Script.Runtime.Game.UI
 {
-    public class BattleHudWindow : BaseWindow
+    public class TestWindow : BaseWindow
     {
         public static UIConfig Config = new()
         {
             Layer = EUILayer.Normal,
-            Path = "Assets/Bundles/UI/BattleHudWindow.prefab",
+            Path = "Assets/Bundles/UI/TestWindow.prefab",
         };
-
-        public Button Test;
         
         public override void OnTick(float dt)
         {
@@ -19,10 +17,6 @@ namespace Script.Runtime.Game.UI
 
         public override void OnOpen()
         {
-            Test.onClick.AddListener((() =>
-            {
-                SystemDriver.UISystem.OpenWindow(TestWindow.Config);
-            }));
         }
 
         public override void OnClose()

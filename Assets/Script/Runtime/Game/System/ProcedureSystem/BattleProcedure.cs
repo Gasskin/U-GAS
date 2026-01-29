@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Script.Runtime.Framework.System;
+using Script.Runtime.Game.UI;
 
 namespace Script.Runtime.Game
 {
@@ -27,8 +28,8 @@ namespace Script.Runtime.Game
 
         private async UniTaskVoid Initialize()
         {
-            await SystemDriver.PlayerDataSystem.CreatePlayer();
-        
+            // await SystemDriver.PlayerDataSystem.CreatePlayer();
+            SystemDriver.UISystem.OpenWindow(BattleHudWindow.Config);
         
             _isInitialize = true;
             await UniTask.Yield();

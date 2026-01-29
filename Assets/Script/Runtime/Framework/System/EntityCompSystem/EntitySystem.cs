@@ -24,16 +24,13 @@ namespace Script.Runtime.Framework.System
         public override async UniTask Initialize()
         {
             var types = typeof(EntitySystem).Assembly.GetTypes()
-                .Where(t => t.IsSubclassOf(typeof(EntityComp)) && !t.IsAbstract);
+                .Where(t => t.IsSubclassOf(typeof(EntityComp)) &&
+                            !t.IsAbstract &&
+                            t.IsDefined(typeof(EntityCompPriorityAttribute), false));
 
             foreach (var type in types)
             {
                 var attribute = type.GetCustomAttribute<EntityCompPriorityAttribute>();
-                if (attribute == null)
-                {
-                    Debug.LogError($"{type} has no EntityCompPriorityAttribute");
-                    continue;
-                }
                 if (_priority2Comp.TryGetValue(attribute.Priority, out var comp))
                 {
                     Debug.LogError($"{type} and {comp}, priority conflict");

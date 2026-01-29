@@ -21,14 +21,15 @@ namespace Script.Runtime.Framework.System
 
     public class UIRootMono : MonoBehaviour
     {
-        public List<UILayer> Layers = new();
+        [SerializeField]
+        private List<UILayer> _layers = new();
 
         public Dictionary<EUILayer, Transform> UIRoots = new();
 
 
         private void Awake()
         {
-            foreach (var uiLayer in Layers)
+            foreach (var uiLayer in _layers)
             {
                 UIRoots.Add(uiLayer.Layer, uiLayer.Root.transform);
                 uiLayer.Root.overrideSorting = true;
