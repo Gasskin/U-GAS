@@ -22,7 +22,7 @@ namespace cfg.Gas
 
         protected override void OnEnd()
         {
-            if (SystemDriver.EntitySystem.HasComp(Context.EntityId, EntityComp.Priority_BattleInput, out BattleInputComp input))
+            if (SystemDriver.EntitySystem.HasComp(Context.EntityId, out BattleInputComp input))
             {
                 if (_attack)
                 {

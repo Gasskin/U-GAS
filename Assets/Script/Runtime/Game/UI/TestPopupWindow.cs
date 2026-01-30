@@ -21,12 +21,12 @@ namespace Script.Runtime.Game.UI
             
         }
 
-        public override void OnOpen()
+        public override void OnCreate()
         {
             Close.onClick.AddListener(CloseWindow);
         }
 
-        public override void OnClose()
+        public override void OnDestroy()
         {
         }
 

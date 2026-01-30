@@ -10,7 +10,7 @@ namespace Script.Runtime.Framework
     {
         public class EventGroup : IPoolObject
         {
-            private Dictionary<Type, List<Action<IEventMessage>>> _dict = new();
+            private Dictionary<Type, List<Action<BaseEventMessage>>> _dict = new();
 
             public void OnRelease()
             {
@@ -24,12 +24,12 @@ namespace Script.Runtime.Framework
                 _dict.Clear();
             }
 
-            public void AddListener<T>(Action<IEventMessage> listener) where T : IEventMessage
+            public void AddListener<T>(Action<BaseEventMessage> listener) where T : BaseEventMessage
             {
                 var type = typeof(T);
                 if (!_dict.ContainsKey(type))
                 {
-                    _dict.Add(type, new List<Action<IEventMessage>>());
+                    _dict.Add(type, new List<Action<BaseEventMessage>>());
                 }
                 if (!_dict[type].Contains(listener))
                 {

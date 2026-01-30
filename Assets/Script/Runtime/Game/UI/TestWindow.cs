@@ -19,7 +19,7 @@ namespace Script.Runtime.Game.UI
         {
         }
 
-        public override void OnOpen()
+        public override void OnCreate()
         {
             Close.onClick.AddListener((CloseWindow));
             Pop.onClick.AddListener(((() =>
@@ -28,7 +28,7 @@ namespace Script.Runtime.Game.UI
             })));
         }
 
-        public override void OnClose()
+        public override void OnDestroy()
         {
         }
 

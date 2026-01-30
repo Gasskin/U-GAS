@@ -1,4 +1,5 @@
 using System;
+using Script.Runtime.Framework;
 using Script.Runtime.Framework.System;
 using UnityEngine.UI;
 
@@ -12,21 +13,18 @@ namespace Script.Runtime.Game.UI
             Path = "Assets/Bundles/UI/BattleHudWindow.prefab",
         };
 
-        public Button Test;
         
         public override void OnTick(float dt)
         {
         }
 
-        public override void OnOpen()
+        public override void OnCreate()
         {
-            Test.onClick.AddListener((() =>
-            {
-                SystemDriver.UISystem.OpenWindow(TestWindow.Config);
-            }));
+            EventGroup.AddListener<OnEntityCreateEvent>(OnEntityCreateEvent);
         }
+        
 
-        public override void OnClose()
+        public override void OnDestroy()
         {
         }
 
@@ -37,6 +35,15 @@ namespace Script.Runtime.Game.UI
 
         public override void OnHide()
         {
+        }
+        
+        
+        private void OnEntityCreateEvent(BaseEventMessage be)
+        {
+            if (be is not OnEntityCreateEvent e)
+            {
+                return;
+            }
         }
     }
 }

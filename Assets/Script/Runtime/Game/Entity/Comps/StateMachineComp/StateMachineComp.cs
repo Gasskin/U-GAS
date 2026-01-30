@@ -50,7 +50,7 @@ namespace Script.Runtime.Game.Entity.StateMachineComp
 
         public override async UniTask Initialize()
         {
-            Entity.HasComp(Priority_View,out GameObjectComp view);
+            Entity.HasComp(out GameObjectComp view);
 
             Animancer  = view.View.GetComponentInChildren<AnimancerComponent>();
             Settings = view.View.GetComponent<StateMachineSetting>();

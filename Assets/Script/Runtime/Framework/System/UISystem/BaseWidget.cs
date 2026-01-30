@@ -1,4 +1,4 @@
-﻿using Sirenix.OdinInspector;
+﻿using System;
 using UnityEngine;
 
 namespace Script.Runtime.Framework.System
@@ -6,19 +6,22 @@ namespace Script.Runtime.Framework.System
     [DisallowMultipleComponent]
     public abstract class BaseWidget : MonoBehaviour
     {
-        [SerializeField]
-        private UIRenderLayerSortMono[] _renderLayerSort;
-        
-        protected abstract void OnTick(float dt);
-        protected abstract void OnOpen();
-        protected abstract void OnClose();
+        public abstract void OnTick(float dt);
+        public abstract void OnCreate();
+        public abstract void OnDestroy();
 
-#if UNITY_EDITOR
-        [Button]
-        public void ResetRenderLayerSort()
+        public abstract void OnShow();
+        public abstract void OnHide();
+
+        [NonSerialized]
+        public BaseWindow ParentWindow;
+        
+        private void Awake()
         {
-            _renderLayerSort = gameObject.GetComponentsInChildren<UIRenderLayerSortMono>(true);
+            ParentWindow = GetComponentInParent<BaseWindow>();
+            ParentWindow.Widgets.Add(this);
         }
-#endif
+
+
     }
 }

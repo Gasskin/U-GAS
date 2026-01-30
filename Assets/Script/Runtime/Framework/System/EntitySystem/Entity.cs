@@ -107,7 +107,7 @@ namespace Script.Runtime.Framework.System
 
         public T AddComp<T>(T comp) where T : EntityComp
         {
-            var p = SystemDriver.EntitySystem.GetPriority(comp);
+            var p = SystemDriver.EntitySystem.GetPriority<T>();
             if (p <= 0)
             {
                 throw new ArgumentOutOfRangeException($"组件权重异常：{typeof(T).Name}");
@@ -193,11 +193,20 @@ namespace Script.Runtime.Framework.System
                 await _comps[i].Initialize();
             }
             IsInitialized = true;
+
+            var msg = Pool<OnEntityCreateEvent>.Get();
+            msg.EntityId = Id;
+            msg.Send();
         }
 
-        public bool HasComp<T>(int priority, out T comp) where T : EntityComp
+        public bool HasComp<T>(out T comp) where T : EntityComp
         {
             comp = null;
+            var priority = SystemDriver.EntitySystem.GetPriority<T>();
+            if (priority <= 0) 
+            {
+                return false;
+            }
             if (_comps != null && _comps.Length > priority)
             {
                 comp = (T)_comps[priority];

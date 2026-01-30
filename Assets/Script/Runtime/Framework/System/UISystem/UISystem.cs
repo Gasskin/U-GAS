@@ -7,15 +7,20 @@ using Object = UnityEngine.Object;
 
 namespace Script.Runtime.Framework.System
 {
-    public struct EventMessageOnUIOpen : IEventMessage
+    public class OnUIOpenEvent : BaseEventMessage
     {
         public ulong Uid;
         public UIConfig Config;
 
-        public EventMessageOnUIOpen(ulong uid, UIConfig config)
+        public override void Release()
         {
-            Uid = uid;
-            Config = config;
+            Pool<OnUIOpenEvent>.Release(this);
+        }
+        
+        public override void OnRelease()
+        {
+            Uid = 0;
+            Config = null;
         }
     }
 
@@ -103,7 +108,7 @@ namespace Script.Runtime.Framework.System
             // 说明已经打开
             if (_activeUiLogicDict[uiLogic.Config.Layer].Remove(uiLogic))
             {
-                uiLogic.Close();
+                uiLogic.Destroy();
                 SetLayerUiDepth(uiLogic.Config.Layer);
                 RefreshLayerVisibility(_activeUiLogicDict[uiLogic.Config.Layer]);
                 Object.Destroy(uiLogic.Window.gameObject);
@@ -152,9 +157,11 @@ namespace Script.Runtime.Framework.System
             SetLayerUiDepth(uiLogic.Config.Layer);
             RefreshLayerVisibility(_activeUiLogicDict[uiLogic.Config.Layer]);
 
-            uiLogic.Open();
+            uiLogic.Create();
 
-            var msg = new EventMessageOnUIOpen(uiLogic.Uid, uiLogic.Config);
+            var msg = Pool<OnUIOpenEvent>.Get();
+            msg.Uid = uiLogic.Uid;
+            msg.Config = uiLogic.Config;
             msg.Send();
 
             await UniTask.Yield();

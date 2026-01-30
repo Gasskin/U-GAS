@@ -1,7 +1,14 @@
+using System;
 using Script.Runtime.Framework.ObjectPool;
 
 namespace Script.Runtime.Framework.System
 {
+    public abstract class BaseUIOpenData : IPoolObject
+    {
+        public abstract void Release();
+        public abstract void OnRelease();
+    }
+
     public class UILogic : IPoolObject
     {
     #region Uid
@@ -20,8 +27,8 @@ namespace Script.Runtime.Framework.System
         public UIConfig Config;
         public BaseWindow Window;
         public ulong Uid;
+        public BaseUIOpenData OpenData;
         public bool IsActive { get; private set; } = true;
-        // public bool IsPaused { get; private set; } = false;
 
         public void Tick(float dt)
         {
@@ -29,18 +36,32 @@ namespace Script.Runtime.Framework.System
             {
                 return;
             }
-            Window?.OnTick(dt);
+            Window.OnTick(dt);
+            for (int i = 0; i < Window.Widgets.Count; i++)
+            {
+                Window.Widgets[i].OnTick(dt);
+            }
         }
 
-        public void Open()
+        public void Create(BaseUIOpenData openData = null)
         {
+            OpenData = openData;
             Window.Logic = this;
-            Window?.OnOpen();
+            Window.EventGroup = Pool<EventSystem.EventGroup>.Get();
+            Window.OnCreate();
+            for (int i = 0; i < Window.Widgets.Count; i++)
+            {
+                Window.Widgets[i].OnCreate();
+            }
         }
 
-        public void Close()
+        public void Destroy()
         {
-            Window?.OnClose();
+            for (int i = 0; i < Window.Widgets.Count; i++)
+            {
+                Window.Widgets[i].OnDestroy();
+            }
+            Window.OnDestroy();
         }
 
         public void Show()
@@ -51,7 +72,11 @@ namespace Script.Runtime.Framework.System
             }
             IsActive = true;
             Window.gameObject.SetActive(true);
-            Window?.OnShow();
+            Window.OnShow();
+            for (int i = 0; i < Window.Widgets.Count; i++)
+            {
+                Window.Widgets[i].OnShow();
+            }
         }
 
         public void Hide()
@@ -62,13 +87,21 @@ namespace Script.Runtime.Framework.System
             }
             IsActive = false;
             Window.gameObject.SetActive(false);
+            for (int i = 0; i < Window.Widgets.Count; i++)
+            {
+                Window.Widgets[i].OnHide();
+            }
             Window?.OnHide();
         }
 
 
         public void OnRelease()
         {
+            OpenData?.Release();
+            OpenData = null;
             Window.Logic = null;
+            Pool<EventSystem.EventGroup>.Release(Window.EventGroup);
+            Window.EventGroup = null;
             Window = null;
             IsActive = true;
             Uid = 0;

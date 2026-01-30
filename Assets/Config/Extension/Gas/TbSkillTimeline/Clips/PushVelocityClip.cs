@@ -16,7 +16,7 @@ namespace cfg.Gas
         protected override void OnStart()
         {
             if (SystemDriver.EntitySystem.HasEntity(Context.EntityId, out var entity) &&
-                entity.HasComp(EntityComp.Priority_StateMachine, out StateMachineComp stateMachine))
+                entity.HasComp(out StateMachineComp stateMachine))
             {
                 var mult = stateMachine.Turn.IsFacingRight ? 1 : -1;
                 stateMachine.Velocity.AddVelocity(Velocity * mult);

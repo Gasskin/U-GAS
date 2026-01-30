@@ -646,7 +646,7 @@ namespace Script.Editor
             _gasByEntityId.Clear();
 
             var comps = new List<GasComp>();
-            SystemDriver.EntitySystem.Search(EntityComp.Priority_Gas, comps);
+            SystemDriver.EntitySystem.Search(comps);
 
             var set = new HashSet<ulong>();
             for (int i = 0; i < comps.Count; i++)

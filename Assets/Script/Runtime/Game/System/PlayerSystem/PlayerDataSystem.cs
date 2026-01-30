@@ -32,12 +32,11 @@ namespace Script.Runtime.Game
 
             _level = 10;
 
-            var e = EntityHero.Create(new EntityHero()
+            await EntityHero.Create(new EntityHero()
             {
                 Level = _level,
                 HeroId = 1001,
             });
-            await e.Initialize();
 
             await UniTask.Yield();
         }

@@ -8,6 +8,36 @@ using UnityEngine;
 
 namespace Script.Runtime.Framework.System
 {
+    public class OnEntityCreateEvent : BaseEventMessage
+    {
+        public ulong EntityId;
+
+        public override void OnRelease()
+        {
+            EntityId = 0;
+        }
+
+        public override void Release()
+        {
+            Pool<OnEntityCreateEvent>.Release(this);
+        }
+    }
+
+    public class OnEntityDestroyEvent : BaseEventMessage
+    {
+        public ulong EntityId;
+
+        public override void OnRelease()
+        {
+            EntityId = 0;
+        }
+
+        public override void Release()
+        {
+            Pool<OnEntityDestroyEvent>.Release(this);
+        }
+    }
+
     public class EntitySystem : BaseSystem, ITickSystem, IFixedTickSystem, ILateTickSystem
     {
         private Dictionary<ulong, Entity> _id2Entity = new();
@@ -100,11 +130,11 @@ namespace Script.Runtime.Framework.System
             return _id2Entity.TryGetValue(id, out entity);
         }
 
-        public bool HasComp<T>(ulong id, int compIndex, out T component) where T : EntityComp
+        public bool HasComp<T>(ulong id, out T component) where T : EntityComp
         {
             component = null;
             if (HasEntity(id, out var entity) &&
-                entity.HasComp(compIndex, out component))
+                entity.HasComp(out component))
             {
                 return true;
             }
@@ -120,6 +150,10 @@ namespace Script.Runtime.Framework.System
         {
             if (_id2Entity.TryGetValue(eId, out var entity))
             {
+                var msg = Pool<OnEntityDestroyEvent>.Get();
+                msg.EntityId = eId;
+                msg.Send();
+                
                 entity.Destroy();
                 _id2Entity.Remove(eId);
 
@@ -141,16 +175,12 @@ namespace Script.Runtime.Framework.System
             }
         }
 
-        public void Search<T>(int priority, List<T> comps) where T : EntityComp
+        public void Search<T>(List<T> comps) where T : EntityComp
         {
             comps.Clear();
-            if (priority < 0)
-            {
-                return;
-            }
             for (int i = 0; i < _entities.Count; i++)
             {
-                if (_entities[i].HasComp(priority, out T comp))
+                if (_entities[i].HasComp(out T comp))
                 {
                     comps.Add(comp);
                 }
@@ -175,9 +205,9 @@ namespace Script.Runtime.Framework.System
             entity.FixedTickIndex = _fixedTickEntities.Count - 1;
         }
 
-        public int GetPriority(EntityComp comp)
+        public int GetPriority<T>() where T : EntityComp
         {
-            return _comp2Priority.GetValueOrDefault(comp.GetType(), -1);
+            return _comp2Priority.GetValueOrDefault(typeof(T), -1);
         }
     }
 }

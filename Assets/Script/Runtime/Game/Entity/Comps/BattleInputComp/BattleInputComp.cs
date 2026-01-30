@@ -21,7 +21,7 @@ namespace Script.Runtime.Game.Entity.BattleInputComp
 
         public override async UniTask Initialize()
         {
-            Entity.HasComp(Priority_StateMachine, out _stateMachine);
+            Entity.HasComp(out _stateMachine);
 
             var input = SystemDriver.InputSystem;
             input.OnPlayerMove += OnPlayerMove;

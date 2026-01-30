@@ -14,7 +14,7 @@ namespace cfg.Gas
         protected override void OnStart()
         {
             if (SystemDriver.EntitySystem.HasEntity(Context.EntityId, out var entity) &&
-                entity.HasComp(EntityComp.Priority_Gas, out GasComp owner))
+                entity.HasComp(out GasComp owner))
             {
                 owner.GameTagController.AddTag(Combo);
             }
@@ -23,7 +23,7 @@ namespace cfg.Gas
         protected override void OnEnd()
         {
             if (SystemDriver.EntitySystem.HasEntity(Context.EntityId, out var entity) &&
-                entity.HasComp(EntityComp.Priority_Gas, out GasComp owner))
+                entity.HasComp(out GasComp owner))
             {
                 owner.GameTagController.RemoveTag(Combo);
             }

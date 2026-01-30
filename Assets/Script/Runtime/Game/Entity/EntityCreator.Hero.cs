@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using cfg.Gas;
+using Cysharp.Threading.Tasks;
 using Script.Runtime.Framework.System;
 using Script.Runtime.Game.Entity.StateMachineComp.States;
 
@@ -11,7 +12,7 @@ namespace Script.Runtime.Game.Entity
         public Dictionary<EAttributeId, float> InitAttributes;
         public int HeroId;
 
-        public static Framework.System.Entity Create(EntityHero heroInfo)
+        public static async UniTask<Framework.System.Entity> Create(EntityHero heroInfo)
         {
             if (!SystemDriver.ConfigSystem.Tables.TbHero.DataMap.TryGetValue(heroInfo.HeroId, out var heroConfig))
             {
@@ -32,7 +33,8 @@ namespace Script.Runtime.Game.Entity
             var run = new RunState();
             var skillSpell = new SkillSpellState();
             e.AddComp(new StateMachineComp.StateMachineComp(idle, run, skillSpell));
-
+            
+            await e.Initialize();
             return e;
         }
 

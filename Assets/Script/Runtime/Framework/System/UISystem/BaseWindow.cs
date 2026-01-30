@@ -1,5 +1,5 @@
 ﻿using System;
-using Sirenix.OdinInspector;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Script.Runtime.Framework.System
@@ -10,17 +10,18 @@ namespace Script.Runtime.Framework.System
     [DisallowMultipleComponent]
     public abstract class BaseWindow : MonoBehaviour
     {
-        [SerializeField]
-        private UIRenderLayerSortMono[] _renderLayerSort;
-
         public Canvas Canvas { get; private set; }
         public int Depth { get; private set; }
 
         public UILogic Logic;
+        
+        public List<BaseWidget> Widgets = new();
+
+        public EventSystem.EventGroup EventGroup;
 
         public abstract void OnTick(float dt);
-        public abstract void OnOpen();
-        public abstract void OnClose();
+        public abstract void OnCreate();
+        public abstract void OnDestroy();
         public abstract void OnShow();
 
         public abstract void OnHide();
@@ -34,9 +35,20 @@ namespace Script.Runtime.Framework.System
         public void OnDepthChange(int depth)
         {
             Depth = depth;
-            for (int i = 0; i < _renderLayerSort.Length; i++)
+        }
+
+        protected void AddWidget(BaseWidget widget)
+        {
+            if (Widgets.Contains(widget))
             {
-                _renderLayerSort[i].OnDepthChange(depth);
+                Debug.LogError("添加重复Widgets");
+                return;
+            }
+            Widgets.Add(widget);
+            widget.OnCreate();
+            if (!Logic.IsActive)
+            {
+                widget.OnHide();
             }
         }
 
@@ -44,13 +56,5 @@ namespace Script.Runtime.Framework.System
         {
             SystemDriver.UISystem.CloseWindow(Logic.Uid);
         }
-
-#if UNITY_EDITOR
-        [Button]
-        public void ResetRenderLayerSort()
-        {
-            _renderLayerSort = gameObject.GetComponentsInChildren<UIRenderLayerSortMono>(true);
-        }
-#endif
     }
 }

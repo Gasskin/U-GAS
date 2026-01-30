@@ -32,7 +32,7 @@ namespace Script.Runtime.Game.Entity.StateMachineComp
                     return false;
                 }
 
-                if (!_stateMachine.Entity.HasComp(Priority_Gas, out GasComp owner))
+                if (!_stateMachine.Entity.HasComp(out GasComp owner))
                 {
                     Debug.LogError($"不存在GasComp：{_stateMachine.Entity}");
                     return false;
