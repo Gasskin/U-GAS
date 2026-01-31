@@ -632,7 +632,7 @@ namespace Script.Editor
             float newBaseValue = field.value;
 
             var attr = gasComp.GameAttributeController.GetAttribute(attrId);
-            attr.SetBaseValue(newBaseValue, false);
+            attr.SetBaseValue(newBaseValue);
 
             RefreshAttributesForSelectedEntity();
         }

@@ -23,11 +23,7 @@ namespace Script.Runtime.Framework.System.GameAttribute
     public class GameAttribute
     {
     #region Static
-        private static readonly HashSet<EAttributeId> s_warningAttributes = new()
-        {
-        };
-
-        private static readonly Dictionary<EAttributeId, EAttributeId> s_attrMax = new()
+        private static readonly Dictionary<EAttributeId, EAttributeId> _attrMax = new()
         {
             // 生命值
             { EAttributeId.HpNow, EAttributeId.HpMax },
@@ -38,11 +34,11 @@ namespace Script.Runtime.Framework.System.GameAttribute
             { EAttributeId.ChaosArmorNow, EAttributeId.FireArmorMax },
         };
 
-        private static readonly Dictionary<EAttributeId, float> s_attrMaxStatic = new()
+        private static readonly Dictionary<EAttributeId, float> _attrMaxStatic = new()
         {
         };
 
-        private static readonly Dictionary<EAttributeId, float> s_attrMinStatic = new()
+        private static readonly Dictionary<EAttributeId, float> _attrMinStatic = new()
         {
             // 抗性
             { EAttributeId.FireArmorNow, float.MinValue },
@@ -123,12 +119,8 @@ namespace Script.Runtime.Framework.System.GameAttribute
         }
 
 
-        public void SetBaseValue(float newValue, bool checkWarning = true)
+        public void SetBaseValue(float newValue)
         {
-            if (checkWarning && s_warningAttributes.Contains(AttributeId))
-            {
-                Debug.LogError($"直接设置属性: {AttributeId}, 可能存在逻辑性问题, 请确认是否正确, 并关闭警告");
-            }
             foreach (var func in _onPreBaseValueChange)
             {
                 newValue = func(newValue);
@@ -155,10 +147,10 @@ namespace Script.Runtime.Framework.System.GameAttribute
 
         private float ClampAttribute(float input)
         {
-            if (s_attrMaxStatic.TryGetValue(AttributeId, out var max))
+            if (_attrMaxStatic.TryGetValue(AttributeId, out var max))
             {
             }
-            else if (s_attrMax.TryGetValue(AttributeId, out var maxId))
+            else if (_attrMax.TryGetValue(AttributeId, out var maxId))
             {
                 max = _owner.GameAttributeController.GetCurrentValue(maxId);
             }
@@ -167,7 +159,7 @@ namespace Script.Runtime.Framework.System.GameAttribute
                 max = float.MaxValue;
             }
 
-            if (s_attrMinStatic.TryGetValue(AttributeId, out var min))
+            if (_attrMinStatic.TryGetValue(AttributeId, out var min))
             {
             }
             else

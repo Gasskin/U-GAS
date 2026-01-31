@@ -89,7 +89,7 @@ namespace Script.Runtime.Framework.System
             }
             for (int i = 0; i < _lateUpdateComps.Count; i++)
             {
-                _lateUpdateComps[i].OnTick(dt);
+                _lateUpdateComps[i].OnLateTick(dt);
             }
         }
 
@@ -101,7 +101,7 @@ namespace Script.Runtime.Framework.System
             }
             for (int i = 0; i < _fixedUpdateComps.Count; i++)
             {
-                _fixedUpdateComps[i].OnTick(dt);
+                _fixedUpdateComps[i].OnFixedTick(dt);
             }
         }
 

@@ -119,7 +119,7 @@ namespace Script.Runtime.Framework.System
                     default:
                         throw new NotSupportedException($"Operation '{modifier.Operate}' not supported!");
                 }
-                attr.SetBaseValue(newValue, false);
+                attr.SetBaseValue(newValue);
             }
         }
     }

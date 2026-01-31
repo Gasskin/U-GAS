@@ -14,12 +14,9 @@ namespace Script.Runtime.Framework
 
             public void OnRelease()
             {
-                foreach (var pair in _dict)
+                foreach (var type in _dict.Keys)
                 {
-                    foreach (var listener in pair.Value)
-                    {
-                        SystemDriver.EventSystem.RemoveListener(pair.Key, listener);
-                    }
+                    SystemDriver.EventSystem.UnRegisterEventGroup(type, this);
                 }
                 _dict.Clear();
             }
@@ -27,18 +24,30 @@ namespace Script.Runtime.Framework
             public void AddListener<T>(Action<BaseEventMessage> listener) where T : BaseEventMessage
             {
                 var type = typeof(T);
-                if (!_dict.ContainsKey(type))
+                if (!_dict.TryGetValue(type, out var listeners))
                 {
-                    _dict.Add(type, new List<Action<BaseEventMessage>>());
+                    listeners = new List<Action<BaseEventMessage>>();
+                    _dict[type] = listeners;
+                    SystemDriver.EventSystem.RegisterEventGroup(type, this);
                 }
-                if (!_dict[type].Contains(listener))
+                if (!listeners.Contains(listener))
                 {
-                    _dict[type].Add(listener);
-                    SystemDriver.EventSystem.AddListener<T>(listener);
+                    listeners.Add(listener);
                 }
                 else
                 {
-                    Debug.LogError($"add same listener: {type}");
+                    Debug.LogError($"添加重复事件");
+                }
+            }
+
+            public void Trigger(Type type, BaseEventMessage msg)
+            {
+                if (_dict.TryGetValue(type, out var listeners))
+                {
+                    for (int i = 0; i < listeners.Count; i++)
+                    {
+                        listeners[i]?.Invoke(msg);
+                    }
                 }
             }
         }

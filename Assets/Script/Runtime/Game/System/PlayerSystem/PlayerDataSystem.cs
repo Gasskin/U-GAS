@@ -6,7 +6,7 @@ namespace Script.Runtime.Game
 {
     public class PlayerDataSystem : BaseSystem
     {
-        private Framework.System.Entity _player;
+        public Framework.System.Entity Player { get; private set; }
 
         private int _level;
 
@@ -17,9 +17,9 @@ namespace Script.Runtime.Game
 
         public override void Destroy()
         {
-            if (_player != null)
+            if (Player != null)
             {
-                SystemDriver.EntitySystem?.DestroyEntity(_player);
+                SystemDriver.EntitySystem?.DestroyEntity(Player);
             }
         }
 
@@ -32,7 +32,7 @@ namespace Script.Runtime.Game
 
             _level = 10;
 
-            await EntityHero.Create(new EntityHero()
+            Player = await EntityHero.Create(new EntityHero()
             {
                 Level = _level,
                 HeroId = 1001,

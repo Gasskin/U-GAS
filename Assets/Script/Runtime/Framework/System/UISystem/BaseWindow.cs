@@ -20,8 +20,8 @@ namespace Script.Runtime.Framework.System
         public EventSystem.EventGroup EventGroup;
 
         public abstract void OnTick(float dt);
-        public abstract void OnCreate();
-        public abstract void OnDestroy();
+        public abstract void OnOpen();
+        public abstract void OnClose();
         public abstract void OnShow();
 
         public abstract void OnHide();
@@ -45,7 +45,7 @@ namespace Script.Runtime.Framework.System
                 return;
             }
             Widgets.Add(widget);
-            widget.OnCreate();
+            widget.OnOpen();
             if (!Logic.IsActive)
             {
                 widget.OnHide();

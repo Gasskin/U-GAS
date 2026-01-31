@@ -75,6 +75,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Widgets: []
+  HpBar: {fileID: 0}
+  MpBar: {fileID: 0}
+  ShieldBar: {fileID: 0}
 --- !u!114 &1457304097316711569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,6 +149,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5216674187829456150}
     m_Modifications:
+    - target: {fileID: 3138517318669677053, guid: 33b6f0bf4c61934429cfbe68e4a46c56, type: 3}
+      propertyPath: Max
+      value: 205
+      objectReference: {fileID: 0}
+    - target: {fileID: 3138517318669677053, guid: 33b6f0bf4c61934429cfbe68e4a46c56, type: 3}
+      propertyPath: Now
+      value: 204
+      objectReference: {fileID: 0}
     - target: {fileID: 5472271968559932528, guid: 33b6f0bf4c61934429cfbe68e4a46c56, type: 3}
       propertyPath: m_Name
       value: MpBar
@@ -260,6 +271,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5216674187829456150}
     m_Modifications:
+    - target: {fileID: 3138517318669677053, guid: 33b6f0bf4c61934429cfbe68e4a46c56, type: 3}
+      propertyPath: Max
+      value: 104
+      objectReference: {fileID: 0}
+    - target: {fileID: 3138517318669677053, guid: 33b6f0bf4c61934429cfbe68e4a46c56, type: 3}
+      propertyPath: Now
+      value: 105
+      objectReference: {fileID: 0}
     - target: {fileID: 5472271968559932528, guid: 33b6f0bf4c61934429cfbe68e4a46c56, type: 3}
       propertyPath: m_Name
       value: HpBar

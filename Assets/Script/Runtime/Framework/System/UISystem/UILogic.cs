@@ -48,10 +48,10 @@ namespace Script.Runtime.Framework.System
             OpenData = openData;
             Window.Logic = this;
             Window.EventGroup = Pool<EventSystem.EventGroup>.Get();
-            Window.OnCreate();
+            Window.OnOpen();
             for (int i = 0; i < Window.Widgets.Count; i++)
             {
-                Window.Widgets[i].OnCreate();
+                Window.Widgets[i].OnOpen();
             }
         }
 
@@ -59,9 +59,9 @@ namespace Script.Runtime.Framework.System
         {
             for (int i = 0; i < Window.Widgets.Count; i++)
             {
-                Window.Widgets[i].OnDestroy();
+                Window.Widgets[i].OnClose();
             }
-            Window.OnDestroy();
+            Window.OnClose();
         }
 
         public void Show()

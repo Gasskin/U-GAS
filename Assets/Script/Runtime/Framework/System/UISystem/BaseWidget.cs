@@ -7,8 +7,8 @@ namespace Script.Runtime.Framework.System
     public abstract class BaseWidget : MonoBehaviour
     {
         public abstract void OnTick(float dt);
-        public abstract void OnCreate();
-        public abstract void OnDestroy();
+        public abstract void OnOpen();
+        public abstract void OnClose();
 
         public abstract void OnShow();
         public abstract void OnHide();
@@ -21,7 +21,5 @@ namespace Script.Runtime.Framework.System
             ParentWindow = GetComponentInParent<BaseWindow>();
             ParentWindow.Widgets.Add(this);
         }
-
-
     }
 }

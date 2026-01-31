@@ -8,7 +8,7 @@ namespace Script.Runtime.Framework
 {
     public partial class EventSystem : BaseSystem, ITickSystem
     {
-        private Dictionary<Type, List<Action<BaseEventMessage>>> _listeners = new();
+        private Dictionary<Type,List<EventGroup>> _eventGroups = new();
         private List<BaseEventMessage> _waitMessages = new();
 
         public override async UniTask Initialize()
@@ -26,11 +26,11 @@ namespace Script.Runtime.Framework
             {
                 var msg = _waitMessages[i];
                 var type = msg.GetType();
-                if (_listeners.TryGetValue(type, out var listeners))
+                if (_eventGroups.TryGetValue(type, out var groups))
                 {
-                    for (int j = 0; j < listeners.Count; j++)
+                    for (int j = 0; j < groups.Count; j++)
                     {
-                        listeners[i]?.Invoke(msg);
+                        groups[j].Trigger(type, msg);
                     }
                 }
                 msg.Release();
@@ -38,22 +38,21 @@ namespace Script.Runtime.Framework
             _waitMessages.Clear();
         }
 
-        private void AddListener<T>(Action<BaseEventMessage> listener)
+        private void RegisterEventGroup(Type type, EventGroup group)
         {
-            var type = typeof(T);
-            if (!_listeners.TryGetValue(type, out var listeners))
+            if (!_eventGroups.TryGetValue(type,out var groups))
             {
-                listeners = new List<Action<BaseEventMessage>>();
-                _listeners.Add(type, listeners);
+                groups = new List<EventGroup>();
+                _eventGroups.Add(type, groups);
             }
-            listeners.Add(listener);
+            groups.Add(group);
         }
 
-        private void RemoveListener(Type type, Action<BaseEventMessage> listener)
+        private void UnRegisterEventGroup(Type type, EventGroup group)
         {
-            if (_listeners.TryGetValue(type, out var listeners))
+            if (_eventGroups.TryGetValue(type,out var groups))
             {
-                listeners.Remove(listener);
+                groups.Remove(group);
             }
         }
 
