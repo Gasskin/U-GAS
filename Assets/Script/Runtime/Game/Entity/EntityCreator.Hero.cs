@@ -22,12 +22,10 @@ namespace Script.Runtime.Game.Entity
             FillAttributes(heroInfo);
 
             var e = SystemDriver.EntitySystem.CreateEntity();
-
             e.AddComp(new GasComp(heroInfo.Level, heroInfo.InitAttributes));
             e.AddComp(new GameObjectComp(heroConfig.PrefabPath, null));
             e.AddComp(new CampComp(ECamp.Player));
             e.AddComp(new BattleInputComp.BattleInputComp());
-            // e.AddComp(new SkillSpellComp());
 
             var idle = new IdleState();
             var run = new RunState();

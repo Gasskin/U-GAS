@@ -108,7 +108,7 @@ namespace Script.Runtime.Framework.System
             // 说明已经打开
             if (_activeUiLogicDict[uiLogic.Config.Layer].Remove(uiLogic))
             {
-                uiLogic.Destroy();
+                uiLogic.Close();
                 SetLayerUiDepth(uiLogic.Config.Layer);
                 RefreshLayerVisibility(_activeUiLogicDict[uiLogic.Config.Layer]);
                 Object.Destroy(uiLogic.Window.gameObject);
@@ -157,7 +157,7 @@ namespace Script.Runtime.Framework.System
             SetLayerUiDepth(uiLogic.Config.Layer);
             RefreshLayerVisibility(_activeUiLogicDict[uiLogic.Config.Layer]);
 
-            uiLogic.Create();
+            uiLogic.Open();
 
             var msg = Pool<OnUIOpenEvent>.Get();
             msg.Uid = uiLogic.Uid;

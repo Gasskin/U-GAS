@@ -16,10 +16,6 @@ namespace Script.Runtime.Framework.System
         [NonSerialized]
         public BaseWindow ParentWindow;
         
-        private void Awake()
-        {
-            ParentWindow = GetComponentInParent<BaseWindow>();
-            ParentWindow.Widgets.Add(this);
-        }
+
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Script.Runtime.Game;
+using UnityEngine;
 
 namespace Script.Runtime.Framework.System
 {
@@ -14,6 +15,7 @@ namespace Script.Runtime.Framework.System
         public override async UniTask Initialize()
         {
             Register(new BattleProcedure());
+            Register(new InitProcedure());
 
             await UniTask.Yield();
         }
@@ -37,6 +39,10 @@ namespace Script.Runtime.Framework.System
             {
                 _nowProcedure = procedure;
                 _nowProcedure?.Enter();
+            }
+            else
+            {
+                Debug.LogError($"no procedure found: {typeof(T)}");
             }
         } 
 

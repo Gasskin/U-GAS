@@ -281,6 +281,7 @@ MonoBehaviour:
   - {fileID: 7400000, guid: eb401bdee4eea0b4db7596cad05e139d, type: 2}
   - {fileID: 7400000, guid: 05d0847ca12ed3645809475ea4c1a5ba, type: 2}
   - {fileID: 7400000, guid: 0ee792f952cec644481f8a2a02f297d0, type: 2}
+  - {fileID: 7400000, guid: e27b0c53aaf1cfe40a4227e52b85eecf, type: 2}
   Sprite: {fileID: 7964159304973324910}
   Rg: {fileID: 223178994799496011}
   RunSpeed: 8

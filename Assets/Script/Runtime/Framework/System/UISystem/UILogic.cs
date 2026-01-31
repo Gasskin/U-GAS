@@ -37,31 +37,36 @@ namespace Script.Runtime.Framework.System
                 return;
             }
             Window.OnTick(dt);
-            for (int i = 0; i < Window.Widgets.Count; i++)
+            for (int i = 0; i < Window.StaticWidgets.Count; i++)
             {
-                Window.Widgets[i].OnTick(dt);
+                Window.StaticWidgets[i].OnTick(dt);
             }
         }
 
-        public void Create(BaseUIOpenData openData = null)
+        public void Open(BaseUIOpenData openData = null)
         {
             OpenData = openData;
             Window.Logic = this;
             Window.EventGroup = Pool<EventSystem.EventGroup>.Get();
             Window.OnOpen();
-            for (int i = 0; i < Window.Widgets.Count; i++)
+            for (int i = 0; i < Window.StaticWidgets.Count; i++)
             {
-                Window.Widgets[i].OnOpen();
+                Window.StaticWidgets[i].ParentWindow = Window;
+                Window.StaticWidgets[i].OnOpen();
             }
         }
 
-        public void Destroy()
+        public void Close()
         {
-            for (int i = 0; i < Window.Widgets.Count; i++)
+            for (int i = 0; i < Window.StaticWidgets.Count; i++)
             {
-                Window.Widgets[i].OnClose();
+                Window.StaticWidgets[i].OnClose();
+                Window.StaticWidgets[i].ParentWindow = null;
             }
             Window.OnClose();
+            Window.Logic = null;
+            Pool<EventSystem.EventGroup>.Release(Window.EventGroup);
+            Window.EventGroup = null;
         }
 
         public void Show()
@@ -73,9 +78,9 @@ namespace Script.Runtime.Framework.System
             IsActive = true;
             Window.gameObject.SetActive(true);
             Window.OnShow();
-            for (int i = 0; i < Window.Widgets.Count; i++)
+            for (int i = 0; i < Window.StaticWidgets.Count; i++)
             {
-                Window.Widgets[i].OnShow();
+                Window.StaticWidgets[i].OnShow();
             }
         }
 
@@ -87,21 +92,17 @@ namespace Script.Runtime.Framework.System
             }
             IsActive = false;
             Window.gameObject.SetActive(false);
-            for (int i = 0; i < Window.Widgets.Count; i++)
+            for (int i = 0; i < Window.StaticWidgets.Count; i++)
             {
-                Window.Widgets[i].OnHide();
+                Window.StaticWidgets[i].OnHide();
             }
             Window?.OnHide();
         }
-
 
         public void OnRelease()
         {
             OpenData?.Release();
             OpenData = null;
-            Window.Logic = null;
-            Pool<EventSystem.EventGroup>.Release(Window.EventGroup);
-            Window.EventGroup = null;
             Window = null;
             IsActive = true;
             Uid = 0;

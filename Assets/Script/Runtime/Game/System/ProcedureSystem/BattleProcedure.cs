@@ -28,7 +28,6 @@ namespace Script.Runtime.Game
 
         private async UniTaskVoid Initialize()
         {
-            SystemDriver.UISystem.OpenWindow(BattleHudWindow.Config);
             await SystemDriver.PlayerDataSystem.CreatePlayer();
             _isInitialize = true;
             await UniTask.Yield();

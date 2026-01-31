@@ -89,6 +89,12 @@ namespace Script.Runtime.Game.UI
         {
             var now = _now.CurrentValue;
             var max = _max.CurrentValue;
+            if (max <= 0) 
+            {
+                Fill.fillAmount = 0;
+                Num.text = "0/0";
+                return;
+            }
             Fill.fillAmount = now / max;
             Num.text = $"{(int)now}/{(int)max}";
         }

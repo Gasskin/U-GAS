@@ -5,13 +5,6 @@ using UnityEngine.InputSystem;
 
 namespace Script.Runtime.Game.Entity.BattleInputComp
 {
-    public struct SavedInput
-    {
-        public Vector2 Vector2;
-        public bool Started;
-        public bool Canceled;
-    }
-
     [EntityCompPriority(Priority_BattleInput)]
     public class BattleInputComp : EntityComp
     {
@@ -75,14 +68,15 @@ namespace Script.Runtime.Game.Entity.BattleInputComp
 
         private void OnPlayerDash(InputAction.CallbackContext ctx)
         {
-            if (ctx.started)
-            {
-                _stateMachine.Context.Dash.Start();
-            }
-            else if (ctx.canceled)
-            {
-                _stateMachine.Context.Dash.Cancel();
-            }
+            // if (ctx.started)
+            // {
+            //     _stateMachine.Context.Dash.Start();
+            // }
+            // else if (ctx.canceled)
+            // {
+            //     _stateMachine.Context.Dash.Cancel();
+            // }
+            _stateMachine.SkillSpell.TrySpellSkill(1001201);
         }
 
 
@@ -96,7 +90,7 @@ namespace Script.Runtime.Game.Entity.BattleInputComp
 
         public void Attack()
         {
-            _stateMachine.SkillSpell.TrySpellSkill(101001);
+            _stateMachine.SkillSpell.TrySpellSkill(1001101);
         }
     }
 }

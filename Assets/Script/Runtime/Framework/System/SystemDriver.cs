@@ -107,7 +107,7 @@ namespace Script.Runtime.Framework.System
                 }
             }
         
-            ProcedureSystem.ChangeProcedure<BattleProcedure>();
+            ProcedureSystem.ChangeProcedure<InitProcedure>();
         }
 
         private void OnDestroy()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Script.Runtime.Framework.System
@@ -10,13 +11,16 @@ namespace Script.Runtime.Framework.System
     [DisallowMultipleComponent]
     public abstract class BaseWindow : MonoBehaviour
     {
+    #region Serialize
+        [FoldoutGroup("BaseWindow")]
+        public List<BaseWidget> StaticWidgets = new();
+    #endregion
+        
         public Canvas Canvas { get; private set; }
         public int Depth { get; private set; }
 
         public UILogic Logic;
         
-        public List<BaseWidget> Widgets = new();
-
         public EventSystem.EventGroup EventGroup;
 
         public abstract void OnTick(float dt);
@@ -25,7 +29,6 @@ namespace Script.Runtime.Framework.System
         public abstract void OnShow();
 
         public abstract void OnHide();
-
 
         private void Awake()
         {
@@ -39,12 +42,12 @@ namespace Script.Runtime.Framework.System
 
         protected void AddWidget(BaseWidget widget)
         {
-            if (Widgets.Contains(widget))
+            if (StaticWidgets.Contains(widget))
             {
                 Debug.LogError("添加重复Widgets");
                 return;
             }
-            Widgets.Add(widget);
+            StaticWidgets.Add(widget);
             widget.OnOpen();
             if (!Logic.IsActive)
             {

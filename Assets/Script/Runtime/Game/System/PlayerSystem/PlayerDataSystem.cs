@@ -25,11 +25,6 @@ namespace Script.Runtime.Game
 
         public async UniTask CreatePlayer()
         {
-            // if (!SystemDriver.EntityRootSystem.TryGetHeroFirstCell(out var index, out var cell))
-            // {
-            //     return;
-            // }
-
             _level = 10;
 
             Player = await EntityHero.Create(new EntityHero()

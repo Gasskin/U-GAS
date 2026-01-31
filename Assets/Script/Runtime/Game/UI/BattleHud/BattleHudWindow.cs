@@ -11,10 +11,6 @@ namespace Script.Runtime.Game.UI
             Path = "Assets/Bundles/UI/BattleHud/BattleHudWindow.prefab",
         };
 
-        public HpBarWidget HpBar;
-        public HpBarWidget MpBar;
-        public HpBarWidget ShieldBar;
-
         public override void OnTick(float dt)
         {
         }
