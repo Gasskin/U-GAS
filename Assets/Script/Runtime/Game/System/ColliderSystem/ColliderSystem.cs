@@ -6,12 +6,15 @@ using UnityEngine;
 
 namespace Script.Runtime.Game.System
 {
-    public class ColliderSystem : BaseSystem
+
+
+    public partial class ColliderSystem : BaseSystem
     {
         public const string LayerHurtBody = "HurtBody";
 
         private Dictionary<Collider2D, ulong> _hurt2Entity = new();
         private List<Collider2D> _results = new(32);
+        private List<ulong> _entityRepeated = new();
 
 
         public override async UniTask Initialize()
@@ -32,14 +35,6 @@ namespace Script.Runtime.Game.System
         {
             _hurt2Entity.Remove(hurt);
         }
-
-        public void BoxCast2D(ECamp campFilter, Vector2 center, Vector2 size, float angle)
-        {
-            var filter = new ContactFilter2D();
-            filter.useTriggers = false;
-            filter.useLayerMask = true;
-            filter.layerMask = LayerMask.GetMask(LayerHurtBody);
-            Physics2D.OverlapBox(center, size, angle, filter, _results);
-        }
+        
     }
 }

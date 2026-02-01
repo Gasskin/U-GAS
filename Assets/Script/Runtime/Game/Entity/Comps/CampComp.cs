@@ -4,11 +4,18 @@ using Script.Runtime.Framework.System;
 
 namespace Script.Runtime.Game.Entity
 {
-    [Flags]
     public enum ECamp
     {
-        Player = 1 << 0,
-        Enemy = 1 << 1,
+        Player,
+        Enemy,
+    }
+
+    public enum ECampRelation
+    {
+        None,
+        Self,
+        Friend,
+        Enemy,
     }
 
     [EntityCompPriority(Priority_Camp)]
@@ -21,6 +28,23 @@ namespace Script.Runtime.Game.Entity
             var comp = ObjectPool.Get<CampComp>();
             comp.Camp = camp;
             return comp;
+        }
+
+        public ECampRelation RelationTo(CampComp other)
+        {
+            if (other.Entity == Entity)
+            {
+                return ECampRelation.Self;
+            }
+            if (other.Camp == Camp)
+            {
+                return ECampRelation.Friend;
+            }
+            if (other.Camp != Camp)
+            {
+                return ECampRelation.Enemy;
+            }
+            return ECampRelation.None;
         }
     }
 }
