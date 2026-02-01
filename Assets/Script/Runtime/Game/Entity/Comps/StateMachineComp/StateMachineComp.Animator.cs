@@ -1,6 +1,6 @@
 ﻿using Animancer;
 
-namespace Script.Runtime.Game.Entity.StateMachineComp
+namespace Script.Runtime.Game.Entity
 {
     public partial class StateMachineComp
     {

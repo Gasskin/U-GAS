@@ -1,7 +1,7 @@
 ﻿using System;
 using MemoryPack;
 using Script.Runtime.Framework.System;
-using Script.Runtime.Game.Entity.StateMachineComp;
+using Script.Runtime.Game.Entity;
 using UnityEngine;
 
 namespace cfg.Gas

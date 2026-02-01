@@ -47,7 +47,7 @@ namespace Script.Runtime.Framework.System
         {
             OpenData = openData;
             Window.Logic = this;
-            Window.EventGroup = Pool<EventSystem.EventGroup>.Get();
+            Window.EventGroup = ObjectPool.ObjectPool.Get<EventSystem.EventGroup>();
             Window.OnOpen();
             for (int i = 0; i < Window.StaticWidgets.Count; i++)
             {
@@ -65,7 +65,7 @@ namespace Script.Runtime.Framework.System
             }
             Window.OnClose();
             Window.Logic = null;
-            Pool<EventSystem.EventGroup>.Release(Window.EventGroup);
+            ObjectPool.ObjectPool.Release(Window.EventGroup);
             Window.EventGroup = null;
         }
 

@@ -13,16 +13,16 @@ namespace Script.Runtime.Framework.System.GameEffect
     public class GameEffectSpec : IPoolObject
     {
     #region static
-        private static ulong s_idFactory;
+        private static ulong _idFactory;
 
         public static GameEffectSpec Create(cfg.Gas.GameEffect ge, GasComp source, GasComp target, GameEffectContext context)
         {
-            var spec = Pool<GameEffectSpec>.Get();
-            if (s_idFactory >= ulong.MaxValue)
+            var spec = ObjectPool.ObjectPool.Get<GameEffectSpec>();
+            if (_idFactory >= ulong.MaxValue)
             {
-                s_idFactory = 0;
+                _idFactory = 1;
             }
-            spec.Id = ++s_idFactory;
+            spec.Id = _idFactory++;
             spec.GameEffect = ge;
             spec.Source = source;
             spec.Target = target;
@@ -89,7 +89,7 @@ namespace Script.Runtime.Framework.System.GameEffect
             IsActive = false;
             if (_periodGameEffectSpec != null)
             {
-                Pool<GameEffectSpec>.Release(_periodGameEffectSpec);
+                ObjectPool.ObjectPool.Release(_periodGameEffectSpec);
             }
             _periodGameEffectSpec = null;
         }

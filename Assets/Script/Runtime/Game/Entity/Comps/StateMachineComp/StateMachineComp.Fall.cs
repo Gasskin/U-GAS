@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Script.Runtime.Game.Entity.StateMachineComp
+namespace Script.Runtime.Game.Entity
 {
     public class StateMachineFall
     {

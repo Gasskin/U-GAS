@@ -2,7 +2,7 @@
 using Script.Runtime.Framework.System;
 using Script.Runtime.Game.Entity;
 
-namespace Script.Runtime.Game
+namespace Script.Runtime.Game.System
 {
     public class PlayerDataSystem : BaseSystem
     {

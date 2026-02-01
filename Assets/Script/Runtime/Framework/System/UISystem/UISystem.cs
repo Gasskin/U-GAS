@@ -12,11 +12,6 @@ namespace Script.Runtime.Framework.System
         public ulong Uid;
         public UIConfig Config;
 
-        public override void Release()
-        {
-            Pool<OnUIOpenEvent>.Release(this);
-        }
-        
         public override void OnRelease()
         {
             Uid = 0;
@@ -90,7 +85,7 @@ namespace Script.Runtime.Framework.System
             }
 
             // 否则加载新UI
-            var uiLogic = Pool<UILogic>.Get();
+            var uiLogic = ObjectPool.ObjectPool.Get<UILogic>();
             uiLogic.Uid = UILogic.GetUid();
             uiLogic.Config = config;
             _uiLogics.Add(uiLogic.Uid, uiLogic);
@@ -114,7 +109,7 @@ namespace Script.Runtime.Framework.System
                 Object.Destroy(uiLogic.Window.gameObject);
             }
             _uiLogics.Remove(uid);
-            Pool<UILogic>.Release(uiLogic);
+            ObjectPool.ObjectPool.Release(uiLogic);
         }
 
         private async UniTaskVoid LoadUIAsync(UILogic uiLogic)
@@ -124,21 +119,21 @@ namespace Script.Runtime.Framework.System
             if (root == null)
             {
                 Debug.LogError($"layer is null: {uiLogic.Config.Layer}");
-                Pool<UILogic>.Release(uiLogic);
+                ObjectPool.ObjectPool.Release(uiLogic);
                 return;
             }
             var prefab = await SystemDriver.YooSystem.InitializeGameObjectAsync(root, uiLogic.Config.Path);
             // 资源异常
             if (prefab == null)
             {
-                Pool<UILogic>.Release(uiLogic);
+                ObjectPool.ObjectPool.Release(uiLogic);
                 return;
             }
             // 还没打开又被关了
             if (!_uiLogics.ContainsKey(uiLogic.Uid))
             {
                 Object.Destroy(prefab);
-                Pool<UILogic>.Release(uiLogic);
+                ObjectPool.ObjectPool.Release(uiLogic);
                 return;
             }
             var wnd = prefab.GetComponent<BaseWindow>();
@@ -146,7 +141,7 @@ namespace Script.Runtime.Framework.System
             if (wnd == null)
             {
                 Object.Destroy(prefab);
-                Pool<UILogic>.Release(uiLogic);
+                ObjectPool.ObjectPool.Release(uiLogic);
                 return;
             }
             uiLogic.Window = wnd;
@@ -159,7 +154,7 @@ namespace Script.Runtime.Framework.System
 
             uiLogic.Open();
 
-            var msg = Pool<OnUIOpenEvent>.Get();
+            var msg = ObjectPool.ObjectPool.Get<OnUIOpenEvent>();
             msg.Uid = uiLogic.Uid;
             msg.Config = uiLogic.Config;
             msg.Send();

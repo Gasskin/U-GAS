@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using Script.Runtime.Game;
+using Script.Runtime.Game.System;
 using UnityEngine;
 
 namespace Script.Runtime.Framework.System
@@ -15,23 +15,23 @@ namespace Script.Runtime.Framework.System
     public class SystemDriver : MonoBehaviour
     {
     #region static
-        public static SystemDriver Instance { get;private set; }
+        public static SystemDriver Instance { get; private set; }
 
         private static Dictionary<Type, BaseSystem> _baseSystemsDict = new();
-    
+
         private static T Get<T>() where T : BaseSystem
         {
             if (Instance == null)
             {
                 return null;
             }
-        
+
             var type = typeof(T);
             if (_baseSystemsDict.TryGetValue(type, out var sys))
             {
                 return sys as T;
             }
-        
+
             for (int i = 0; i < Instance._baseSystems.Count; i++)
             {
                 if (Instance._baseSystems[i] is T { Initialized: true } t)
@@ -48,19 +48,21 @@ namespace Script.Runtime.Framework.System
 
         public UIRootMono UIRoot;
 
-        // framework
+        // Framework
         public static YooSystem YooSystem => Get<YooSystem>();
         public static ConfigSystem ConfigSystem => Get<ConfigSystem>();
         public static EventSystem EventSystem => Get<EventSystem>();
-        public static TimeSystem TimeSystem => Get<TimeSystem>();
         public static EntitySystem EntitySystem => Get<EntitySystem>();
         public static ProcedureSystem ProcedureSystem => Get<ProcedureSystem>();
-        public static InputSystem InputSystem => Get<InputSystem>();
         public static UISystem UISystem => Get<UISystem>();
 
-        // game
+        // Game
         public static PlayerDataSystem PlayerDataSystem => Get<PlayerDataSystem>();
-    
+        public static InputSystem InputSystem => Get<InputSystem>();
+        public static TimeSystem TimeSystem => Get<TimeSystem>();
+        public static ColliderSystem ColliderSystem => Get<ColliderSystem>();
+
+
         private readonly List<BaseSystem> _baseSystems = new()
         {
             // Framework System
@@ -74,6 +76,7 @@ namespace Script.Runtime.Framework.System
             new TimeSystem(),
             new InputSystem(),
             new PlayerDataSystem(),
+            new ColliderSystem(),
         };
 
         private List<ITickSystem> _tickSystems = new();
@@ -106,7 +109,7 @@ namespace Script.Runtime.Framework.System
                     _lateTickSystems.Add(lateTick);
                 }
             }
-        
+
             ProcedureSystem.ChangeProcedure<InitProcedure>();
         }
 

@@ -33,7 +33,7 @@ namespace Script.Runtime.Framework
                         groups[j].Trigger(type, msg);
                     }
                 }
-                msg.Release();
+                ObjectPool.ObjectPool.Release(msg);
             }
             _waitMessages.Clear();
         }

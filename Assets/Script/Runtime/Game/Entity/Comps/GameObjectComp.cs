@@ -1,10 +1,11 @@
 using Cysharp.Threading.Tasks;
+using Script.Runtime.Framework.ObjectPool;
 using Script.Runtime.Framework.System;
 using UnityEngine;
 
 namespace Script.Runtime.Game.Entity
 {
-    [EntityCompPriority(Priority_View)]
+    [EntityCompPriority(Priority_GameObject)]
     public class GameObjectComp : EntityComp
     {
 
@@ -14,10 +15,12 @@ namespace Script.Runtime.Game.Entity
 
         public GameObject View { get; private set; }
 
-        public GameObjectComp(string path, Transform parent)
+        public static GameObjectComp Get(string path, Transform parent)
         {
-            _assetPath = path;
-            _parent = parent;
+            var comp = ObjectPool.Get<GameObjectComp>();
+            comp._parent = parent;
+            comp._assetPath = path;
+            return comp;
         }
 
         public override async UniTask Initialize()

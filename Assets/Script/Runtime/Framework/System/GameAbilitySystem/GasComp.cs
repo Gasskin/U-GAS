@@ -14,24 +14,23 @@ namespace Script.Runtime.Framework.System
     {
         public int Level { get; private set; }
 
-        public GameTagController GameTagController { get; private set; }
+        public GameTagController GameTagController { get; private set; } = new();
 
-        public GameEffectController GameEffectController { get; private set; }
-        public GameAttributeController GameAttributeController { get; private set; }
+        public GameEffectController GameEffectController { get; private set; }= new();
+        public GameAttributeController GameAttributeController { get; private set; }= new();
 
         public override bool NeedTick => true;
 
-        public GasComp(int level, Dictionary<EAttributeId, float> inAttr)
+        public static GasComp Get(int level, Dictionary<EAttributeId, float> inAttr)
         {
-            Level = level;
-        
-            GameTagController = new();
-            GameEffectController = new();
-            GameAttributeController = new();
-
-            GameTagController.Init(this);
-            GameEffectController.Init(this);
-            GameAttributeController.Init(this, inAttr);
+            var comp = ObjectPool.ObjectPool.Get<GasComp>();
+            comp.Level = level;
+            
+            comp.GameTagController.Init(comp);
+            comp.GameEffectController.Init(comp);
+            comp.GameAttributeController.Init(comp, inAttr);
+            
+            return comp;
         }
 
         public override async UniTask Initialize()

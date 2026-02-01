@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Animancer;
 using Cysharp.Threading.Tasks;
 using Script.Runtime.Framework.System;
-using Script.Runtime.Game.Entity.StateMachineComp.States;
+using ObjectPool = Script.Runtime.Framework.ObjectPool.ObjectPool;
 
-namespace Script.Runtime.Game.Entity.StateMachineComp
+namespace Script.Runtime.Game.Entity
 {
     /// <summary>
     /// State.FixedTick -> AddVelocity
@@ -27,38 +27,38 @@ namespace Script.Runtime.Game.Entity.StateMachineComp
         public override bool NeedLateTick => true;
 
         public StateMachineSetting Settings { get; private set; }
-    
+
         // state machine
         private BaseState _curState;
 
         private readonly Dictionary<Type, BaseState> _stateDic = new();
 
-        private readonly List<BaseState> _states;
+        private readonly List<BaseState> _states = new();
 
-        public StateMachineComp(params BaseState[] inStates)
+        public static StateMachineComp Get(params BaseState[] inStates)
         {
-            _states = new List<BaseState>();
-            _states.AddRange(inStates);
-            foreach (var state in _states)
+            var comp = ObjectPool.Get<StateMachineComp>();
+            comp._states.Clear();
+            comp._states.AddRange(inStates);
+            comp._stateDic.Clear();
+            foreach (var state in comp._states)
             {
-                _stateDic.Add(state.GetType(), state);
-                if (state is SkillSpellState s)
-                {
-                }
+                comp._stateDic.Add(state.GetType(), state);
             }
+            return comp;
         }
 
         public override async UniTask Initialize()
         {
             Entity.HasComp(out GameObjectComp view);
 
-            Animancer  = view.View.GetComponentInChildren<AnimancerComponent>();
+            Animancer = view.View.GetComponentInChildren<AnimancerComponent>();
             Settings = view.View.GetComponent<StateMachineSetting>();
 
             SkillSpell = new(this);
             Turn = new(this);
-            Velocity= new(this);
-            Movement= new(this);
+            Velocity = new(this);
+            Movement = new(this);
 
             for (int i = 0; i < _states.Count; i++)
             {
@@ -85,8 +85,8 @@ namespace Script.Runtime.Game.Entity.StateMachineComp
 
             if (!changeAny && _curState != null)
             {
-                var state  = _curState.GetCanEnterTo();
-                if (state != null) 
+                var state = _curState.GetCanEnterTo();
+                if (state != null)
                 {
                     ChangeState(state);
                 }
@@ -110,7 +110,7 @@ namespace Script.Runtime.Game.Entity.StateMachineComp
             return _stateDic.GetValueOrDefault(type, null);
         }
 
-    
+
         public bool IsState<T>(out T state) where T : BaseState
         {
             state = null;

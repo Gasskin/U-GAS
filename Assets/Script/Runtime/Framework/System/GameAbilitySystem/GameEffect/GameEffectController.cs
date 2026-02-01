@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using cfg.Gas;
 using Script.Runtime.Framework.ObjectPool;
 using Script.Runtime.Game;
-using Script.Runtime.Game.GameAbility;
+using Script.Runtime.Game.System.GameAbilitySystem;
 using UnityEngine.Pool;
 
 namespace Script.Runtime.Framework.System.GameEffect
@@ -56,13 +56,13 @@ namespace Script.Runtime.Framework.System.GameEffect
         {
             if (!spec.CanApply())
             {
-                Pool<GameEffectSpec>.Release(spec);
+                ObjectPool.ObjectPool.Release(spec);
                 return 0;
             }
 
             if (spec.IsImmune())
             {
-                Pool<GameEffectSpec>.Release(spec);
+                ObjectPool.ObjectPool.Release(spec);
                 return 0;
             }
 
@@ -70,7 +70,7 @@ namespace Script.Runtime.Framework.System.GameEffect
             if (spec.GameEffect.Duration.DurationType == EGameEffectDurationType.Instant)
             {
                 spec.OnExecute();
-                Pool<GameEffectSpec>.Release(spec);
+                ObjectPool.ObjectPool.Release(spec);
                 return 0;
             }
 
@@ -81,7 +81,7 @@ namespace Script.Runtime.Framework.System.GameEffect
                 {
                     return spec.Id;
                 }
-                Pool<GameEffectSpec>.Release(spec);
+                ObjectPool.ObjectPool.Release(spec);
                 return 0;
             }
 
@@ -109,7 +109,7 @@ namespace Script.Runtime.Framework.System.GameEffect
             }
             stackSpec.AddStack(1, spec.GameEffect.Stack.RefreshDurationOnStack, spec.GameEffect.Stack.RefreshPeriodOnStack);
             // 堆叠后可以直接释放
-            Pool<GameEffectSpec>.Release(spec);
+            ObjectPool.ObjectPool.Release(spec);
 
             return stackSpec.Id;
 
@@ -178,7 +178,7 @@ namespace Script.Runtime.Framework.System.GameEffect
             _gameEffectSpecs.Remove(spec);
             spec.OnDeActive();
             spec.OnRemove();
-            Pool<GameEffectSpec>.Release(spec);
+            ObjectPool.ObjectPool.Release(spec);
         }
     }
 }

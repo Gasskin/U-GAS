@@ -2,7 +2,7 @@
 using MemoryPack;
 using Script.Runtime.Framework.System;
 using Script.Runtime.Game;
-using Script.Runtime.Game.Entity.BattleInputComp;
+using Script.Runtime.Game.Entity;
 using UnityEngine.InputSystem;
 
 namespace cfg.Gas

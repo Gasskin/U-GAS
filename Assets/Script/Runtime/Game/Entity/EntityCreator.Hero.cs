@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using cfg.Gas;
 using Cysharp.Threading.Tasks;
+using Script.Runtime.Framework.ObjectPool;
 using Script.Runtime.Framework.System;
-using Script.Runtime.Game.Entity.StateMachineComp.States;
 
 namespace Script.Runtime.Game.Entity
 {
@@ -22,15 +22,16 @@ namespace Script.Runtime.Game.Entity
             FillAttributes(heroInfo);
 
             var e = SystemDriver.EntitySystem.CreateEntity();
-            e.AddComp(new GasComp(heroInfo.Level, heroInfo.InitAttributes));
-            e.AddComp(new GameObjectComp(heroConfig.PrefabPath, null));
-            e.AddComp(new CampComp(ECamp.Player));
-            e.AddComp(new BattleInputComp.BattleInputComp());
+            e.AddComp(GasComp.Get(heroInfo.Level, heroInfo.InitAttributes));
+            e.AddComp(GameObjectComp.Get(heroConfig.PrefabPath, null));
+            e.AddComp(CampComp.Get(ECamp.Player));
+            e.AddComp(ObjectPool.Get<BattleInputComp>());
+            e.AddComp(ObjectPool.Get<HurtBodyComp>());
 
             var idle = new IdleState();
             var run = new RunState();
             var skillSpell = new SkillSpellState();
-            e.AddComp(new StateMachineComp.StateMachineComp(idle, run, skillSpell));
+            e.AddComp(StateMachineComp.Get(idle, run, skillSpell));
             
             await e.Initialize();
             return e;

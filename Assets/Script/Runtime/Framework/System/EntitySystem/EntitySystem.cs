@@ -16,11 +16,6 @@ namespace Script.Runtime.Framework.System
         {
             EntityId = 0;
         }
-
-        public override void Release()
-        {
-            Pool<OnEntityCreateEvent>.Release(this);
-        }
     }
 
     public class OnEntityDestroyEvent : BaseEventMessage
@@ -30,11 +25,6 @@ namespace Script.Runtime.Framework.System
         public override void OnRelease()
         {
             EntityId = 0;
-        }
-
-        public override void Release()
-        {
-            Pool<OnEntityDestroyEvent>.Release(this);
         }
     }
 
@@ -117,7 +107,7 @@ namespace Script.Runtime.Framework.System
             {
                 throw new ArgumentOutOfRangeException($"EntityId 重复");
             }
-            var e = Pool<Entity>.Get();
+            var e = ObjectPool.ObjectPool.Get<Entity>();
             e.Init(id, this);
             _id2Entity[id] = e;
             _entities.Add(e);
@@ -150,7 +140,7 @@ namespace Script.Runtime.Framework.System
         {
             if (_id2Entity.TryGetValue(eId, out var entity))
             {
-                var msg = Pool<OnEntityDestroyEvent>.Get();
+                var msg = ObjectPool.ObjectPool.Get<OnEntityDestroyEvent>();
                 msg.EntityId = eId;
                 msg.Send();
                 
@@ -171,7 +161,7 @@ namespace Script.Runtime.Framework.System
                     _fixedTickEntities.RemoveAt(entity.FixedTickIndex);
                 }
 
-                Pool<Entity>.Release(entity);
+                ObjectPool.ObjectPool.Release(entity);
             }
         }
 

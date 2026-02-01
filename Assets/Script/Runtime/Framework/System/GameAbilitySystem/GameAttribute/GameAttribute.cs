@@ -100,7 +100,7 @@ namespace Script.Runtime.Framework.System.GameAttribute
                         if (modifier.TargetAttr == AttributeId)
                         {
                             TryAddRelativeAttrListener(modifier.Magnitude);
-                            var cache = Pool<AttrModifier>.Get();
+                            var cache = ObjectPool.ObjectPool.Get<AttrModifier>();
                             cache.Modifier = modifier;
                             cache.Spec = spec;
                             _modifierSpecs.Add(cache);
@@ -213,7 +213,7 @@ namespace Script.Runtime.Framework.System.GameAttribute
             foreach (var m in _modifierSpecs)
             {
                 TryRemoveRelativeAttrListener(m.Modifier.Magnitude);
-                Pool<AttrModifier>.Release(m);
+                ObjectPool.ObjectPool.Release(m);
             }
             _modifierSpecs.Clear();
         }

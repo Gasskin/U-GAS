@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 // ReSharper disable InconsistentNaming
-	namespace Script.Runtime.Game.GameAbility
+	namespace Script.Runtime.Game.System.GameAbilitySystem
     {
         public static class GameTagRegister
         {

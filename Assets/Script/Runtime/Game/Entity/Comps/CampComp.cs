@@ -1,11 +1,14 @@
-﻿using Script.Runtime.Framework.System;
+﻿using System;
+using Script.Runtime.Framework.ObjectPool;
+using Script.Runtime.Framework.System;
 
 namespace Script.Runtime.Game.Entity
 {
+    [Flags]
     public enum ECamp
     {
-        Player,
-        Enemy,
+        Player = 1 << 0,
+        Enemy = 1 << 1,
     }
 
     [EntityCompPriority(Priority_Camp)]
@@ -13,9 +16,11 @@ namespace Script.Runtime.Game.Entity
     {
         public ECamp Camp { get; private set; }
 
-        public CampComp(ECamp camp)
+        public static CampComp Get(ECamp camp)
         {
-            Camp = camp;
+            var comp = ObjectPool.Get<CampComp>();
+            comp.Camp = camp;
+            return comp;
         }
     }
 }

@@ -3,13 +3,13 @@ using Script.Runtime.Framework.System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Script.Runtime.Game.Entity.BattleInputComp
+namespace Script.Runtime.Game.Entity
 {
     [EntityCompPriority(Priority_BattleInput)]
     public class BattleInputComp : EntityComp
     {
 
-        private StateMachineComp.StateMachineComp _stateMachine;
+        private StateMachineComp _stateMachine;
 
 
         public override async UniTask Initialize()

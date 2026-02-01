@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Script.Runtime.Game.Entity.StateMachineComp.States
+namespace Script.Runtime.Game.Entity
 {
     public class JumpState : BaseState
     {

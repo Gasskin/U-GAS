@@ -6,7 +6,6 @@ namespace Script.Runtime.Framework
 {
     public abstract class BaseEventMessage : IPoolObject
     {
-        public abstract void Release();
         public abstract void OnRelease();
     }
 

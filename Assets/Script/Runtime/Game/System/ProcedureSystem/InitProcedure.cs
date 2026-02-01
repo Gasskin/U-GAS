@@ -1,7 +1,7 @@
 ﻿using Script.Runtime.Framework.System;
-using Script.Runtime.Game.UI;
+using Script.Runtime.Game.UI.BattleHud;
 
-namespace Script.Runtime.Game
+namespace Script.Runtime.Game.System
 {
     public class InitProcedure: BaseProcedure
     {

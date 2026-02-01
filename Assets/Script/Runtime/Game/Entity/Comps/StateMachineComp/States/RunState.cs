@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Script.Runtime.Game.Entity.StateMachineComp.States
+namespace Script.Runtime.Game.Entity
 {
     public class RunState : BaseState
     {

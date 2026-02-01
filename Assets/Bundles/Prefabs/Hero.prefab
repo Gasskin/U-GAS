@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1006210211670826984}
   - component: {fileID: 7407168944662237900}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,6 +205,7 @@ GameObject:
   - component: {fileID: 4134890231946823996}
   - component: {fileID: 223178994799496011}
   - component: {fileID: 5242782535153498203}
+  - component: {fileID: 8532797513795756232}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Untagged
@@ -228,6 +229,7 @@ Transform:
   - {fileID: 2965685837741178355}
   - {fileID: 1006210211670826984}
   - {fileID: 2368121776741390160}
+  - {fileID: 4732616819958489645}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &223178994799496011
@@ -287,6 +289,20 @@ MonoBehaviour:
   RunSpeed: 8
   RunAcceleration: 100
   RunDeceleration: 80
+--- !u!114 &8532797513795756232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3242954940588827865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dd761c38e544207bf751eaf7d961d58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HurtBodies:
+  - {fileID: 2551007512696466384}
 --- !u!1 &3611338472931666241
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,7 +313,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2368121776741390160}
   - component: {fileID: 4988956156278799862}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Foot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -365,3 +381,72 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.38624287, y: 0.06477308}
   m_EdgeRadius: 0
+--- !u!1 &7017517425784780925
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4732616819958489645}
+  - component: {fileID: 2551007512696466384}
+  m_Layer: 7
+  m_Name: HurtBody
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4732616819958489645
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7017517425784780925}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4134890231946823996}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &2551007512696466384
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7017517425784780925}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.012272418, y: -0.013995826}
+  m_Size: {x: 0.3033539, y: 0.8356632}
+  m_Direction: 0

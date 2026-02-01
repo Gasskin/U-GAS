@@ -1,14 +1,12 @@
-using System;
 using cfg.Gas;
 using Script.Runtime.Framework;
 using Script.Runtime.Framework.System;
 using Script.Runtime.Framework.System.GameAttribute;
 using Script.Runtime.Game.Entity;
 using TMPro;
-using UnityEngine;
 using UnityEngine.UI;
 
-namespace Script.Runtime.Game.UI
+namespace Script.Runtime.Game.UI.BattleHud.Widget
 {
     public class HpBarWidget : BaseWidget
     {

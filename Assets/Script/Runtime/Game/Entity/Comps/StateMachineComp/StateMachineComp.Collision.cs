@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-namespace Script.Runtime.Game.Entity.StateMachineComp
+namespace Script.Runtime.Game.Entity
 {
     public class StateMachineCollision
     {
-        public event System.Action OnGroundTouched;
-        public event System.Action OnGroundLeft;
+        public event Action OnGroundTouched;
+        public event Action OnGroundLeft;
 
         public bool IsGrounded { get; private set; }
         private bool _isGrounded;

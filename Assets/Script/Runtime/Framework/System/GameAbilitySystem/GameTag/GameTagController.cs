@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Script.Runtime.Framework.ObjectPool;
 using Script.Runtime.Game;
-using Script.Runtime.Game.GameAbility;
+using Script.Runtime.Game.System.GameAbilitySystem;
 using UnityEngine;
 
 namespace Script.Runtime.Framework.System.GameTag
@@ -40,8 +40,6 @@ namespace Script.Runtime.Framework.System.GameTag
 
         private GasComp _owner;
 
-        private LinkedList<TagTimer> _tagTimers = new();
-
         public void Init(GasComp owner)
         {
             _owner = owner;
@@ -49,33 +47,11 @@ namespace Script.Runtime.Framework.System.GameTag
 
         public void Tick(float dt)
         {
-            var node = _tagTimers.First;
-            while (node != null)
-            {
-                var next = node.Next;
-                node.Value.Duration -= dt;
-                if (node.Value.Duration <= 0)
-                {
-                    RemoveTag(node.Value.Tag);
-                    Pool<TagTimer>.Release(node.Value);
-                    _tagTimers.Remove(node);
-                }
-                node = next;
-            }
         }
 
         public void AddTag(EGameTag eTag)
         {
             TravelAdd((int)eTag, 1);
-        }
-
-        public void AddTagTimer(EGameTag tag, float duration)
-        {
-            var timer = Pool<TagTimer>.Get();
-            timer.Tag = tag;
-            timer.Duration = duration;
-            AddTag(tag);
-            _tagTimers.AddLast(timer);
         }
 
         public void AddTagsWithDirty(List<EGameTag> grantedTags)

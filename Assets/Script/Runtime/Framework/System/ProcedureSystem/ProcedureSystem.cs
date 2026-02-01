@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Script.Runtime.Game;
+using Script.Runtime.Game.System;
 using UnityEngine;
 
 namespace Script.Runtime.Framework.System

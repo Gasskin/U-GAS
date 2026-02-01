@@ -1,7 +1,6 @@
-using Script.Runtime.Framework;
 using Script.Runtime.Framework.System;
 
-namespace Script.Runtime.Game.UI
+namespace Script.Runtime.Game.UI.BattleHud
 {
     public class BattleHudWindow : BaseWindow
     {

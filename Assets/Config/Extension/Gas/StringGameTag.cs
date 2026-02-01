@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using MemoryPack;
 using Script.Runtime.Game;
-using Script.Runtime.Game.GameAbility;
+using Script.Runtime.Game.System.GameAbilitySystem;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Script.Runtime.Game.Entity.StateMachineComp
+namespace Script.Runtime.Game.Entity
 {
     public abstract class BaseState
     {

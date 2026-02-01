@@ -1,8 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using Script.Runtime.Framework.System;
-using Script.Runtime.Game.UI;
 
-namespace Script.Runtime.Game
+namespace Script.Runtime.Game.System
 {
     public class BattleProcedure: BaseProcedure
     {

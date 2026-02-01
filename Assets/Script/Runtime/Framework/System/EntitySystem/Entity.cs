@@ -59,6 +59,13 @@ namespace Script.Runtime.Framework.System
             {
                 _comps[i]?.Destroy();
             }
+            for (int i = _comps.Length - 1; i >= 0; i--)
+            {
+                if (_comps[i] != null)
+                {
+                    ObjectPool.ObjectPool.Release(_comps[i]);
+                }
+            }
             _comps = null;
             _updateComps.Clear();
             _lateUpdateComps.Clear();
@@ -177,10 +184,11 @@ namespace Script.Runtime.Framework.System
                         return;
                     }
                 }
-                
+
                 insertTo.Add(insert);
             }
         }
+
 
         public async UniTask Initialize()
         {
@@ -194,7 +202,7 @@ namespace Script.Runtime.Framework.System
             }
             IsInitialized = true;
 
-            var msg = Pool<OnEntityCreateEvent>.Get();
+            var msg = ObjectPool.ObjectPool.Get<OnEntityCreateEvent>();
             msg.EntityId = Id;
             msg.Send();
         }
@@ -203,7 +211,7 @@ namespace Script.Runtime.Framework.System
         {
             comp = null;
             var priority = SystemDriver.EntitySystem.GetPriority<T>();
-            if (priority <= 0) 
+            if (priority <= 0)
             {
                 return false;
             }

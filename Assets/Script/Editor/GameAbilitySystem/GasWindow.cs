@@ -4,7 +4,7 @@ using Script.Runtime.Framework.System;
 using Script.Runtime.Framework.System.GameAttribute;
 using Script.Runtime.Framework.System.GameEffect;
 using Script.Runtime.Game;
-using Script.Runtime.Game.GameAbility;
+using Script.Runtime.Game.System.GameAbilitySystem;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
