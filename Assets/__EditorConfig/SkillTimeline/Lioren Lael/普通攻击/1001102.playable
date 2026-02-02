@@ -371,6 +371,32 @@ MonoBehaviour:
     m_DisplayName: Combo
   m_Markers:
     m_Objects: []
+--- !u!114 &-1463594992559045095
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a108a1913c8545fa8d24889ae16afe1b, type: 3}
+  m_Name: SkillTimelineClipAsset
+  m_EditorClassIdentifier: 
+  SkillClip:
+    rid: 4804063222320070709
+  references:
+    version: 2
+    RefIds:
+    - rid: 4804063222320070709
+      type: {class: SkillAttackHitClip, ns: cfg.Gas, asm: Runtime}
+      data:
+        StartFrame: 0
+        EndFrame: 0
+        PosOffset: {x: 0.4, y: 0}
+        Size: {x: 0.5, y: 1}
+        Angle: 0
+        Relation: 3
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,6 +416,7 @@ MonoBehaviour:
   - {fileID: -2418024714815199982}
   - {fileID: 1099294297664526159}
   - {fileID: 6802555134937621875}
+  - {fileID: 3041080490838535313}
   m_FixedDuration: 0
   m_EditorSettings:
     m_Framerate: 60
@@ -510,6 +537,167 @@ MonoBehaviour:
       data:
         StartFrame: 0
         EndFrame: 29
+--- !u!114 &3041080490838535313
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fe60d9f1bc347febf280805d39552ef, type: 3}
+  m_Name: Skill Timeline Track (1)
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children: []
+  m_Clips:
+  - m_Version: 1
+    m_Start: 0.2
+    m_ClipIn: 0
+    m_Asset: {fileID: -1463594992559045095}
+    m_Duration: 0.033333333333333326
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: 3041080490838535313}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: 0
+    m_BlendOutDuration: 0
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: SkillTimelineClipAsset
+  - m_Version: 1
+    m_Start: 0.2833333333333333
+    m_ClipIn: 0
+    m_Asset: {fileID: 8045601753598149434}
+    m_Duration: 0.033333333333333326
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: 3041080490838535313}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: 0
+    m_BlendOutDuration: 0
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: SkillTimelineClipAsset
+  m_Markers:
+    m_Objects: []
 --- !u!114 &4275844974902328376
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -649,6 +837,32 @@ MonoBehaviour:
         EndFrame: 40
         Combo:
           _tagName: Combo_C2
+--- !u!114 &8045601753598149434
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a108a1913c8545fa8d24889ae16afe1b, type: 3}
+  m_Name: SkillTimelineClipAsset(Clone)(Clone)
+  m_EditorClassIdentifier: 
+  SkillClip:
+    rid: 4804063222320070709
+  references:
+    version: 2
+    RefIds:
+    - rid: 4804063222320070709
+      type: {class: SkillAttackHitClip, ns: cfg.Gas, asm: Runtime}
+      data:
+        StartFrame: 0
+        EndFrame: 0
+        PosOffset: {x: -0.19, y: 0}
+        Size: {x: 1.53, y: 1}
+        Angle: 0
+        Relation: 3
 --- !u!114 &8393068329987219794
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -13,9 +13,10 @@ namespace Script.Runtime.Framework.System.GameEffect
     public class GameEffectSpec : IPoolObject
     {
     #region static
-        private static ulong _idFactory;
+        private static ulong _idFactory = 1;
 
-        public static GameEffectSpec Create(cfg.Gas.GameEffect ge, GasComp source, GasComp target, GameEffectContext context)
+        public static GameEffectSpec Create(cfg.Gas.GameEffect ge, GasComp source, GasComp target,
+            GameEffectContext context)
         {
             var spec = ObjectPool.ObjectPool.Get<GameEffectSpec>();
             if (_idFactory >= ulong.MaxValue)
@@ -160,7 +161,6 @@ namespace Script.Runtime.Framework.System.GameEffect
             Target.GameAttributeController.OnGameEffectDirty();
             if (IsValid)
             {
-     
             }
         }
 
@@ -180,7 +180,7 @@ namespace Script.Runtime.Framework.System.GameEffect
             }
             IsActive = true;
             ActiveTime = SystemDriver.TimeSystem.Now;
-        
+
             Target.GameTagController.AddTagsWithDirty(GameEffect.GrantedTagContainer.Tags);
 
             if (IsValid)
@@ -195,7 +195,6 @@ namespace Script.Runtime.Framework.System.GameEffect
 
             if (IsValid)
             {
-            
             }
         }
 
@@ -215,7 +214,6 @@ namespace Script.Runtime.Framework.System.GameEffect
 
             if (IsValid)
             {
-            
             }
         }
 
@@ -225,16 +223,16 @@ namespace Script.Runtime.Framework.System.GameEffect
             {
                 return;
             }
-        
+
             TickPeriod(dt);
-        
+
             if (!IsValid)
             {
                 return;
             }
-        
+
             TickDuration();
-        
+
             ElapsedTime += dt;
         }
     #endregion

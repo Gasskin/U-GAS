@@ -19,7 +19,7 @@ namespace cfg.Gas
     [MemoryPackUnion(4, typeof(ComboClip))]
     [MemoryPackUnion(5, typeof(AttackInputCacheClip))]
     [MemoryPackUnion(6, typeof(MotionClip))]
-    [MemoryPackUnion(7, typeof(SkillHitClip))]
+    [MemoryPackUnion(7, typeof(SkillAttackHitClip))]
     public abstract partial class SkillTimelineClip
     {
         [HideInInspector]

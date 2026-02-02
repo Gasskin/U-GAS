@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Script.Runtime.Framework.System;
+using Script.Runtime.Game.ColliderSystem;
 using Script.Runtime.Game.Entity;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace Script.Runtime.Game.System
 
     public partial class ColliderSystem
     {
-        public void BoxHit(ulong sourceCampEntity, ECampRelation relation, Vector2 center, Vector2 size, float angle,
+        public void BoxHit(ulong sourceCampEntity, ECampRelation relation, Vector2 pos, Vector2 size, float angle,
             List<BoxHitResult> hitResult)
         {
             _entityRepeated.Clear();
@@ -29,8 +30,12 @@ namespace Script.Runtime.Game.System
             filter.useTriggers = false;
             filter.useLayerMask = true;
             filter.layerMask = LayerMask.GetMask(LayerHurtBody);
-            var count = Physics2D.OverlapBox(center, size, angle, filter, _results);
-
+            
+            var count = Physics2D.OverlapBox(pos, size, angle, filter, _results);
+#if UNITY_EDITOR
+            DebugHitBoxMono.ShowBoxHit(pos, size, angle);
+#endif
+            
             for (int i = 0; i < count; i++)
             {
                 var result = _results[i];

@@ -24,11 +24,13 @@ namespace Script.Editor
 
         private GameObject _prefab;
 
+        private GameObject _root;
+
 
         protected override void OnDisable()
         {
             base.OnDisable();
-            DestroyImmediate(_prefab);
+            DestroyImmediate(_root);
         }
 
         [Button]
@@ -38,14 +40,25 @@ namespace Script.Editor
             {
                 return;
             }
-            _prefab = Object.Instantiate(HeroPrefab);
+
+            if (_root == null)
+            {
+                _root = new GameObject("TimelinePreviewRoot");
+            }
+
+            if (_prefab != null)
+            {
+                DestroyImmediate(_prefab);
+            }
+
+            _prefab = Instantiate(HeroPrefab, _root.transform, false);
             _prefab.transform.position = Vector3.zero;
             _prefab.SetActive(true);
             var animator = _prefab.GetComponentInChildren<Animator>(true);
 
             if (animator == null) 
             {
-                Object.DestroyImmediate(_prefab);
+                DestroyImmediate(_prefab);
                 return;
             }
 
@@ -59,6 +72,8 @@ namespace Script.Editor
                     pd.SetGenericBinding(track, animator);
                 }
             }
+
+            Selection.activeGameObject = animator.gameObject;
         }
         
     }

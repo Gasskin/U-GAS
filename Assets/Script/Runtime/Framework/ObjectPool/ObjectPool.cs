@@ -13,8 +13,8 @@ namespace Script.Runtime.Framework.ObjectPool
         private static Dictionary<Type, List<IPoolObject>> _pools = new();
 
 #if UNITY_EDITOR
-        private static Dictionary<Type, int> _getCount = new();
-        private static Dictionary<Type, int> _releaseCount = new();
+        public static Dictionary<Type, int> GetCount = new();
+        public static Dictionary<Type, int> ReleaseCount = new();
 #endif
 
         public static T Get<T>() where T : IPoolObject, new()
@@ -26,13 +26,13 @@ namespace Script.Runtime.Framework.ObjectPool
                 _pools[type] = pools;
             }
 #if UNITY_EDITOR
-            _getCount.TryAdd(type, 0);
-            _getCount[type]++;
+            GetCount.TryAdd(type, 0);
+            GetCount[type]++;
 #endif
-            if (_pools.Count > 0)
+            if (pools.Count > 0)
             {
-                var t = pools[_pools.Count - 1];
-                pools.RemoveAt(_pools.Count - 1);
+                var t = pools[^1];
+                pools.RemoveAt(pools.Count - 1);
                 return (T)t;
             }
             return new T();
@@ -40,15 +40,15 @@ namespace Script.Runtime.Framework.ObjectPool
 
         public static void Release<T>(T o) where T : IPoolObject
         {
-            var type = typeof(T);
+            var type = o.GetType();
             if (!_pools.TryGetValue(type, out var pools))
             {
                 pools = new List<IPoolObject>();
                 _pools[type] = pools;
             }
 #if UNITY_EDITOR
-            _releaseCount.TryAdd(type, 0);
-            _releaseCount[type]++;
+            ReleaseCount.TryAdd(type, 0);
+            ReleaseCount[type]++;
 #endif
             o.OnRelease();
             pools.Add(o);

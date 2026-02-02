@@ -7,6 +7,8 @@ namespace Script.Runtime.Game.Entity
         public class StateMachineTurn
         {
             public bool IsFacingRight { get; private set; } = true;
+
+            public int RightMult => IsFacingRight ? 1 : -1;
     
             private StateMachineComp _stateMachine;
     

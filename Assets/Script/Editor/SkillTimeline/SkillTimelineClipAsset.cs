@@ -15,9 +15,11 @@ namespace Script.Editor
             var playable = ScriptPlayable<SkillTimelineBehaviour>.Create(graph);
             // 获取 Behaviour 实例并赋值
             var behaviour = playable.GetBehaviour();
+            behaviour.SkillClip = SkillClip;
             return playable;
         }
 
         public ClipCaps clipCaps => ClipCaps.None;
+        
     }
 }
