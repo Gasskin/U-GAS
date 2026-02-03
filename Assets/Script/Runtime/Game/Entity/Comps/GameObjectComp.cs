@@ -13,19 +13,23 @@ namespace Script.Runtime.Game.Entity
 
         private Transform _parent;
 
+        private Vector3 _initPos;
+
         public GameObject View { get; private set; }
 
-        public static GameObjectComp Get(string path, Transform parent)
+        public static GameObjectComp Get(string path, Transform parent, Vector3 initPos)
         {
             var comp = ObjectPool.Get<GameObjectComp>();
             comp._parent = parent;
             comp._assetPath = path;
+            comp._initPos = initPos;
             return comp;
         }
 
         public override async UniTask Initialize()
         {
             View = await SystemDriver.YooSystem.InitializeGameObjectAsync(_parent, _assetPath);
+            View.transform.position = _initPos;
             if (!IsValid)
             {
                 Object.Destroy(View);

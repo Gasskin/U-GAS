@@ -7,7 +7,7 @@ namespace Script.Runtime.Game.Entity
     public enum ECamp
     {
         Player,
-        Enemy,
+        Monster,
     }
 
     public enum ECampRelation

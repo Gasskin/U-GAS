@@ -25,15 +25,7 @@ namespace Script.Runtime.Framework
             for (int i = 0; i < _waitMessages.Count; i++)
             {
                 var msg = _waitMessages[i];
-                var type = msg.GetType();
-                if (_eventGroups.TryGetValue(type, out var groups))
-                {
-                    for (int j = 0; j < groups.Count; j++)
-                    {
-                        groups[j].Trigger(type, msg);
-                    }
-                }
-                ObjectPool.ObjectPool.Release(msg);
+                SendNow(msg);
             }
             _waitMessages.Clear();
         }
@@ -59,6 +51,19 @@ namespace Script.Runtime.Framework
         public void Send(BaseEventMessage message)
         {
             _waitMessages.Add(message);
+        }
+        
+        public void SendNow(BaseEventMessage msg)
+        {
+            var type = msg.GetType();
+            if (_eventGroups.TryGetValue(type, out var groups))
+            {
+                for (int j = 0; j < groups.Count; j++)
+                {
+                    groups[j].Trigger(type, msg);
+                }
+            }
+            ObjectPool.ObjectPool.Release(msg);
         }
     }
 }

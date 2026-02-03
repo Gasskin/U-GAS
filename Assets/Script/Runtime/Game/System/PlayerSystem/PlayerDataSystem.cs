@@ -1,6 +1,8 @@
 ﻿using Cysharp.Threading.Tasks;
+using Script.Runtime.Framework.ObjectPool;
 using Script.Runtime.Framework.System;
 using Script.Runtime.Game.Entity;
+using UnityEngine.Pool;
 
 namespace Script.Runtime.Game.System
 {
@@ -27,11 +29,10 @@ namespace Script.Runtime.Game.System
         {
             _level = 10;
 
-            Player = await EntityHero.Create(new EntityHero()
-            {
-                Level = _level,
-                HeroId = 1001,
-            });
+            var entityHero = ObjectPool.Get<EntityHero>();
+            entityHero.Level = _level;
+            entityHero.HeroId = 1001;
+            Player = await EntityHero.Create(entityHero);
 
             await UniTask.Yield();
         }

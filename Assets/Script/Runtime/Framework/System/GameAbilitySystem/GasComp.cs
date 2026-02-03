@@ -16,8 +16,8 @@ namespace Script.Runtime.Framework.System
 
         public GameTagController GameTagController { get; private set; } = new();
 
-        public GameEffectController GameEffectController { get; private set; }= new();
-        public GameAttributeController GameAttributeController { get; private set; }= new();
+        public GameEffectController GameEffectController { get; private set; } = new();
+        public GameAttributeController GameAttributeController { get; private set; } = new();
 
         public override bool NeedTick => true;
 
@@ -25,11 +25,11 @@ namespace Script.Runtime.Framework.System
         {
             var comp = ObjectPool.ObjectPool.Get<GasComp>();
             comp.Level = level;
-            
+
             comp.GameTagController.Init(comp);
             comp.GameEffectController.Init(comp);
             comp.GameAttributeController.Init(comp, inAttr);
-            
+
             return comp;
         }
 
@@ -45,16 +45,6 @@ namespace Script.Runtime.Framework.System
         }
 
     #region ApplyGameEffect
-        public ulong ApplyGameEffectTo(int effectId, GasComp target)
-        {
-            var effect = SystemDriver.ConfigSystem.Tables.TbGameEffect.GetOrDefault(effectId);
-            if (effect != null)
-            {
-                return ApplyGameEffectTo(effect, default, target);
-            }
-            return 0;
-        }
-
         public ulong ApplyGameEffectTo(int effectId, GameEffectContext context, GasComp target)
         {
             var effect = SystemDriver.ConfigSystem.Tables.TbGameEffect.GetOrDefault(effectId);
@@ -65,11 +55,6 @@ namespace Script.Runtime.Framework.System
             return 0;
         }
 
-        public ulong ApplyGameEffectTo(cfg.Gas.GameEffect effect, GasComp target)
-        {
-            return ApplyGameEffectTo(effect, default, target);
-        }
-
         public ulong ApplyGameEffectTo(cfg.Gas.GameEffect effect, GameEffectContext context, GasComp target)
         {
             if (effect.Tags.Assets is not { Count: > 0 })
@@ -78,7 +63,11 @@ namespace Script.Runtime.Framework.System
                 return 0;
             }
             var spec = GameEffectSpec.Create(effect, this, target, context);
-            spec.SetContext(context);
+            return ApplyGameEffectTo(spec, target);
+        }
+
+        public ulong ApplyGameEffectTo(GameEffectSpec spec, GasComp target)
+        {
             return target.GameEffectController.AddGameEffectSpec(spec);
         }
     #endregion

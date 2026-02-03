@@ -30,14 +30,14 @@ namespace Script.Runtime.Framework.System.GameAttribute
             }
 
             // 添加相对属性
-            _owner.ApplyGameEffectTo(1, _owner);
-            _owner.ApplyGameEffectTo(2, _owner);
-            _owner.ApplyGameEffectTo(3, _owner);
-            _owner.ApplyGameEffectTo(4, _owner);
-            _owner.ApplyGameEffectTo(5, _owner);
-            _owner.ApplyGameEffectTo(6, _owner);
-            _owner.ApplyGameEffectTo(7, _owner);
-            _owner.ApplyGameEffectTo(8, _owner);
+            _owner.ApplyGameEffectTo(1, null, _owner);
+            _owner.ApplyGameEffectTo(2, null, _owner);
+            _owner.ApplyGameEffectTo(3, null, _owner);
+            _owner.ApplyGameEffectTo(4, null, _owner);
+            _owner.ApplyGameEffectTo(5, null, _owner);
+            _owner.ApplyGameEffectTo(6, null, _owner);
+            _owner.ApplyGameEffectTo(7, null, _owner);
+            _owner.ApplyGameEffectTo(8, null, _owner);
 
             // 重置
             _attributes[EAttributeId.HpNow].InitValue(_attributes[EAttributeId.HpMax].CurrentValue);
@@ -52,7 +52,7 @@ namespace Script.Runtime.Framework.System.GameAttribute
                 attr.OnGameEffectDirty();
             }
         }
-    
+
         public float GetCurrentValue(EAttributeId attributeId)
         {
             return _attributes[attributeId].CurrentValue;

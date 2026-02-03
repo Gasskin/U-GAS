@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Script.Runtime.Framework.ObjectPool
 {
@@ -43,8 +44,8 @@ namespace Script.Runtime.Framework.ObjectPool
             var type = o.GetType();
             if (!_pools.TryGetValue(type, out var pools))
             {
-                pools = new List<IPoolObject>();
-                _pools[type] = pools;
+                Debug.LogError($"object pools not found: {type}");
+                return;
             }
 #if UNITY_EDITOR
             ReleaseCount.TryAdd(type, 0);

@@ -15,5 +15,10 @@ namespace Script.Runtime.Framework
         {
             SystemDriver.EventSystem.Send(message);
         }
+        
+        public static void SendNow(this BaseEventMessage message)
+        {
+            SystemDriver.EventSystem.Send(message);
+        }
     }
 }

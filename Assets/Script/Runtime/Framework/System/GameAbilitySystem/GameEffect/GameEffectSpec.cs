@@ -6,8 +6,14 @@ using UnityEngine;
 
 namespace Script.Runtime.Framework.System.GameEffect
 {
-    public struct GameEffectContext
+    public class GameEffectContext : IPoolObject
     {
+        public Collider2D SkillAttackHitCollider;
+        
+        public void OnRelease()
+        {
+            SkillAttackHitCollider = null;
+        }
     }
 
     public class GameEffectSpec : IPoolObject
@@ -23,6 +29,8 @@ namespace Script.Runtime.Framework.System.GameEffect
             {
                 _idFactory = 1;
             }
+            context ??= ObjectPool.ObjectPool.Get<GameEffectContext>();
+            
             spec.Id = _idFactory++;
             spec.GameEffect = ge;
             spec.Source = source;
@@ -80,7 +88,8 @@ namespace Script.Runtime.Framework.System.GameEffect
         {
             Id = 0;
             GameEffect = null;
-            Context = default;
+            ObjectPool.ObjectPool.Release(Context);
+            Context = null;
             Source = null;
             Target = null;
             ActiveTime = 0;
