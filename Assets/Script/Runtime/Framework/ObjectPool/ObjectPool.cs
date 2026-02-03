@@ -12,11 +12,18 @@ namespace Script.Runtime.Framework.ObjectPool
     public static class ObjectPool
     {
         private static Dictionary<Type, List<IPoolObject>> _pools = new();
+        private static Dictionary<Type, int> _capacityLimits = new();
+        private static int _defaultCapacity = 100;
 
 #if UNITY_EDITOR
         public static Dictionary<Type, int> GetCount = new();
         public static Dictionary<Type, int> ReleaseCount = new();
 #endif
+
+        private static int GetCapacity(Type type)
+        {
+            return _capacityLimits.TryGetValue(type, out var capacity) ? capacity : _defaultCapacity;
+        }
 
         public static T Get<T>() where T : IPoolObject, new()
         {
@@ -52,6 +59,10 @@ namespace Script.Runtime.Framework.ObjectPool
             ReleaseCount[type]++;
 #endif
             o.OnRelease();
+            if (pools.Count >= GetCapacity(type))
+            {
+                return;
+            }
             pools.Add(o);
         }
     }
