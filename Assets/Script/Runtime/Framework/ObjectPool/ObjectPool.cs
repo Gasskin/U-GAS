@@ -65,5 +65,43 @@ namespace Script.Runtime.Framework.ObjectPool
             }
             pools.Add(o);
         }
+
+        public static void Clear<T>() where T : IPoolObject
+        {
+            var type = typeof(T);
+            if (_pools.TryGetValue(type, out var pools))
+            {
+                pools.Clear();
+            }
+#if UNITY_EDITOR
+            GetCount.Remove(type);
+            ReleaseCount.Remove(type);
+#endif
+        }
+
+        public static void Clear(Type type)
+        {
+            if (_pools.TryGetValue(type, out var pools))
+            {
+                pools.Clear();
+            }
+#if UNITY_EDITOR
+            GetCount.Remove(type);
+            ReleaseCount.Remove(type);
+#endif
+        }
+
+        public static void ClearAll()
+        {
+            foreach (var pools in _pools.Values)
+            {
+                pools.Clear();
+            }
+            _pools.Clear();
+#if UNITY_EDITOR
+            GetCount.Clear();
+            ReleaseCount.Clear();
+#endif
+        }
     }
 }
