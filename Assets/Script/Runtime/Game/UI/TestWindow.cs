@@ -15,11 +15,11 @@ namespace Script.Runtime.Game.UI
         public Button Close;
         public Button Pop;
         
-        public override void OnTick(float dt)
+        protected override void OnTick(float dt)
         {
         }
 
-        public override void OnOpen()
+        protected override void OnCreate()
         {
             Close.onClick.AddListener((CloseWindow));
             Pop.onClick.AddListener(((() =>
@@ -28,16 +28,16 @@ namespace Script.Runtime.Game.UI
             })));
         }
 
-        public override void OnClose()
+        protected override void OnDispose()
         {
         }
 
-        public override void OnShow()
+        protected override void OnShow()
         {
             
         }
 
-        public override void OnHide()
+        protected override void OnHide()
         {
         }
     }

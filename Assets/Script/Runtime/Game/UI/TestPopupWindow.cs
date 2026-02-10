@@ -16,25 +16,25 @@ namespace Script.Runtime.Game.UI
 
         public Button Close;
         
-        public override void OnTick(float dt)
+        protected override void OnTick(float dt)
         {
             
         }
 
-        public override void OnOpen()
+        protected override void OnCreate()
         {
             Close.onClick.AddListener(CloseWindow);
         }
 
-        public override void OnClose()
+        protected override void OnDispose()
         {
         }
 
-        public override void OnShow()
+        protected override void OnShow()
         {
         }
 
-        public override void OnHide()
+        protected override void OnHide()
         {
         }
     }

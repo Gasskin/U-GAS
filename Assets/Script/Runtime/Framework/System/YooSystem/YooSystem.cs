@@ -124,13 +124,13 @@ namespace Script.Runtime.Framework.System
             return null;
         }
 
-        public async UniTask<UnityEngine.GameObject> InitializeGameObjectAsync(Transform parent, string path)
+        public async UniTask<GameObject> InitializeGameObjectAsync(string path, Transform parent)
         {
-            var handle = _defaultPackage.LoadAssetAsync<UnityEngine.GameObject>(path);
-            await handle.ToUniTask();
+            var handle = _defaultPackage.LoadAssetAsync<GameObject>(path);
+            await handle;
             if (handle.Status == EOperationStatus.Succeed)
             {
-                var go = (UnityEngine.GameObject)Object.Instantiate(handle.AssetObject, parent);
+                var go = (GameObject)Object.Instantiate(handle.AssetObject, parent, false);
                 var handler = go.AddComponent<YooGameObjectHandler>();
                 handler.Handle = handle;
                 return go;
@@ -139,12 +139,12 @@ namespace Script.Runtime.Framework.System
             return null;
         }
 
-        public UnityEngine.GameObject InitializeGameObjectSync(Transform parent, string path)
+        public GameObject InitializeGameObjectSync(string path, Transform parent)
         {
-            var handle = _defaultPackage.LoadAssetSync<UnityEngine.GameObject>(path);
+            var handle = _defaultPackage.LoadAssetSync<GameObject>(path);
             if (handle.Status == EOperationStatus.Succeed)
             {
-                var go = (UnityEngine.GameObject)Object.Instantiate(handle.AssetObject, parent, false);
+                var go = (GameObject)Object.Instantiate(handle.AssetObject, parent, false);
                 var handler = go.AddComponent<YooGameObjectHandler>();
                 handler.Handle = handle;
                 return go;

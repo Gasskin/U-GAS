@@ -103,10 +103,10 @@ namespace Script.Runtime.Framework.System
             // 说明已经打开
             if (_activeUiLogicDict[uiLogic.Config.Layer].Remove(uiLogic))
             {
-                uiLogic.Close();
+                uiLogic.Dispose();
+                SystemDriver.GameObjectPoolSystem.Release(uiLogic.Config.Path, uiLogic.Window.gameObject);
                 SetLayerUiDepth(uiLogic.Config.Layer);
                 RefreshLayerVisibility(_activeUiLogicDict[uiLogic.Config.Layer]);
-                Object.Destroy(uiLogic.Window.gameObject);
             }
             _uiLogics.Remove(uid);
             ObjectPool.ObjectPool.Release(uiLogic);
@@ -122,17 +122,18 @@ namespace Script.Runtime.Framework.System
                 ObjectPool.ObjectPool.Release(uiLogic);
                 return;
             }
-            var prefab = await SystemDriver.YooSystem.InitializeGameObjectAsync(root, uiLogic.Config.Path);
+            var prefab = await SystemDriver.GameObjectPoolSystem.GetAsync(uiLogic.Config.Path, root);
             // 资源异常
             if (prefab == null)
             {
+                Debug.LogError($"prefab is null: {uiLogic.Config.Layer}");
                 ObjectPool.ObjectPool.Release(uiLogic);
                 return;
             }
             // 还没打开又被关了
             if (!_uiLogics.ContainsKey(uiLogic.Uid))
             {
-                Object.Destroy(prefab);
+                SystemDriver.GameObjectPoolSystem.Release(uiLogic.Config.Path, prefab);
                 ObjectPool.ObjectPool.Release(uiLogic);
                 return;
             }
@@ -145,14 +146,13 @@ namespace Script.Runtime.Framework.System
                 return;
             }
             uiLogic.Window = wnd;
-            prefab.gameObject.SetActive(true);
             prefab.transform.SetAsLastSibling();
 
             _activeUiLogicDict[uiLogic.Config.Layer].Add(uiLogic);
             SetLayerUiDepth(uiLogic.Config.Layer);
             RefreshLayerVisibility(_activeUiLogicDict[uiLogic.Config.Layer]);
 
-            uiLogic.Open();
+            uiLogic.Create();
 
             var msg = ObjectPool.ObjectPool.Get<OnUIOpenEvent>();
             msg.Uid = uiLogic.Uid;

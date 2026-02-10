@@ -1,8 +1,6 @@
-using System;
 using Script.Runtime.Framework.ObjectPool;
-using Script.Runtime.Framework.System;
 
-namespace Script.Runtime.Framework
+namespace Script.Runtime.Framework.System
 {
     public abstract class BaseEventMessage : IPoolObject
     {

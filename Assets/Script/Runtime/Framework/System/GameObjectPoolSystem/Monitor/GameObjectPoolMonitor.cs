@@ -1,16 +1,16 @@
-#if UNITY_EDITOR
+﻿#if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
 
-namespace Script.Runtime.Framework.ObjectPool.Monitor
+namespace Script.Runtime.Framework.System
 {
-    public class ObjectPoolMonitor : MonoBehaviour
+    public class GameObjectPoolMonitor : MonoBehaviour
     {
     #region static
-        [MenuItem("Tools/Monitor/ObjectPoolMonitor")]
+        [MenuItem("Tools/Monitor/GameObjectPoolMonitor")]
         public static void ShowMonitor()
         {
             if (!Application.isPlaying)
@@ -21,14 +21,14 @@ namespace Script.Runtime.Framework.ObjectPool.Monitor
             {
                 return;
             }
-            var o = new GameObject("[ObjectPoolMonitor]");
-            _monitor = o.AddComponent<ObjectPoolMonitor>();
+            var o = new GameObject("[GameObjectPoolMonitor]");
+            _monitor = o.AddComponent<GameObjectPoolMonitor>();
             DontDestroyOnLoad(o);
         }
 
-        private static ObjectPoolMonitor _monitor;
+        private static GameObjectPoolMonitor _monitor;
     #endregion
-
+        
         private class ObjectPoolState
         {
             public string Name;
@@ -39,7 +39,7 @@ namespace Script.Runtime.Framework.ObjectPool.Monitor
         [TextArea(1, 50), HideLabel]
         public string Monitor;
 
-        private Dictionary<Type, ObjectPoolState> _states = new();
+        private Dictionary<string, ObjectPoolState> _states = new();
 
 
         [OnInspectorGUI]
@@ -47,14 +47,14 @@ namespace Script.Runtime.Framework.ObjectPool.Monitor
         {
             _states.Clear();
 
-            var get = ObjectPool.GetCount;
-            var release = ObjectPool.ReleaseCount;
+            var get = SystemDriver.GameObjectPoolSystem.GetCount;
+            var release = SystemDriver.GameObjectPoolSystem.ReleaseCount;
 
             foreach (var key in get.Keys)
             {
                 if (!_states.ContainsKey(key))
                 {
-                    _states[key] = new ObjectPoolState() { Name = key.Name };
+                    _states[key] = new ObjectPoolState() { Name = key };
                 }
             }
 
@@ -62,7 +62,7 @@ namespace Script.Runtime.Framework.ObjectPool.Monitor
             {
                 if (!_states.ContainsKey(key))
                 {
-                    _states[key] = new ObjectPoolState() { Name = key.Name };
+                    _states[key] = new ObjectPoolState() { Name = key };
                 }
             }
 
@@ -83,5 +83,4 @@ namespace Script.Runtime.Framework.ObjectPool.Monitor
         }
     }
 }
-
 #endif

@@ -55,6 +55,7 @@ namespace Script.Runtime.Framework.System
         public static EntitySystem EntitySystem => Get<EntitySystem>();
         public static ProcedureSystem ProcedureSystem => Get<ProcedureSystem>();
         public static UISystem UISystem => Get<UISystem>();
+        public static GameObjectPoolSystem GameObjectPoolSystem => Get<GameObjectPoolSystem>();
 
         // Game
         public static PlayerDataSystem PlayerDataSystem => Get<PlayerDataSystem>();
@@ -69,6 +70,7 @@ namespace Script.Runtime.Framework.System
             new YooSystem(),
             new ConfigSystem(),
             new EventSystem(),
+            new GameObjectPoolSystem(),
             new UISystem(),
             new EntitySystem(),
             new ProcedureSystem(),

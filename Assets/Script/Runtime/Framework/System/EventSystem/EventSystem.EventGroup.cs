@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Script.Runtime.Framework.ObjectPool;
-using Script.Runtime.Framework.System;
 using UnityEngine;
 
-namespace Script.Runtime.Framework
+namespace Script.Runtime.Framework.System
 {
     public partial class EventSystem
     {

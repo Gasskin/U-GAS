@@ -28,7 +28,7 @@ namespace Script.Runtime.Framework.System
         public BaseWindow Window;
         public ulong Uid;
         public BaseUIOpenData OpenData;
-        public bool IsActive { get; private set; } = true;
+        public bool IsActive { get; private set; } = false;
 
         public void Tick(float dt)
         {
@@ -36,37 +36,20 @@ namespace Script.Runtime.Framework.System
             {
                 return;
             }
-            Window.OnTick(dt);
-            for (int i = 0; i < Window.StaticWidgets.Count; i++)
-            {
-                Window.StaticWidgets[i].OnTick(dt);
-            }
+            Window.Tick(dt);
         }
 
-        public void Open(BaseUIOpenData openData = null)
+        public void Create(BaseUIOpenData openData = null)
         {
             OpenData = openData;
-            Window.Logic = this;
-            Window.EventGroup = ObjectPool.ObjectPool.Get<EventSystem.EventGroup>();
-            Window.OnOpen();
-            for (int i = 0; i < Window.StaticWidgets.Count; i++)
-            {
-                Window.StaticWidgets[i].ParentWindow = Window;
-                Window.StaticWidgets[i].OnOpen();
-            }
+            Window.Create(this);
+            Window.Show();
         }
 
-        public void Close()
+        public void Dispose()
         {
-            for (int i = 0; i < Window.StaticWidgets.Count; i++)
-            {
-                Window.StaticWidgets[i].OnClose();
-                Window.StaticWidgets[i].ParentWindow = null;
-            }
-            Window.OnClose();
-            Window.Logic = null;
-            ObjectPool.ObjectPool.Release(Window.EventGroup);
-            Window.EventGroup = null;
+            Window.Hide();
+            Window.Dispose();
         }
 
         public void Show()
@@ -77,11 +60,7 @@ namespace Script.Runtime.Framework.System
             }
             IsActive = true;
             Window.gameObject.SetActive(true);
-            Window.OnShow();
-            for (int i = 0; i < Window.StaticWidgets.Count; i++)
-            {
-                Window.StaticWidgets[i].OnShow();
-            }
+            Window.Show();
         }
 
         public void Hide()
@@ -92,11 +71,7 @@ namespace Script.Runtime.Framework.System
             }
             IsActive = false;
             Window.gameObject.SetActive(false);
-            for (int i = 0; i < Window.StaticWidgets.Count; i++)
-            {
-                Window.StaticWidgets[i].OnHide();
-            }
-            Window?.OnHide();
+            Window?.Hide();
         }
 
         public void OnRelease()
@@ -104,7 +79,7 @@ namespace Script.Runtime.Framework.System
             OpenData?.Release();
             OpenData = null;
             Window = null;
-            IsActive = true;
+            IsActive = false;
             Uid = 0;
             Config = null;
         }

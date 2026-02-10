@@ -28,7 +28,7 @@ namespace Script.Runtime.Game.Entity
 
         public override async UniTask Initialize()
         {
-            View = await SystemDriver.YooSystem.InitializeGameObjectAsync(_parent, _assetPath);
+            View = await SystemDriver.YooSystem.InitializeGameObjectAsync(_assetPath, _parent);
             View.transform.position = _initPos;
             if (!IsValid)
             {

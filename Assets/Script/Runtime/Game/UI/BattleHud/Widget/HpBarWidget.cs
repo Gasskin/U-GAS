@@ -24,7 +24,7 @@ namespace Script.Runtime.Game.UI.BattleHud.Widget
         {
         }
 
-        public override void OnOpen()
+        protected override void OnCreate()
         {
             gameObject.SetActive(false);
             if (SystemDriver.PlayerDataSystem.Player != null)
@@ -37,7 +37,7 @@ namespace Script.Runtime.Game.UI.BattleHud.Widget
             }
         }
 
-        public override void OnClose()
+        protected override void OnDispose()
         {
             if (_now != null)
             {

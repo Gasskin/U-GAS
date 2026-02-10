@@ -74,10 +74,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15269d8961f54e3a84396b7e99774804, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StaticWidgets:
-  - {fileID: 2583091907417512880}
+  _staticWidgets:
   - {fileID: 1901834262713684486}
   - {fileID: 651067475005322837}
+  - {fileID: 2583091907417512880}
 --- !u!114 &1457304097316711569
 MonoBehaviour:
   m_ObjectHideFlags: 0

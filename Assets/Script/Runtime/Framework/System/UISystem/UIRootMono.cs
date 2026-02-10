@@ -7,7 +7,8 @@ namespace Script.Runtime.Framework.System
     public enum EUILayer
     {
         Background = 0,
-        Normal = 1000,
+        EnemyHud = 1000,
+        Normal = 2000,
         Pop = 3000,
         System = 4000,
     }
@@ -21,11 +22,13 @@ namespace Script.Runtime.Framework.System
 
     public class UIRootMono : MonoBehaviour
     {
+        public Camera UICamera;
+        
         [SerializeField]
         private List<UILayer> _layers = new();
-
+        
         public Dictionary<EUILayer, Transform> UIRoots = new();
-
+        
 
         private void Awake()
         {

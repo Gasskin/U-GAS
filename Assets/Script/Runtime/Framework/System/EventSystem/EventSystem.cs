@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using Script.Runtime.Framework.ObjectPool;
-using Script.Runtime.Framework.System;
 
-namespace Script.Runtime.Framework
+namespace Script.Runtime.Framework.System
 {
     public partial class EventSystem : BaseSystem, ITickSystem
     {

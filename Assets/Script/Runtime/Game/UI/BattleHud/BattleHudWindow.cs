@@ -10,24 +10,24 @@ namespace Script.Runtime.Game.UI.BattleHud
             Path = "Assets/Bundles/UI/BattleHud/BattleHudWindow.prefab",
         };
 
-        public override void OnTick(float dt)
+        protected override void OnTick(float dt)
         {
         }
 
-        public override void OnOpen()
+        protected override void OnCreate()
         {
         }
 
 
-        public override void OnClose()
+        protected override void OnDispose()
         {
         }
 
-        public override void OnShow()
+        protected override void OnShow()
         {
         }
 
-        public override void OnHide()
+        protected override void OnHide()
         {
         }
     }
